@@ -1,0 +1,6 @@
+This is the licence for my Neovim configuration files.
+
+Copyright (c) 2023 Jakub Bortlík
+
+Distributed under the same terms as Vim. See :help license in vim, or
+http://vimdoc.sourceforge.net/htmldoc/uganda.html#license.
