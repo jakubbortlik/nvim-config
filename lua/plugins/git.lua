@@ -181,6 +181,9 @@ local M = {
           toggle_node = "i",
           toggle_resolved = "s",
         },
+        discussion_sign_and_diagnostic = {
+          skip_resolved_discussion = true,
+        },
         popup = {
           exit = "q",
           perform_action = "ZZ",
