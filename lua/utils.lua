@@ -7,13 +7,13 @@ local function get_main()
 end
 
 -- Simplify normal mode mappings
-local nmap = function(keys, func, desc)
-  vim.keymap.set("n", keys, func, { desc = desc })
+local nmap = function(keys, func, desc, buffer)
+  vim.keymap.set("n", keys, func, { desc = desc, buffer = buffer })
 end
 
 -- Simplify visual mode mappings
-local vmap = function(keys, func, desc)
-  vim.keymap.set("v", keys, func, { desc = desc })
+local vmap = function(keys, func, desc, buffer)
+  vim.keymap.set("v", keys, func, { desc = desc, buffer = buffer })
 end
 
 M.get_main = get_main
