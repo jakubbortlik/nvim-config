@@ -48,7 +48,6 @@ local M = {
   },
   {
     "shumphrey/fugitive-gitlab.vim",
-    cmd = {"GBrowse"},
     dependencies = {
       "tpope/vim-fugitive",
     },
@@ -58,7 +57,6 @@ local M = {
   },
   {
     "tpope/vim-rhubarb",
-    cmd = {"GBrowse"},
     dependencies = {
       "tpope/vim-fugitive",
     },
