@@ -14,7 +14,7 @@ return {
   -- Plugins for enhanced editing
   "tpope/vim-repeat", -- Repeat other plugins with . command
   {
-    "tpope/vim-rsi", -- Emulate Readline key bindings
+    "tpope/vim-rsi",  -- Emulate Readline key bindings
     event = {
       "InsertEnter",
       "CmdlineEnter",
@@ -24,10 +24,10 @@ return {
     "tpope/vim-capslock",
     keys = {
       { "<C-G>c", mode = "i", desc = "Temporarily toggle caps lock" },
-      { "gC", mode = "n", desc = "Toggle caps lock" },
+      { "gC",     mode = "n", desc = "Toggle caps lock" },
     },
   },
-  "tommcdo/vim-exchange", -- Easy exange of two portions of text
+  "tommcdo/vim-exchange",    -- Easy exange of two portions of text
   {
     "numToStr/Comment.nvim", -- Toggle comments
     config = true,
@@ -40,8 +40,8 @@ return {
     },
     cmd = "SpeedDatingFormat",
   },
-  "tpope/vim-surround", -- Parentheses, brackets, quotes, and more
-  "tpope/vim-unimpaired", -- Pairs of handy bracket mappings
+  "tpope/vim-surround",    -- Parentheses, brackets, quotes, and more
+  "tpope/vim-unimpaired",  -- Pairs of handy bracket mappings
   {
     "vim-scripts/VisIncr", -- In/decreasing columns of Ns and dates
     cmd = {
@@ -71,12 +71,12 @@ return {
   {
     "jakubbortlik/vim-keymaps", -- Switch keyboard layouts
     keys = {
-      { "ckj", desc = "Next keymap" },
-      { "ckk", desc = "Previous keymap" },
-      { "ckl", desc = "Show keymaps" },
-      { mode = "i", "<C-k><C-j>", desc = "Next keymap" },
-      { mode = "i", "<C-k><C-k>", desc = "Previous keymap" },
-      { mode = "i", "<C-k><C-l>", desc = "Show keymaps" },
+      { "ckj",      desc = "Next keymap" },
+      { "ckk",      desc = "Previous keymap" },
+      { "ckl",      desc = "Show keymaps" },
+      { mode = "i", "<C-k><C-j>",            desc = "Next keymap" },
+      { mode = "i", "<C-k><C-k>",            desc = "Previous keymap" },
+      { mode = "i", "<C-k><C-l>",            desc = "Show keymaps" },
     },
   },
   {
@@ -126,7 +126,7 @@ return {
     "tversteeg/registers.nvim",
     name = "registers",
     keys = {
-      { '"', mode = { "n", "v" } },
+      { '"',     mode = { "n", "v" } },
       { "<C-R>", mode = "i" },
     },
     cmd = "Registers",
@@ -180,7 +180,11 @@ return {
     opts = { useDefaultKeymaps = true, disabledKeymaps = { "gw", "gc" } },
     confit = function(_, opts)
       require("various-textobjs").setup(opts)
-      vim.keymap.set("o", "gc", "<cmd>lua require('various-textobjs').multiCommentedLines()<CR>")
+      vim.keymap.set(
+        "o",
+        "gc",
+        "<cmd>lua require('various-textobjs').multiCommentedLines()<CR>"
+      )
     end,
   },
 
@@ -209,7 +213,10 @@ return {
   {
     "folke/flash.nvim",
     event = "VeryLazy",
-    opts = { label = { after = false, before = { 0, 0 } } },
+    opts = {
+      label = { after = false, before = { 0, 0 } },
+      modes = { search = { enabled = false, highlight = { backdrop = true } } },
+    },
     -- stylua: ignore
     keys = {
       { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
@@ -330,8 +337,8 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
       search = {
-        pattern = [[\b(KEYWORDS):]]
-      }
+        pattern = [[\b(KEYWORDS):]],
+      },
     },
     config = function(opts)
       local todo = require("todo-comments")
