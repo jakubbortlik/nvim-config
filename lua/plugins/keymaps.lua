@@ -60,32 +60,10 @@ nmap("<Leader>w8", "<cmd>setlocal textwidth=88<cr>", "Set local text[w]idth to [
 nmap("<Leader>w9", "<cmd>setlocal textwidth=90<cr>", "Set local text[w]idth to [9]0" )
 nmap("<Leader>w1", "<cmd>setlocal textwidth=100<cr>", "Set local text[w]idth to [1]00" )
 
--- Wield the harpoon
-local mark = require("harpoon.mark")
-local ui = require("harpoon.ui")
-nmap("<Leader>a", mark.add_file, "Add file to Harpoon list")
-
-local toggle_relative_quick_menu = function()
-  require("harpoon").setup({
-    menu = {
-      width = math.floor(vim.api.nvim_win_get_width(0) * 0.75),
-    }
-  })
-  ui.toggle_quick_menu()
-end
-
-nmap("<C-h>", toggle_relative_quick_menu, "Open Harpoon quick menu")
-
-nmap("<C-j>", function() ui.nav_file(1) end, "Navigate to harpoon file 1")
-nmap("<C-k>", function() ui.nav_file(2) end, "Navigate to harpoon file 2")
-nmap("<C-l>", function() ui.nav_file(3) end, "Navigate to harpoon file 3")
-nmap("⁏", function() ui.nav_file(4) end, "Navigate to harpoon file 4")  -- Alacritty hack
-nmap("<C-;>", function() ui.nav_file(4) end, "Navigate to harpoon file 4")
-
 -- Diagnostic keymaps
 nmap("[d", vim.diagnostic.goto_prev, "Go to previous diagnostic message")
 nmap("]d", vim.diagnostic.goto_next, "Go to next diagnostic message")
-nmap("<leader>e", vim.diagnostic.open_float, "Open floating diagnostic message")
+nmap("<leader>do", vim.diagnostic.open_float, "Open floating diagnostic message")
 nmap("<leader>q", vim.diagnostic.setloclist, "Open diagnostics list")
 
 return M

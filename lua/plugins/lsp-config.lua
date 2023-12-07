@@ -33,6 +33,7 @@ local M = {
               "buf",
               "commitlint",
               "debugpy",
+              "luacheck",
               "mdformat",
               "shellcheck",
               "stylua",
@@ -221,6 +222,9 @@ local M = {
         ),
         sources = {
           -- linters
+          null_ls.builtins.diagnostics.luacheck.with({
+            extra_args = { "--globals=vim busted --no-max-line-length" }
+          }),  -- lua
           null_ls.builtins.diagnostics.pydocstyle.with({
             extra_args = { "--ignore=" .. warnings_str },
             runtime_condition = disable_for_fugitive,
@@ -234,12 +238,11 @@ local M = {
           }),
           null_ls.builtins.diagnostics.buf,        -- protobuf
           null_ls.builtins.diagnostics.commitlint, -- conventional commits
-          -- null_ls.builtins.diagnostics.markdownlint.with({ command = "/usr/lib/node_modules/node/bin/markdownlint" }),
           null_ls.builtins.diagnostics.yamllint,   -- YAML
           -- formatters
           null_ls.builtins.formatting.buf,         -- Protobuf formatting
           null_ls.builtins.formatting.mdformat,
-          null_ls.builtins.formatting.semistandardjs,
+          null_ls.builtins.formatting.prettierd,
           null_ls.builtins.formatting.stylua,
           null_ls.builtins.formatting.textlint,    -- Markdown
         },
