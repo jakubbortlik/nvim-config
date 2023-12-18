@@ -26,6 +26,11 @@ local M = {
         defaults = {
           dynamic_preview_title = true,
         },
+        pickers = {
+          lsp_references = {
+            show_line = false,
+          },
+        },
         extensions = {
           ["ui-select"] = {
             require("telescope.themes").get_dropdown({})

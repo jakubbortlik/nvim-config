@@ -1,8 +1,6 @@
 -- Git related plugins
 
 local get_main = require("utils").get_main
-local nmap = require("utils").nmap
-local vmap = require("utils").vmap
 
 local M = {
   {
@@ -156,57 +154,6 @@ local M = {
     "rbong/vim-flog",
     dependencies = { "tpope/vim-fugitive" },
   },
-  {
-    "harrisoncramer/gitlab.nvim",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "sindrets/diffview.nvim",
-      "stevearc/dressing.nvim",
-    },
-    build = function () require("gitlab.server").build(true) end, -- Builds the Go binary
-    config = function()
-      require("dressing").setup({
-        input = {
-          enabled = true
-        },
-      })
-      local gitlab = require("gitlab")
-      gitlab.setup({
-        debug = { go_request = true, go_response = true }, -- Which values to log
-        discussion_tree = {
-          position = "bottom",
-          toggle_node = "i",
-          toggle_resolved = "s",
-        },
-        discussion_sign_and_diagnostic = {
-          skip_resolved_discussion = true,
-        },
-        popup = {
-          exit = "q",
-          perform_action = "ZZ",
-          perform_linewise_action = "<leader>l",
-          opacity = 0.85,
-        },
-      })
-      nmap("glr", gitlab.review, "Gitlab Review")
-      nmap("gls", gitlab.summary, "Gitlab Summary")
-      nmap("glA", gitlab.approve, "Gitlab Approve")
-      nmap("glR", gitlab.revoke, "Gitlab Revoke")
-      nmap("glc", gitlab.create_comment, "Gitlab Create Comment")
-      vmap("glc", gitlab.create_multiline_comment, "Gitlab Multiline Comment")
-      vmap("gls", gitlab.create_comment_suggestion, "Gitlab Suggestion")
-      nmap("gln", gitlab.create_note, "Gitlab Create note")
-      nmap("gld", gitlab.toggle_discussions, "Gitlab Toggle Discussions")
-      nmap("glaa", gitlab.add_assignee, "Gitlab Add Assignee")
-      nmap("glad", gitlab.delete_assignee, "Gitlab Delete Assignee")
-      nmap("glva", gitlab.add_reviewer, "Gitlab Add Reviewer")
-      nmap("glvd", gitlab.delete_reviewer, "Gitlab Delete Reviewer")
-      nmap("glp", gitlab.pipeline, "Gitlab Pipeline")
-      nmap("glo", gitlab.open_in_browser, "Gitlab Open in browser")
-      nmap("glm", gitlab.move_to_discussion_tree_from_diagnostic, "Move to discussion")
-    end,
-  }
 }
 
 return M
