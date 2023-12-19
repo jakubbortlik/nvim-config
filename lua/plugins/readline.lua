@@ -1,6 +1,13 @@
 return {
   {
-    "ryvnf/readline.vim", -- Emulate Readline key bindings
+    "tpope/vim-rsi",
+    event = {
+      "CmdlineEnter",
+      "InsertEnter",
+    },
+  },
+  {
+    "ryvnf/readline.vim",
     event = {
       "CmdlineEnter",
     },

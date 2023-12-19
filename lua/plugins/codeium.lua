@@ -4,7 +4,7 @@ M = {
   "Exafunction/codeium.vim",
   event = "BufEnter",
   config = function()
-    vim.keymap.set("i", "<M-p>", function()
+    vim.keymap.set("i", "<M-;>", function()
       return vim.fn["codeium#Accept"]()
     end, { expr = true })
     nmap("<leader>ct", "<cmd>CodeiumToggle<cr>", "Toggle Codeium")
