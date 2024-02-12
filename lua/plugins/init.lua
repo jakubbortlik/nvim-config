@@ -74,14 +74,14 @@ return {
   },
   {
     "mbbill/undotree", -- Show undo history in a tree
-    keys = { { "<Leader>u", "<cmd>UndotreeToggle<cr>", desc = "Toggle UndoTree" } },
+    keys = { { "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "Toggle UndoTree" } },
     config = function()
       vim.g.undotree_WindowLayout = 2
     end,
   },
   {
     "simnalamburt/vim-mundo",
-    keys = { { "<Leader>U", "<cmd>MundoToggle<cr>", desc = "Toggle Mundo Tree" } },
+    keys = { { "<leader>U", "<cmd>MundoToggle<cr>", desc = "Toggle Mundo Tree" } },
     config = function()
       vim.g.mundo_preview_bottom = 1
       vim.g.mundo_verbose_graph = 0
@@ -105,7 +105,7 @@ return {
     "smjonas/inc-rename.nvim", -- Rename with preview
     keys = {
       {
-        "<Leader>ri",
+        "<leader>ir",
         function()
           return ":IncRename " .. vim.fn.expand("<cword>")
         end,

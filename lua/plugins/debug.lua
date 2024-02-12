@@ -106,10 +106,10 @@ local M = {
 
       local widgets = require("dap.ui.widgets")
 
-      keymap({ "n", "v" }, "<Leader>dh", function() widgets.hover() end, { desc = "[D]ap widgets [H]over" })
-      keymap({ "n", "v" }, "<Leader>dp", function() widgets.preview() end, { desc = "[D]ap widgets [P]review" })
-      keymap("n", "<Leader>df", function() widgets.centered_float(widgets.frames) end, { desc = "[D]ap float widget [F]rames" })
-      keymap("n", "<Leader>dv", function() widgets.centered_float(widgets.scopes) end, { desc = "[D]ap float widget [V]ariable scopes" })
+      keymap({ "n", "v" }, "<leader>dh", function() widgets.hover() end, { desc = "[D]ap widgets [H]over" })
+      keymap({ "n", "v" }, "<leader>dp", function() widgets.preview() end, { desc = "[D]ap widgets [P]review" })
+      keymap("n", "<leader>df", function() widgets.centered_float(widgets.frames) end, { desc = "[D]ap float widget [F]rames" })
+      keymap("n", "<leader>dv", function() widgets.centered_float(widgets.scopes) end, { desc = "[D]ap float widget [V]ariable scopes" })
 
       require("dap-python").setup()
       local dap_python = require("dap-python")

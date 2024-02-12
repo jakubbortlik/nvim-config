@@ -13,7 +13,7 @@ return {
     })
     local mark = require("harpoon.mark")
     local ui = require("harpoon.ui")
-    nmap("<Leader>a", mark.add_file, "Add file to Harpoon list")
+    nmap("<leader>a", mark.add_file, "Add file to Harpoon list")
     nmap("<C-h>", ui.toggle_quick_menu, "Open Harpoon quick menu")
     nmap("<C-j>", function() ui.nav_file(1) end, "Navigate to harpoon file 1")
     nmap("<C-k>", function() ui.nav_file(2) end, "Navigate to harpoon file 2")
