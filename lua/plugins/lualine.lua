@@ -44,6 +44,14 @@ return {
     local codeium_status = function()
       return "{…}" .. vim.api.nvim_call_function("codeium#GetStatusString", {})
     end
+    local conditions = {
+      window_wider_than = function(limit)
+        if limit == nil then
+          limit = 95
+        end
+        return vim.fn.winwidth(0) > limit
+      end,
+    }
     require("lualine").setup({
       options = {
         theme = "powerline",
@@ -51,10 +59,47 @@ return {
       sections = {
         lualine_a = {
           function()
-            return mode_map[vim.api.nvim_get_mode().mode] or "__"
+            if conditions.window_wider_than(115) then
+              return mode_map[vim.api.nvim_get_mode().mode] or "__"
+            else
+              -- Abbreviate mode indicator
+              return string.gsub(
+                mode_map[vim.api.nvim_get_mode().mode],
+                "(%a)%a+",
+                "%1"
+              ) or "__"
+            end
           end,
         },
-        lualine_x = { function() return codeium_status() end, "encoding", "fileformat", "filetype" },
+        -- Show components only when window is wide enough
+        lualine_x = {
+          {
+            function()
+              return codeium_status()
+            end,
+            cond = function()
+              return conditions.window_wider_than(95)
+            end,
+          },
+          {
+            "encoding",
+            cond = function()
+              return conditions.window_wider_than(120)
+            end,
+          },
+          {
+            "fileformat",
+            cond = function()
+              return conditions.window_wider_than(110)
+            end,
+          },
+          {
+            "filetype",
+            cond = function()
+              return conditions.window_wider_than(100)
+            end,
+          },
+        },
       },
     })
   end,
