@@ -9,6 +9,7 @@ return {
     "sindrets/diffview.nvim",
     "stevearc/dressing.nvim",
   },
+  dev = true,
   build = function()
     require("gitlab.server").build(true)
   end, -- Builds the Go binary
@@ -29,7 +30,7 @@ return {
       },
       discussion_tree = {
         size = "25%",                                    -- Size of split
-        position = "bottom",
+        position = "right",
         toggle_node = "i",
         toggle_resolved = "s",
       },
@@ -78,6 +79,7 @@ return {
     nmap("glc", gitlab.create_comment, "Gitlab Create Comment")
     vmap("glc", gitlab.create_multiline_comment, "Gitlab Multiline Comment")
     vmap("gls", gitlab.create_comment_suggestion, "Gitlab Suggestion")
+    nmap("glO", gitlab.create_mr, "Gitlab Create MR")
     nmap("gln", gitlab.create_note, "Gitlab Create note")
     nmap("gld", gitlab.toggle_discussions, "Gitlab Toggle Discussions")
     nmap("glaa", gitlab.add_assignee, "Gitlab Add Assignee")

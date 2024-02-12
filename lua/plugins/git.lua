@@ -125,10 +125,10 @@ local M = {
     "sindrets/diffview.nvim", -- a single tabpage interface for reviewing all git changes
     keys = {
       { "<leader>vc", "<cmd>DiffviewClose<cr>", desc = "Run Diff[v]iew[C]lose"},
-      { "<leader>vH", ":DiffviewFileHistory ", desc = "Prepopulate commandline with Diff[v]iewFile[H]istory"},
-      { "<leader>vh", "<cmd>DiffviewFileHistory %<cr>", desc = "Run Diff[v]iewFile[H]istory for current file"},
-      { "<leader>vm", "<cmd>DiffviewOpen " .. get_main() .. "<cr>", desc = "Run Diff[v]iew[O]pen"},
-      { "<leader>vo", ":DiffviewOpen ", desc = "Prepopulate commandline with Diff[v]iew[O]pen"},
+      { "<leader>vH", ":DiffviewFileHistory --no-merges", desc = "Prepopulate commandline with Diff[v]iewFile[H]istory"},
+      { "<leader>vh", "<cmd>DiffviewFileHistory --no-merges %<cr>", desc = "Run Diff[v]iewFile[H]istory for current file"},
+      { "<leader>vm", "<cmd>DiffviewOpen --no-merges " .. get_main() .. "<cr>", desc = "Run Diff[v]iew[O]pen"},
+      { "<leader>vo", ":DiffviewOpen --no-merges ", desc = "Prepopulate commandline with Diff[v]iew[O]pen"},
       { "<leader>vr", "<cmd>DiffviewRefresh<cr>", desc = "Run Diff[v]iew[R]efresh"},
     },
     cmd = {
@@ -146,7 +146,8 @@ local M = {
           win_config = function()
             return { type = "float", border = "rounded", }
           end
-        }
+        },
+        view = { default = {layout = "diff2_vertical"}}
       })
     end,
   },
