@@ -14,13 +14,6 @@ return {
   -- Plugins for enhanced editing
   "tpope/vim-repeat", -- Repeat other plugins with . command
   {
-    "tpope/vim-rsi",  -- Emulate Readline key bindings
-    event = {
-      "InsertEnter",
-      "CmdlineEnter",
-    },
-  },
-  {
     "tpope/vim-capslock",
     keys = {
       { "<C-G>c", mode = "i", desc = "Temporarily toggle caps lock" },
