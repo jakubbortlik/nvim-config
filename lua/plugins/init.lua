@@ -58,10 +58,6 @@ return {
     },
   },
   {
-    "mechatroner/rainbow_csv", -- Show tabulated data in colour
-    ft = { "csv", "tsv", "txt" },
-  },
-  {
     "jakubbortlik/vim-keymaps", -- Switch keyboard layouts
     keys = {
       { "ckj",      desc = "Next keymap" },

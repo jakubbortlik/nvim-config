@@ -74,7 +74,15 @@ return {
           if ok and stats and stats.size > max_filesize then
             return true
           else
-            return false
+            return {
+              "csv",
+              "tsv",
+              "csv_semicolon",
+              "csv_whitespace",
+              "csv_pipe",
+              "rfc_csv",
+              "rfc_semicolon",
+            }
           end
         end,
         additional_vim_regex_highlighting = {'org'},
