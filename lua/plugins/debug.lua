@@ -234,6 +234,7 @@ local M = {
           require("neotest-python")({
             dap = { justMyCode = true },
             python = python_path(),
+            args = { "--cov", "--cov-report", "term", "--cov-report", "xml:coverage.xml" },
           }),
         },
         quickfix = {
