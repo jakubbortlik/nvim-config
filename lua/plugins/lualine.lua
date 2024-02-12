@@ -42,9 +42,7 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons", "Exafunction/codeium.vim" },
   config = function()
     local codeium_status = function()
-      local logo = "{…}"
-      local status = vim.api.nvim_call_function("codeium#GetStatusString", {})
-      return logo .. status
+      return "{…}" .. vim.api.nvim_call_function("codeium#GetStatusString", {})
     end
     require("lualine").setup({
       options = {
