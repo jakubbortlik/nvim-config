@@ -13,7 +13,13 @@ return {
 
   -- Plugins for enhanced editing
   "tpope/vim-repeat", -- Repeat other plugins with . command
-  "tpope/vim-rsi", -- Emulate Readline key bindings
+  {
+    "tpope/vim-rsi", -- Emulate Readline key bindings
+    event = {
+      "InsertEnter",
+      "CmdlineEnter",
+    },
+  },
   {
     "tpope/vim-capslock",
     keys = {
@@ -238,7 +244,6 @@ return {
   },
 
   -- highlighting and other visual stuff
-  "machakann/vim-highlightedyank",
   -- TODO: figure out how to disable folding upon enteing the window
   --[[ {
     "tmhedberg/SimpylFold",
