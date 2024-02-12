@@ -1,3 +1,4 @@
+-- This is a minimal init.lua that is used for debugging
 -- DO NOT change the paths and don't remove the colorscheme
 local root = vim.fn.fnamemodify("./.repro", ":p")
 
