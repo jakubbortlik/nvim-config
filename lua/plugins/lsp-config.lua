@@ -33,6 +33,7 @@ local M = {
               "buf",
               "commitlint",
               "debugpy",
+              "json-lsp",
               "luacheck",
               "mdformat",
               "shellcheck",
