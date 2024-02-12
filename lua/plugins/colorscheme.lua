@@ -13,6 +13,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
     set_hl(0, "IBLIndent", { bg="NONE", fg="#1a1a1a", nocombine=true })
     set_hl(0, "MatchParen", { bg="#363646", fg="#ff9e3b" })
     set_hl(0, "CursorLine", { bg="#161616" })
+    set_hl(0, "Substitute", { bg="#c34043", fg="#000000"})
   end
 })
 

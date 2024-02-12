@@ -186,6 +186,7 @@ local M = {
           exit = "q",
           perform_action = "ZZ",
           perform_linewise_action = "<leader>l",
+          opacity = 0.85,
         },
       })
       nmap("glr", gitlab.review, "Gitlab Review")
