@@ -31,7 +31,6 @@ return {
       discussion_tree = {
         size = "25%",                                    -- Size of split
         position = "right",
-        toggle_node = "i",
         toggle_resolved = "s",
       },
       discussion_sign_and_diagnostic = {
@@ -44,6 +43,11 @@ return {
         width = "60%",
         backup_register = "+",
       },
+      create_mr = {
+        title_input = {
+          size = 120,
+        }
+      }
     })
     local create_mappings = function()
       nmap("c", gitlab.create_comment, "Gitlab Create Comment", true)

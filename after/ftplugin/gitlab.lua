@@ -6,11 +6,10 @@ local toggle_if_match = function(pattern)
     vim.fn.search([[\(^\s\+\)\@<=[].*[✓-]$]], "b")
   end
   if vim.api.nvim_get_current_line():match(pattern) then
-    vim.cmd.normal("i")
+    vim.cmd.normal("t")
   end
 end
 
-nmap("td", gitlab.toggle_discussions, "Gitlab Toggle Discussions", true)
 nmap("aa", gitlab.add_assignee, "Gitlab Add Assignee", true)
 nmap("da", gitlab.delete_assignee, "Gitlab Delete Assignee", true)
 nmap("ar", gitlab.add_reviewer, "Gitlab Add Reviewer", true)
