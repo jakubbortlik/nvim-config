@@ -95,5 +95,9 @@ return {
         gitlab.review()
       end)
     end, "Gitlab Restart Server")
+    nmap("glq", function()
+      vim.cmd([[0,$yank *]])
+      vim.cmd.normal("ZQ")
+    end, "Save contents to * register & Close window")
   end,
 }

@@ -89,6 +89,9 @@ return {
   },
   {
     "iamcco/markdown-preview.nvim",
+    keys = {
+      { "<leader>M", "<cmd>MarkdownPreviewToggle<cr>", desc = "Toggle MarkdownPreview" }
+    },
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     build = "cd app && yarn install",
     init = function()
@@ -276,7 +279,7 @@ return {
     },
     config = function(_, opts)
       require("illuminate").configure(opts)
-      vim.g.Illuminate_ftblacklist = {'phxstm'}
+      vim.g.Illuminate_ftblacklist = { "phxstm", "text", "txt" }
     end,
   },
   {

@@ -39,6 +39,9 @@ nmap("<leader>su", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "[s]u
 nmap("<leader>cp", [[<cmd>let @+ = expand('%') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy [p]ath of buffer to clipboard")
 nmap("<leader>cP", [[<cmd>let @+ = expand('%:p') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy full [P]ath of buffer to clipboard")
 nmap("<leader>c<c-p>", [[<cmd>let @+ = expand('%:t') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy basename of buffer to clipboard")
+nmap("<leader>cl", [[<cmd>let @+ = expand('%') .. ':' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy [p]ath of buffer to clipboard")
+nmap("<leader>cL", [[<cmd>let @+ = expand('%:p') .. ':' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy full [P]ath of buffer to clipboard")
+nmap("<leader>c<c-l>", [[<cmd>let @+ = expand('%:t') .. ':' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy basename of buffer to clipboard")
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], {desc = "Exit terminal-mode"})
 nmap("<BS>", "<Del>", "Delete the last digit when entering a number.")
 

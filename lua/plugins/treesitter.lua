@@ -20,7 +20,9 @@ return {
             end
           end
           if not enabled then
-            require("lazy.core.loader").disable_rtp_plugin("nvim-treesitter-textobjects")
+            require("lazy.core.loader").disable_rtp_plugin(
+              "nvim-treesitter-textobjects"
+            )
           end
         end,
       },
@@ -28,7 +30,7 @@ return {
     },
     keys = {
       { "<c-space>", desc = "Increment selection" },
-      { "<bs>", desc = "Decrement selection", mode = "x" },
+      { "<bs>",      desc = "Decrement selection", mode = "x" },
     },
     opts = {
       ensure_installed = {
@@ -85,9 +87,9 @@ return {
             }
           end
         end,
-        additional_vim_regex_highlighting = {'org'},
+        additional_vim_regex_highlighting = { "org" },
       },
-      indent = { enable = true, disable = {"python"} },
+      indent = { enable = true, disable = { "python" } },
       incremental_selection = {
         enable = true,
         disable = function()
@@ -105,9 +107,8 @@ return {
       },
     },
     config = function(_, opts)
-
       -- This is required for the dap_repl parser to be installable
-      require('nvim-dap-repl-highlights').setup()
+      require("nvim-dap-repl-highlights").setup()
 
       if type(opts.ensure_installed) == "table" then
         local added = {}
@@ -128,13 +129,13 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     config = function(_, _)
-      require('nvim-treesitter.configs').setup {
+      require("nvim-treesitter.configs").setup({
         rainbow = {
           enable = true,
-          query = 'rainbow-parens',
-          strategy = require('ts-rainbow').strategy.global,  -- Highlight the entire buffer all at once
+          query = "rainbow-parens",
+          strategy = require("ts-rainbow").strategy.global, -- Highlight the entire buffer all at once
         },
-      }
+      })
     end,
-  }
+  },
 }

@@ -75,6 +75,14 @@ local M = {
           end
         end, { "i", "s" }),
 
+        ["<C-l>"] = cmp.mapping(function(fallback)
+          if luasnip.choice_active() then
+            luasnip.change_choice(1)
+          else
+            fallback()
+          end
+        end, { "i" }),
+
         ["<Tab>"] = cmp.mapping(function(fallback)
           local col = vim.fn.col(".") - 1
 
