@@ -110,7 +110,7 @@ return {
           return ":IncRename " .. vim.fn.expand("<cword>")
         end,
         expr = true,
-        desc = "[R]ename [I]ncrementally",
+        desc = "[i]ncrementally [r]ename",
       },
     },
     config = true,
@@ -280,6 +280,7 @@ return {
     },
     config = function(_, opts)
       require("illuminate").configure(opts)
+      vim.g.Illuminate_ftblacklist = {'phxstm'}
     end,
   },
   {
