@@ -23,6 +23,7 @@ return {
     local gitlab_server = require("gitlab.server")
     gitlab.setup({
       debug = { go_request = true, go_response = true }, -- Which values to log
+      attachment_dir = vim.fn.expand("$HOME") .. "/Pictures",
       reviewer_settings = {
         diffview = {
           imply_local = true,
@@ -59,7 +60,7 @@ return {
       nmap("da", gitlab.delete_assignee, "Gitlab Delete Assignee", true)
       nmap("ar", gitlab.add_reviewer, "Gitlab Add Reviewer", true)
       nmap("dr", gitlab.delete_reviewer, "Gitlab Delete Reviewer", true)
-      nmap("p", gitlab.pipeline, "Gitlab Pipeline", true)
+      nmap("P", gitlab.pipeline, "Gitlab Pipeline", true)
       nmap("O", gitlab.open_in_browser, "Gitlab Open in browser", true)
       nmap(
         "m",
