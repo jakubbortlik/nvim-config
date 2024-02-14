@@ -46,7 +46,7 @@ return {
       },
       create_mr = {
         title_input = {
-          size = 120,
+          width = 120,
         }
       }
     })
