@@ -69,4 +69,17 @@ nmap("]d", vim.diagnostic.goto_next, "Go to next diagnostic message")
 nmap("<leader>do", vim.diagnostic.open_float, "Open floating diagnostic message")
 nmap("<leader>q", vim.diagnostic.setloclist, "Open diagnostics list")
 
+-- Keymaps for easier work with messages
+nmap("<leader>me", "<cmd>messages<cr>", "View previously given messages")
+nmap("<leader>mc", "<cmd>messages clear<cr>", "Clear all messages")
+nmap(
+  "<leader>mt",
+  function()
+    vim.cmd.tabnew()
+    vim.cmd.Messages()
+    vim.cmd.only()
+  end,
+  "Clear all messages"
+)
+
 return M
