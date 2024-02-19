@@ -70,6 +70,7 @@ return {
               ) or "__"
             end
           end,
+          function() return vim.o.keymap end
         },
         -- Show components only when window is wide enough
         lualine_x = {
