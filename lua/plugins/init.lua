@@ -165,7 +165,7 @@ return {
     "chrisgrieser/nvim-various-textobjs",
     lazy = false,
     opts = { useDefaultKeymaps = true, disabledKeymaps = { "gw", "gc" } },
-    confit = function(_, opts)
+    config = function(_, opts)
       require("various-textobjs").setup(opts)
       vim.keymap.set(
         "o",
