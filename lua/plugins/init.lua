@@ -162,11 +162,6 @@ return {
     opts = {}, -- this is equalent to setup({}) function
   },
   {
-    "abecodes/tabout.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    config = true,
-  },
-  {
     "chrisgrieser/nvim-various-textobjs",
     lazy = false,
     opts = { useDefaultKeymaps = true, disabledKeymaps = { "gw", "gc" } },
