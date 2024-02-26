@@ -36,11 +36,11 @@ local M = {
               "json-lsp",
               "luacheck",
               "mdformat",
+              "selene",
               "shellcheck",
               "stylua",
               "textlint",
               "vint",
-              "vulture",
               "yamllint",
             },
           })
@@ -223,22 +223,10 @@ local M = {
         ),
         sources = {
           -- linters
-          null_ls.builtins.diagnostics.luacheck.with({
-            extra_args = { "--globals=vim busted --no-max-line-length" }
-          }),  -- lua
-          null_ls.builtins.diagnostics.pydocstyle.with({
-            extra_args = { "--ignore=" .. warnings_str },
-            runtime_condition = disable_for_fugitive,
-          }),
-          null_ls.builtins.diagnostics.shellcheck, -- sh
-          null_ls.builtins.diagnostics.vint,       -- vimscript
-          -- detect unused code in Python
-          null_ls.builtins.diagnostics.vulture.with({
-            args = { "$FILENAME", "whitelist.py" },
-            runtime_condition = disable_for_fugitive,
-          }),
           null_ls.builtins.diagnostics.buf,        -- protobuf
           null_ls.builtins.diagnostics.commitlint, -- conventional commits
+          null_ls.builtins.diagnostics.selene,     -- lua
+          null_ls.builtins.diagnostics.vint,       -- vimscript
           null_ls.builtins.diagnostics.yamllint,   -- YAML
           -- formatters
           null_ls.builtins.formatting.buf,         -- Protobuf formatting
