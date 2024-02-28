@@ -1,6 +1,6 @@
 -- This is a minimal init.lua that is used for debugging
--- DO NOT change the paths and don't remove the colorscheme
-local root = vim.fn.fnamemodify("./.repro", ":p")
+local root = vim.fn.stdpath("run") .. "/nvim/mininit"
+vim.fn.mkdir(root, "p")
 
 -- set stdpaths to use .repro
 for _, name in ipairs({ "config", "data", "state", "cache" }) do
