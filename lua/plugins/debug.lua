@@ -23,11 +23,13 @@ local M = {
     keys = {
       { "<F5>" },
       { "<F7>" },
+      { "<F8>" },
       { "<leader>bb" },
       { "<leader>bc" },
       { "<leader>bC" },
     },
     dependencies = {
+      "nvim-neotest/nvim-nio",
       -- Creates a beautiful debugger UI
       "rcarriga/nvim-dap-ui",
       "LiadOz/nvim-dap-repl-highlights",
@@ -47,10 +49,23 @@ local M = {
       "jay-babu/mason-nvim-dap.nvim",
       -- Add debuggers here:
       "mfussenegger/nvim-dap-python",
+      "leoluz/nvim-dap-go",
+      "jbyuki/one-small-step-for-vimkind",
     },
     config = function()
       local dap = require("dap")
       local dapui = require("dapui")
+
+      dap.configurations.lua = {
+        {
+          type = 'nlua',
+          request = 'attach',
+          name = "Attach to running Neovim instance",
+        }
+      }
+      dap.adapters.nlua = function(callback, config)
+        callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
+      end
 
       require("mason-nvim-dap").setup({
         -- Makes a best effort to setup the various debuggers with
@@ -76,6 +91,8 @@ local M = {
       keymap("n", "<F6>", dap.terminate, { desc = "Dap terminate" })
       -- Toggle to see last session result to see session output in case of unhandled exception
       keymap("n", "<F7>", function() dapui.toggle({ reset = true }) end, { desc = "Dapui toggle" })
+
+      keymap('n', '<F8>', [[:lua require("osv").launch({port = 8086})<CR>]], { desc = "Launch OSV server in debugee", noremap = true })
 
       local opts = { noremap = true, silent = true }
       local pbapi = require("persistent-breakpoints.api")
@@ -248,6 +265,7 @@ local M = {
       wk.register({
         n = {
           name = "Neotest", -- optional group name
+          a = { function() neotest.run.run(vim.fn.getcwd()) end, "Run [n]eotest for current project" },
           d = { function() neotest.run.run({vim.fn.expand("%"), strategy = "dap" }) end, "Run [n]eotest for current file with [d]ap" },
           f = { function() neotest.run.run({vim.fn.expand("%")}) end, "Run [n]eotest for current [f]ile" },
           n = { neotest.run.run, "Run [n]eotest for [n]earest test" },
