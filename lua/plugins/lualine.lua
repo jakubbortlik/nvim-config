@@ -37,17 +37,19 @@ local mode_map = {
   ["t"] = "TERMINAL",
 }
 
---- @param trunc_width number trunctate when screen width is less then trunc_width
---- @param trunc_len number|nil truncate to trunc_len number of chars
+--- @param trunc_width number|nil trunctate when window width is less then trunc_width
+--- @param trunc_len number truncate to trunc_len number of chars
 --- @param hide_width number|nil hide component when window width is smaller then hide_width
---- @param no_ellipsis boolean whether to disable adding '...' at end after truncation
+--- @param no_ellipsis boolean whether to disable adding '…' at end after truncation
 --- return function that can format the component accordingly
 local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
   return function(str)
     local win_width = vim.fn.winwidth(0)
-    if hide_width and win_width < hide_width then return ''
-    elseif trunc_width and trunc_len and win_width < trunc_width and #str > trunc_len then
-      return str:sub(1, trunc_len) .. (no_ellipsis and '' or '…')
+    if hide_width ~= nil and win_width < hide_width then return ''
+    elseif trunc_width ~= nil then
+      if win_width < trunc_width and #str > trunc_len then
+        return str:sub(1, trunc_len) .. (no_ellipsis and '' or '…')
+      end
     end
     return str
   end
@@ -90,7 +92,7 @@ return {
           },
           function() return vim.o.keymap end
         },
-        lualine_b = {{'branch', fmt=trunc(80, 20, nil, false)}, 'diff', 'diagnostics'},
+        lualine_b = {{'branch', fmt=trunc(120, 20, nil, false)}, 'diff', 'diagnostics'},
         -- Show components only when window is wide enough
         lualine_x = {
           {
