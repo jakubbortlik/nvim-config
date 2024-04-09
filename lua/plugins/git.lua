@@ -8,11 +8,12 @@ local M = {
     keys = {
       { "<C-g><C-b>", "<cmd>Git blame<cr>", desc = "Run [G]it [b]lame"},
       { "<C-g><C-g>", "<cmd>Git<cr>", desc = "Run [G]it"},
+      { "<C-g>g", "<cmd>vertical Git<cr>", desc = "Run [G]it in a vertical split"},
       { "<C-g><C-d>", "<cmd>Gdiffsplit " .. get_main() .. "<cr>", desc = "[G][d]iffsplit with main"},
       { "<C-g><C-v>", "<cmd>Gvdiffsplit " .. get_main() .. "<cr>", desc = "[G][v]diffsplit with main"},
-      { "<C-g>g", ":G ", desc = "Prepopulate commandline with :[G]it"},
       { "<C-g>d", ":Gdiffsplit ", desc = "Prepopulate commandline with [G][d]iffsplit"},
       { "<C-g>v", ":Gvdiffsplit ", desc = "Prepopulate commandline with [G][v]diffsplit"},
+      { "<leader>gb", "<cmd>GBrowse<cr>", desc = "Run GBrowse"},
     },
     cmd = {
       "G",
