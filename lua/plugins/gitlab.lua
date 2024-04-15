@@ -41,7 +41,6 @@ return {
         virtual_text = true,
       },
       popup = {
-        exit = "q",
         perform_action = "ZZ",
         opacity = 0.85,
         width = "60%",
@@ -51,7 +50,7 @@ return {
         title_input = {
           width = vim.fn.winwidth(0) > 120 and 120 or vim.fn.winwidth(0) - 10,
         },
-        squash = false,
+        squash = true,
         delete_branch = true,
       },
     })
@@ -71,7 +70,25 @@ return {
     nmap("glvd", gitlab.delete_reviewer, "Gitlab Delete Reviewer")
     nmap("glp", gitlab.pipeline, "Gitlab Pipeline")
     nmap("glo", gitlab.open_in_browser, "Gitlab Open in browser")
+    nmap("glu", gitlab.copy_mr_url, "Copy URL of MR")
     nmap("glm", gitlab.move_to_discussion_tree_from_diagnostic, "Move to discussion")
+    nmap("glM", gitlab.merge, "Merge MR")
+    nmap("gll", function()
+      vim.cmd("tab new " .. vim.print(gitlab.state.settings.log_path))
+    end, "Open gitlab.nvim.log in a new tab")
+    nmap("glL", function()
+      local ok, err = os.remove(gitlab.state.settings.log_path)
+      if not ok then
+        vim.print(("Unable to remove file %s, error %s"):format(gitlab.state.settings.log_path, err), vim.log.levels.ERROR)
+      else
+        vim.print("Removed file: " .. gitlab.state.settings.log_path)
+      end
+    end, "Remove the gitlab.nvim.log file")
+    nmap("glS", function()
+      vim.cmd.tabnew()
+      vim.cmd.Verbose('lua require("gitlab").print_settings()')
+      vim.cmd.only()
+    end, "Gitlab print Settings")
     nmap("gl<C-r>", function()
       gitlab_server.restart(function()
         vim.cmd.tabclose()
@@ -82,5 +99,11 @@ return {
       vim.cmd([[0,$yank *]])
       vim.cmd.normal("ZQ")
     end, "Save contents to * register & Close window")
+    nmap("ZQ", function()
+      local reg_backup = gitlab.state.settings.popup.temp_registers
+      gitlab.state.settings.popup.temp_registers = {}
+      vim.cmd("quit!")
+      gitlab.state.settings.popup.temp_registers = reg_backup
+    end)
   end,
 }
