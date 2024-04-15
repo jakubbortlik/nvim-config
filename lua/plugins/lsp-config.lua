@@ -7,7 +7,7 @@ local M = {
       -- Automatically install LSPs to stdpath for neovim
       {
         "williamboman/mason.nvim",
-        keys = { { "<leader>m", "<cmd>Mason<cr>", desc = "Mason" } },
+        keys = { { "<leader>ma", "<cmd>Mason<cr>", desc = "Mason" } },
         config = function()
           require("mason").setup({
             ui = { border = "rounded" },
