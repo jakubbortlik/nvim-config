@@ -83,11 +83,11 @@ local M = {
       local keymap = vim.keymap.set
 
       -- Basic debugging keymaps, feel free to change to your liking!
-      keymap("n", "<F1>", dap.step_into, { desc = "Dap step into" })
-      keymap("n", "<F2>", dap.step_over, { desc = "Dap step over" })
-      keymap("n", "<F3>", dap.step_out, { desc = "Dap step out" })
+      keymap("n", "<F1>", function() dap.step_into() vim.cmd.normal("zz") end, { desc = "Dap step into" })
+      keymap("n", "<F2>", function() dap.step_over() vim.cmd.normal("zz") end, { desc = "Dap step over" })
+      keymap("n", "<F3>", function() dap.step_out() vim.cmd.normal("zz") end, { desc = "Dap step out" })
       keymap("n", "<F4>", dap.step_back, { desc = "Dap step out" })
-      keymap("n", "<F5>", dap.continue, { desc = "Dap continue" })
+      keymap("n", "<F5>", function() dap.continue() vim.cmd.normal("zz") end, { desc = "Dap continue" })
       keymap("n", "<F6>", dap.terminate, { desc = "Dap terminate" })
       -- Toggle to see last session result to see session output in case of unhandled exception
       keymap("n", "<F7>", function() dapui.toggle({ reset = true }) end, { desc = "Dapui toggle" })
@@ -155,10 +155,10 @@ local M = {
         layouts = {
           {
             elements = {
-              { id = "scopes", size = 0.25 },
+              { id = "scopes", size = 0.5 },
               { id = "breakpoints", size = 0.25 },
               { id = "stacks", size = 0.25 },
-              { id = "watches", size = 0.25 }
+              -- { id = "watches", size = 0.25 }
             },
             position = "left",
             size = 40
@@ -193,9 +193,9 @@ local M = {
         end)
       })
 
-      vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter", "WinEnter"}, {
+      vim.api.nvim_create_autocmd({"WinEnter"}, {
         group = id_dap,
-        pattern = "dap-\\(frames\\|hover\\|preview\\|scopes\\)*",
+        pattern = "dap-\\(frames\\|float\\|hover\\|preview\\|scopes\\)*",
         callback = function()
           vim.keymap.set("n", "q", "<cmd>quit<cr>", { desc = "Quit this window", buffer = true })
         end
@@ -251,9 +251,14 @@ local M = {
           require("neotest-python")({
             dap = { justMyCode = true },
             python = python_path(),
-            args = { "--cov", "--cov-report", "term", "--cov-report", "xml:coverage.xml" },
+            args = { "-vv", "--cov", "--cov-report", "term", "--cov-report", "xml:coverage.xml" },
           }),
         },
+        diagnostic = {
+          enabled = true,
+          severity = 1
+        },
+
         quickfix = {
           enabled = true,
           open = false,
@@ -278,8 +283,12 @@ local M = {
           s = { neotest.summary.toggle, "Toggle [n]eotest [s]ummary" },
         },
       }, { prefix = "<leader>" })
-      vim.keymap.set( "n", "[n", function() neotest.jump.prev({ status = "failed" }) end, { desc = "Jump to previous failed test" })
-      vim.keymap.set( "n", "]n", function() neotest.jump.next({ status = "failed" }) end, { desc = "Jump to next failed test" })
+      vim.keymap.set( "n", "[n", function()
+        neotest.jump.prev({ status = "failed" })
+      end, { desc = "Jump to previous failed test" })
+      vim.keymap.set( "n", "]n", function()
+        neotest.jump.next({ status = "failed" })
+      end, { desc = "Jump to next failed test" })
     end,
   },
 }
