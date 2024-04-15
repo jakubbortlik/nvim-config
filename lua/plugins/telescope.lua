@@ -30,6 +30,15 @@ local M = {
           lsp_references = {
             show_line = false,
           },
+          buffers = {
+            show_all_buffers = true,
+            sort_lastused = true,
+            mappings = {
+              i = {
+                ["<c-k>"] = "delete_buffer",
+              }
+            }
+          }
         },
         extensions = {
           ["ui-select"] = {
@@ -37,9 +46,9 @@ local M = {
           },
         },
       })
-      pcall(telescope.load_extension, "fzf") -- Enable telescope fzf native, if installed
+      pcall(telescope.load_extension, "fzf")          -- Enable telescope fzf native, if installed
       pcall(telescope.load_extension, "code_actions") -- Enable telescope code actions, if installed
-      pcall(telescope.load_extension, "ui-select") -- Enable telescope code actions, if installed
+      pcall(telescope.load_extension, "ui-select")    -- Enable telescope code actions, if installed
       local builtin = require("telescope.builtin")
 
       local nmap = function(keys, func, desc)
@@ -66,7 +75,16 @@ local M = {
       nmap("<leader>sh", builtin.help_tags, "[s]earch [h]elp")
       nmap("<leader>sr", builtin.resume, "[s]earch - [r]esume")
       nmap("<leader>sw", builtin.grep_string, "[s]earch current [w]ord")
-      nmap("<leader>sz", function() builtin.grep_string({ shorten_path = true, word_match = "-w", only_sort_text = true, search = '' }) end, "[s]earch by grep fu[z]zily")
+      nmap("<leader>sz",
+        function()
+          builtin.grep_string({
+            shorten_path = true,
+            word_match = "-w",
+            only_sort_text = true,
+            search =
+            ''
+          })
+        end, "[s]earch by grep fu[z]zily")
     end,
   },
 
