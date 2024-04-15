@@ -1,4 +1,4 @@
-M = {
+local M = {
   {
     "folke/which-key.nvim", -- Show pending keybinds
     event = "VeryLazy",
@@ -24,7 +24,8 @@ vim.keymap.set({"n", "t"}, "<A-h>", "<cmd>TmuxNavigateLeft<cr>", { silent = true
 vim.keymap.set({"n", "t"}, "<A-j>", "<cmd>TmuxNavigateDown<cr>", { silent = true, desc = "Navigate down" })
 vim.keymap.set({"n", "t"}, "<A-k>", "<cmd>TmuxNavigateUp<cr>", { silent = true, desc = "Navigate up" })
 vim.keymap.set({"n", "t"}, "<A-l>", "<cmd>TmuxNavigateRight<cr>", { silent = true, desc = "Navigate right" })
-vim.keymap.set("n", "g<c-]>", "<cmd>tab split | execute 'normal <c-]>'<cr>", { silent = true, desc = "Jump to definition in new tab." })
+nmap("g<c-]>", "<cmd>tab split | execute 'normal <c-]>'<cr>", "Jump to definition in new tab.")
+nmap("<leader>tc", vim.cmd.tabclose, "Close the current tab")
 
 -- Miscellaneous mappings
 vim.keymap.set({ "i", "n", "s", "v" }, "<C-s>", "<cmd>update<cr><esc>", { desc = "[s]ave file" })
@@ -59,6 +60,7 @@ nmap("<C-g><C-s>", "<cmd>silent !tmux neww tmux-sessionizer<cr>", "Create tmux [
 -- Adjust textwidth
 nmap("<leader>w0", "<cmd>setlocal textwidth=0<cr>", "Set local text[w]idth to [0]" )
 nmap("<leader>w7", "<cmd>setlocal textwidth=72<cr>", "Set local text[w]idth to [7]2" )
+nmap("<leader>w*", "<cmd>setlocal textwidth=80<cr>", "Set local text[w]idth to [8]0" )
 nmap("<leader>w8", "<cmd>setlocal textwidth=88<cr>", "Set local text[w]idth to [8]8" )
 nmap("<leader>w9", "<cmd>setlocal textwidth=90<cr>", "Set local text[w]idth to [9]0" )
 nmap("<leader>w1", "<cmd>setlocal textwidth=100<cr>", "Set local text[w]idth to [1]00" )
@@ -67,6 +69,7 @@ nmap("<leader>w1", "<cmd>setlocal textwidth=100<cr>", "Set local text[w]idth to 
 nmap("[d", vim.diagnostic.goto_prev, "Go to previous diagnostic message")
 nmap("]d", vim.diagnostic.goto_next, "Go to next diagnostic message")
 nmap("<leader>do", vim.diagnostic.open_float, "Open floating diagnostic message")
+nmap("<leader>ds", vim.diagnostic.show, "Show diagnostic message")
 nmap("<leader>q", vim.diagnostic.setloclist, "Open diagnostics list")
 
 -- Keymaps for easier work with messages
@@ -79,7 +82,7 @@ nmap(
     vim.cmd.Messages()
     vim.cmd.only()
   end,
-  "Clear all messages"
+  "Open [m]essages in new [t]ab"
 )
 
 return M
