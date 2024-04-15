@@ -10,12 +10,6 @@ local toggle_if_match = function(pattern)
   end
 end
 
-nmap("aa", gitlab.add_assignee, "Gitlab Add Assignee", true)
-nmap("da", gitlab.delete_assignee, "Gitlab Delete Assignee", true)
-nmap("ar", gitlab.add_reviewer, "Gitlab Add Reviewer", true)
-nmap("dr", gitlab.delete_reviewer, "Gitlab Delete Reviewer", true)
-nmap("P", gitlab.pipeline, "Gitlab Pipeline", true)
-
 nmap("j", [[<Cmd>call search('[] @')<CR>]], "Go to next node", true)
 nmap("k", [[<Cmd>call search('[] @', 'b')<CR>]], "Go to previous node", true)
 
