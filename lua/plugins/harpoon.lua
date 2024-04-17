@@ -10,7 +10,7 @@ return {
     local harpoon = require("harpoon")
     harpoon:setup()
     nmap("<leader>a", function()
-      harpoon:list():append()
+      harpoon:list():add()
     end, "Add file to Harpoon list")
     nmap("<C-h>", function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
