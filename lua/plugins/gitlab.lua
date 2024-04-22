@@ -56,14 +56,13 @@ return {
     })
 
     ---@param cb string Name of the API function to call
-    ---@param op '"g@"'|'"g@$"' Operator-mode expression
-    local function create_rhs(cb, op)
+    local function execute_operatorfunc(cb)
       local old_opfunc = vim.opt.operatorfunc
       local cur_win = vim.api.nvim_get_current_win()
       local cur_pos = vim.api.nvim_win_get_cursor(cur_win)
 
       _G.CreateOperatorfunc = function(callback)
-        return function(motion)
+        return function()
           vim.cmd.execute([["normal! '[V']"]])
           vim.api.nvim_command(('lockmarks lua require("gitlab").%s()'):format(callback))
           vim.api.nvim_win_set_cursor(cur_win, cur_pos)
@@ -72,7 +71,7 @@ return {
       end
 
       vim.opt.operatorfunc = ("v:lua.CreateOperatorfunc'%s'"):format(cb)
-      vim.api.nvim_feedkeys(op, 'n', false)
+      vim.api.nvim_feedkeys("g@", "n", false)
     end
 
     require("diffview").setup({
@@ -84,8 +83,8 @@ return {
       view = { default = { layout = "diff2_vertical" } },
       keymaps = {
         view = {
-          { "n", "c", function() create_rhs("create_multiline_comment", "g@") end, { desc = "Create comment in range of motion"} },
-          { "n", "s", function() create_rhs("create_comment_suggestion", "g@") end, { desc = "Create suggestion for range of motion"} },
+          { "n", "c", function() execute_operatorfunc("create_multiline_comment") end, { desc = "Create comment in range of motion"} },
+          { "n", "s", function() execute_operatorfunc("create_comment_suggestion") end, { desc = "Create suggestion for range of motion"} },
           { "n", "a", function() require("gitlab").move_to_discussion_tree_from_diagnostic() end, { desc = "Move to discussion"} },
           { "v", "s", function () require("gitlab").create_comment_suggestion() end, {desc = "Create suggestion for selected text"}},
           { "v", "c", function () require("gitlab").create_multiline_comment() end, {desc = "Create comment for selected text"}},
