@@ -1,23 +1,7 @@
 -- Use the DAP and Neotest plugins to debug code
 -- Primarily focused on configuring the debugger for Python
 
-local python_path = function()
-  -- TODO: find out if it's possible to get the VIRTUAL_ENV activated in the DAP REPL.
-  -- Debugpy supports launching an application with a different interpreter then
-  -- the one used to launch debugpy itself.
-  -- The code below looks for a Python executable within the `VIRTUAL_ENV` environment.
-  -- 
-  -- return "/home/jakub/.cache/pypoetry/virtualenvs/phonexia-speech-api-ny0Relwj-py3.11/bin/python"
-  local vdir = os.getenv("VIRTUAL_ENV")
-  if vdir then
-    return vdir .. "/bin/python"
-  else
-    return "/usr/bin/python3"
-  end
-end
-
 local M = {
-
   {
     "mfussenegger/nvim-dap",
     keys = {
@@ -64,7 +48,11 @@ local M = {
         }
       }
       dap.adapters.nlua = function(callback, config)
-        callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
+        callback({
+          type = 'server',
+          host = config.host or "127.0.0.1",
+          port = config.port or 8086,
+        })
       end
 
       require("mason-nvim-dap").setup({
@@ -83,14 +71,28 @@ local M = {
       local keymap = vim.keymap.set
 
       -- Basic debugging keymaps, feel free to change to your liking!
-      keymap("n", "<F1>", function() dap.step_into() vim.cmd.normal("zz") end, { desc = "Dap step into" })
-      keymap("n", "<F2>", function() dap.step_over() vim.cmd.normal("zz") end, { desc = "Dap step over" })
-      keymap("n", "<F3>", function() dap.step_out() vim.cmd.normal("zz") end, { desc = "Dap step out" })
+      keymap("n", "<F1>", function()
+        dap.step_into()
+        vim.cmd.normal("zz")
+      end, { desc = "Dap step into" })
+      keymap("n", "<F2>", function()
+        dap.step_over()
+        vim.cmd.normal("zz")
+      end, { desc = "Dap step over" })
+      keymap("n", "<F3>", function()
+        dap.step_out()
+        vim.cmd.normal("zz")
+      end, { desc = "Dap step out" })
       keymap("n", "<F4>", dap.step_back, { desc = "Dap step out" })
-      keymap("n", "<F5>", function() dap.continue() vim.cmd.normal("zz") end, { desc = "Dap continue" })
+      keymap("n", "<F5>", function()
+        dap.continue()
+        vim.cmd.normal("zz")
+      end, { desc = "Dap continue" })
       keymap("n", "<F6>", dap.terminate, { desc = "Dap terminate" })
       -- Toggle to see last session result to see session output in case of unhandled exception
-      keymap("n", "<F7>", function() dapui.toggle({ reset = true }) end, { desc = "Dapui toggle" })
+      keymap("n", "<F7>", function()
+        dapui.toggle({ reset = true })
+      end, { desc = "Dapui toggle" })
 
       keymap('n', '<F8>', [[:lua require("osv").launch({port = 8086})<CR>]], { desc = "Launch OSV server in debugee", noremap = true })
 
@@ -123,16 +125,25 @@ local M = {
 
       local widgets = require("dap.ui.widgets")
 
-      keymap({ "n", "v" }, "<leader>dh", function() widgets.hover() end, { desc = "[D]ap widgets [H]over" })
-      keymap({ "n", "v" }, "<leader>dp", function() widgets.preview() end, { desc = "[D]ap widgets [P]review" })
-      keymap("n", "<leader>df", function() widgets.centered_float(widgets.frames) end, { desc = "[D]ap float widget [F]rames" })
-      keymap("n", "<leader>dv", function() widgets.centered_float(widgets.scopes) end, { desc = "[D]ap float widget [V]ariable scopes" })
+      keymap({ "n", "v" }, "<leader>dh", function()
+        widgets.hover()
+      end, { desc = "[D]ap widgets [H]over" })
+      keymap({ "n", "v" }, "<leader>dp", function()
+        widgets.preview()
+      end, { desc = "[D]ap widgets [P]review" })
+      keymap("n", "<leader>df", function()
+        widgets.centered_float(widgets.frames)
+      end, { desc = "[D]ap float widget [F]rames" })
+      keymap("n", "<leader>dv", function()
+        widgets.centered_float(widgets.scopes)
+      end, { desc = "[D]ap float widget [V]ariable scopes" })
 
-      require("dap-python").setup()
+      -- Python specific config
       local dap_python = require("dap-python")
-      keymap("n", "<leader>dm", dap_python.test_method)
-      keymap("n", "<leader>dc", dap_python.test_class)
-      keymap("v", "<leader>ds", dap_python.debug_selection)
+      dap_python.setup(vim.g.python3_host_prog)
+      nmap("<leader>dm", dap_python.test_method, "Run test [m]ethod above cursor")
+      nmap("<leader>dc", dap_python.test_class, "Run test [c]lass above cursor")
+      vmap("<leader>ds", dap_python.debug_selection, "Debug selected code")
 
       -- Dap UI setup
       dapui.setup({
@@ -175,11 +186,11 @@ local M = {
 
       -- Navigate between dapui elements
       -- TODO: Get rid of the repeating `win_gotoid` and `require` calls
-      keymap({"n", "i"}, "<C-q>b", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Breakpoints')))<cr>", { desc = "[G]o to [B]reakpoints" })
-      keymap({"n", "i"}, "<C-q>v", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Scopes')))<cr>", { desc = "[G]o to [V]ariable scopes" })
-      keymap({"n", "i"}, "<C-q>w", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Watches')))<cr>", { desc = "[G]o to [W]atches" })
-      keymap({"n", "i"}, "<C-q>r", "<cmd>call win_gotoid(win_getid(bufwinnr('\\[dap-repl\\]')))<cr>", { desc = "[G]o to [R]EPL" })
-      keymap({"n", "i"}, "<C-q>s", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Stacks')))<cr>", { desc = "[G]o to [S]tacks" })
+      keymap({ "n", "i" }, "<C-q>b", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Breakpoints')))<cr>", { desc = "[G]o to [B]reakpoints" })
+      keymap({ "n", "i" }, "<C-q>v", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Scopes')))<cr>", { desc = "[G]o to [V]ariable scopes" })
+      keymap({ "n", "i" }, "<C-q>w", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Watches')))<cr>", { desc = "[G]o to [W]atches" })
+      keymap({ "n", "i" }, "<C-q>r", "<cmd>call win_gotoid(win_getid(bufwinnr('\\[dap-repl\\]')))<cr>", { desc = "[G]o to [R]EPL" })
+      keymap({ "n", "i" }, "<C-q>s", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Stacks')))<cr>", { desc = "[G]o to [S]tacks" })
 
       -- Debugger autocommands
       local id_dap = vim.api.nvim_create_augroup("DAP", {
@@ -193,7 +204,7 @@ local M = {
         end)
       })
 
-      vim.api.nvim_create_autocmd({"WinEnter"}, {
+      vim.api.nvim_create_autocmd({ "WinEnter" }, {
         group = id_dap,
         pattern = "dap-\\(frames\\|float\\|hover\\|preview\\|scopes\\)*",
         callback = function()
@@ -206,89 +217,26 @@ local M = {
         group = id_dap,
         pattern = "\\(DAP \\(Scopes\\|Breakpoints\\|Stacks\\|Watches\\)\\|\\[dap-repl\\]\\)",
         callback = function()
-          local nmap = function(keys, func, desc)
+          local dap_nmap = function(keys, func, desc)
             if desc then
               desc = "DAP: " .. desc
             end
             vim.keymap.set("n", keys, func, { desc = desc, buffer = true })
           end
-          nmap("B", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Breakpoints')))<cr>", "[G]o to [B]reakpoints")
-          nmap("V", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Scopes')))<cr>", "[G]o to [V]ariable scopes")
-          nmap("W", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Watches')))<cr>", "[G]o to [W]atches")
-          nmap("S", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Stacks')))<cr>", "[G]o to [S]tacks")
-          nmap("!!", "<cmd>call win_gotoid(win_getid(bufwinnr('\\[dap-repl\\]')))<cr>", "[G]o to [R]EPL")
+          dap_nmap("B", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Breakpoints')))<cr>", "[G]o to [B]reakpoints")
+          dap_nmap("V", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Scopes')))<cr>", "[G]o to [V]ariable scopes")
+          dap_nmap("W", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Watches')))<cr>", "[G]o to [W]atches")
+          dap_nmap("S", "<cmd>call win_gotoid(win_getid(bufwinnr('DAP Stacks')))<cr>", "[G]o to [S]tacks")
+          dap_nmap("!!", "<cmd>call win_gotoid(win_getid(bufwinnr('\\[dap-repl\\]')))<cr>", "[G]o to [R]EPL")
 
           -- Move cursor up and down in insert mode (useful in dap REPL)
           vim.keymap.set("i", "<C-j>", "<Down>", { desc = "Move cursor down / Select next command", remap = true })
           vim.keymap.set("i", "<C-k>", "<Up>", { desc = "Move cursor up / Select previous command", remap = true })
-
         end
       })
       dap.listeners.after.event_initialized["dapui_config"] = dapui.open
       dap.listeners.before.event_terminated["dapui_config"] = dapui.close
       dap.listeners.before.event_exited["dapui_config"] = dapui.close
-
-      -- Install Python specific config
-      require("dap-python").setup(python_path())
-      require("dap-python").resolve_python = function()
-        return python_path()
-      end
-    end,
-  },
-
-  -- Setup Neotest
-  {
-    "nvim-neotest/neotest",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      "antoinemadec/FixCursorHold.nvim",
-      "nvim-neotest/neotest-python",
-    },
-    config = function()
-      require("neotest").setup({
-        adapters = {
-          require("neotest-python")({
-            dap = { justMyCode = true },
-            python = python_path(),
-            args = { "-vv", "--cov", "--cov-report", "term", "--cov-report", "xml:coverage.xml" },
-          }),
-        },
-        diagnostic = {
-          enabled = true,
-          severity = 1
-        },
-
-        quickfix = {
-          enabled = true,
-          open = false,
-        },
-      })
-      local neotest = package.loaded.neotest
-      local wk = require("which-key")
-      -- Register normal mode keymaps
-      wk.register({
-        n = {
-          name = "Neotest", -- optional group name
-          a = { function() neotest.run.run(vim.fn.getcwd()) end, "Run [n]eotest for current project" },
-          d = { function() neotest.run.run({vim.fn.expand("%"), strategy = "dap" }) end, "Run [n]eotest for current file with [d]ap" },
-          f = { function() neotest.run.run({vim.fn.expand("%")}) end, "Run [n]eotest for current [f]ile" },
-          n = { neotest.run.run, "Run [n]eotest for [n]earest test" },
-          l = { neotest.run.run_last, "Run [n]eotest for [l]ast position (same args and strategy)" },
-          L = { function() neotest.run.run_last({strategy = "dap" }) end, "Run [n]eotest for [L]ast position (same args but with DAP)" },
-          w = { function() neotest.watch.toggle(vim.fn.expand("%")) end, "Toggle [n]eotest [w]atching the current file" },
-          W = { neotest.watch.toggle, "Toggle [n]eotest [W]atching the nearest test" },
-          o = { function() neotest.output.open({ enter = false, autoclose = true }) end, "Open [n]eotest [o]utput" },
-          O = { function() neotest.output_panel.open({ enter = false, autoclose = true }) end, "Open [n]eotest [O]utput panel" },
-          s = { neotest.summary.toggle, "Toggle [n]eotest [s]ummary" },
-        },
-      }, { prefix = "<leader>" })
-      vim.keymap.set( "n", "[n", function()
-        neotest.jump.prev({ status = "failed" })
-      end, { desc = "Jump to previous failed test" })
-      vim.keymap.set( "n", "]n", function()
-        neotest.jump.next({ status = "failed" })
-      end, { desc = "Jump to next failed test" })
     end,
   },
 }
