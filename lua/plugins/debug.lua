@@ -1,6 +1,9 @@
 -- Use the DAP and Neotest plugins to debug code
 -- Primarily focused on configuring the debugger for Python
 
+local nmap = require("utils").nmap
+local vmap = require("utils").vmap
+
 local M = {
   {
     "mfussenegger/nvim-dap",
