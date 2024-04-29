@@ -1,6 +1,16 @@
 local nmap = require("utils").nmap
 local vmap = require("utils").vmap
 
+local title_input_width
+local discussion_tree_position
+if vim.fn.winwidth(0) > 120 then
+  title_input_width = 120
+  discussion_tree_position = "right"
+else
+  title_input_width = vim.fn.winwidth(0) - 10
+  discussion_tree_position = "bottom"
+end
+
 return {
   "harrisoncramer/gitlab.nvim",
   dependencies = {
@@ -31,8 +41,9 @@ return {
       },
       discussion_tree = {
         jump_to_reviewer = "a",
+        refresh_data = "",
         size = "25%", -- Size of split
-        position = "right",
+        position = discussion_tree_position,
         keep_current_open = true,
         expanded_by_default = { resolved = false, unresolved = true },
       },
@@ -48,7 +59,7 @@ return {
       },
       create_mr = {
         title_input = {
-          width = vim.fn.winwidth(0) > 120 and 120 or vim.fn.winwidth(0) - 10,
+          width = title_input_width,
         },
         squash = true,
         delete_branch = true,
@@ -119,6 +130,10 @@ return {
         vim.print("Removed file: " .. gitlab.state.settings.log_path)
       end
     end, "Remove the gitlab.nvim.log file")
+    nmap("glb", function()
+      vim.notify("Rebuilding Gitlab Go server.")
+      gitlab_server.build(true)
+    end, "Rebuild the Gitlab Go server")
     nmap("glS", function()
       vim.cmd.tabnew()
       vim.cmd.Verbose('lua require("gitlab").print_settings()')
@@ -140,5 +155,7 @@ return {
       vim.cmd("quit!")
       gitlab.state.settings.popup.temp_registers = reg_backup
     end)
+    nmap("glD", gitlab.toggle_draft_mode, "Toggle between draft and live mode")
+    nmap("glP", gitlab.publish_all_drafts, "Publish all drafts")
   end,
 }
