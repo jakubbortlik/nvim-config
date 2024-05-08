@@ -7,14 +7,17 @@ return {
     {"[t", desc = "Previous [t]odo comment"},
   },
   opts = {
+    keywords = {
+      DEBUGPRINT = { icon = "🐛", color = "info" },
+    },
     highlight = {
       -- TODO (ABC-195):
       -- INFO CDE-195:
       -- NOTE EFG-195 - 
-      pattern = [[.*<(KEYWORDS)\s*(:|\(?<[A-Z]+-\d+\)?)]]
+      pattern = [[.*<(KEYWORDS)\s*(:|\[[0-9]\]:|\(?<[A-Z]+-\d+\)?)]]
     },
     search = {
-      pattern = [[\b(KEYWORDS)\s*(:|\(?\b[A-Z]+-\d+\)?)]],
+      pattern = [[\b(KEYWORDS)\s*(:|\[[0-9]\]:|\(?\b[A-Z]+-\d+\)?)]],
     },
   },
   config = function(_, opts)

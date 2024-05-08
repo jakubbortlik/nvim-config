@@ -69,7 +69,7 @@ local M = {
           "python",
         },
       })
-      require("nvim-dap-virtual-text").setup()
+      require("nvim-dap-virtual-text").setup({})
 
       local keymap = vim.keymap.set
 

@@ -1,6 +1,6 @@
 local nmap = require("utils").nmap
 
-M = {
+local M = {
   "Exafunction/codeium.vim",
   event = "BufEnter",
   config = function()

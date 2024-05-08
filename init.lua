@@ -33,6 +33,7 @@ local opts = {
     rtp = {
       disabled_plugins = {
         "matchparen",
+        "netrwPlugin",
         "tohtml",
         "tutor",
       },

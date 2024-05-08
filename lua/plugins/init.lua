@@ -173,10 +173,6 @@ return {
 
   -- Navigation
   {
-    "tpope/vim-vinegar", -- Enhanced netrw
-    keys = { "-" },
-  },
-  {
     "christoomey/vim-tmux-navigator", -- Navigate easily in vim and tmux
     cmd = {
       "TmuxNavigateDown",

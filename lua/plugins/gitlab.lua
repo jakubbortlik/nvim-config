@@ -3,7 +3,7 @@ local vmap = require("utils").vmap
 
 local title_input_width
 local discussion_tree_position
-if vim.fn.winwidth(0) > 120 then
+if vim.o.columns > 170 then
   title_input_width = 120
   discussion_tree_position = "right"
 else
@@ -18,6 +18,7 @@ return {
     "nvim-lua/plenary.nvim",
     "sindrets/diffview.nvim",
     "stevearc/dressing.nvim",
+    "nvim-tree/nvim-web-devicons", -- not required
   },
   dev = true,
   build = function()

@@ -93,6 +93,7 @@ return {
           function() return vim.o.keymap end
         },
         lualine_b = {{'branch', fmt=trunc(150, 20, nil, false)}, 'diff', 'diagnostics'},
+        lualine_c = {{'filename', path=1}},
         -- Show components only when window is wide enough
         lualine_x = {
           {
