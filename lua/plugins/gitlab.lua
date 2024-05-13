@@ -1,5 +1,4 @@
 local nmap = require("utils").nmap
-local vmap = require("utils").vmap
 
 local title_input_width
 local discussion_tree_position

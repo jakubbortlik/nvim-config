@@ -1,4 +1,3 @@
-local gitlab = require("gitlab")
 local discussions = require("gitlab.actions.discussions")
 local nmap = require("utils").nmap
 

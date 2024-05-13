@@ -133,7 +133,6 @@ local M = {
             end,
           },
         },
-        { name = "git" },
         { name = "path" },
         { name = "treesitter" },
         { name = "git" },

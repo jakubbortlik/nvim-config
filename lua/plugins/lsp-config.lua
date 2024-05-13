@@ -185,35 +185,6 @@ local M = {
     dependencies = { "mason.nvim" },
     opts = function()
       local null_ls = require("null-ls")
-      local warnings = {
-        -- More info at: http://www.pydocstyle.org/en/stable/error_codes.html
-        "D100", -- Missing docs in public module
-        "D101", -- Missing docs in public class
-        "D102", -- Missing docs in public method
-        "D103", -- Missing docs in public function
-        -- "D104", -- Missing docs in public package
-        "D105", -- Missing docs in magic method
-        "D106", -- Missing docstring in public nested class
-        "D107", -- Missing docstring in __init__
-        "D203", -- 1 blank line required before class docstring
-        "D212", -- Multi-line docstring summary should start at the first line
-        "D213", -- Multi-line docstring summary should start at the second line
-        "D400", -- First line should end with a period
-        "D401", -- First line should be in imperative mood; try rephrasing (found '...')
-        "D406", -- Section name should end with a newline (causes problems with "Returns:")
-        "D407", -- Missing dashed underline after section
-        "D413", -- Missing blank line after last section
-        "D415", -- First line should end with a period, question mark, or exclamation point
-      }
-      local warnings_str = table.concat(warnings, ",")
-      -- Disable null_ls source for fugitive buffers
-      local disable_for_fugitive = function(params)
-        if string.find(params.bufname, "fugitive://") then
-          return false
-        else
-          return true
-        end
-      end
       return {
         root_dir = require("null-ls.utils").root_pattern(
           ".null-ls-root",
@@ -232,7 +203,11 @@ local M = {
           null_ls.builtins.formatting.buf,         -- Protobuf formatting
           null_ls.builtins.formatting.mdformat,
           null_ls.builtins.formatting.prettierd,
-          null_ls.builtins.formatting.stylua,
+          null_ls.builtins.formatting.stylua.with({
+            extra_args = {
+            "--column-width=120 --line-endings=Unix --indent-type=Spaces --indent-width=2 --quote-style=AutoPreferDouble --call-parentheses=Always --collapse-simple-statement=Never"
+            },
+          }),
           null_ls.builtins.formatting.textlint,    -- Markdown
         },
       }

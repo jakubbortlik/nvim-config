@@ -51,7 +51,7 @@ local M = {
       "tpope/vim-fugitive",
     },
     config = function()
-      vim.g.fugitive_gitlab_domains = {"https://gitlab.cloud.phonexia.com"}
+      vim.g.fugitive_gitlab_domains = { "https://gitlab.cloud.phonexia.com" }
     end
   },
   {
@@ -79,13 +79,17 @@ local M = {
           -- Navigation
           map("n", "]c", function()
             if vim.wo.diff then return "]c" end
-            vim.schedule(function() gs.next_hunk() end)
+            vim.schedule(function()
+              gs.next_hunk()
+            end)
             return '<Ignore>'
           end, { expr = true })
 
           map("n", "[c", function()
             if vim.wo.diff then return "[c" end
-            vim.schedule(function() gs.prev_hunk() end)
+            vim.schedule(function()
+              gs.prev_hunk()
+            end)
             return "<Ignore>"
           end, { expr = true })
 
@@ -148,7 +152,7 @@ local M = {
             return { type = "float", border = "rounded", }
           end
         },
-        view = { default = {layout = "diff2_vertical"}}
+        view = { default = { layout = "diff2_vertical" } }
       })
     end,
   },
