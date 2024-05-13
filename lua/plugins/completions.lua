@@ -6,7 +6,10 @@ local M = {
   },
   dependencies = {
     "hrsh7th/cmp-buffer",                    -- nvim-cmp source for buffer words
-    "petertriho/cmp-git",                    -- nvim-cmp source for git
+    {
+      "petertriho/cmp-git",                  -- nvim-cmp source for git
+      dependencies = "nvim-lua/plenary.nvim",
+    },
     "hrsh7th/cmp-nvim-lsp",                  -- Add LSP completion capabilities
     "hrsh7th/cmp-nvim-lsp-signature-help",   -- nvim-cmp source for function signatures
     "hrsh7th/cmp-path",                      -- nvim-cmp source for filesystem paths
@@ -171,6 +174,31 @@ local M = {
       }, {
         { name = "conventionalcommits" },
       }),
+    })
+    local format = require("cmp_git.format")
+    local sort = require("cmp_git.sort")
+    require("cmp_git").setup({
+      filetypes = {"gitcommit", "octo", "markdown" },
+      gitlab = {
+        hosts = { "gitlab.cloud.phonexia.com" }, -- list of private instances of gitlab
+        issues = {
+          limit = 100,
+          state = "opened", -- opened, closed, all
+          sort_by = sort.gitlab.issues,
+          format = format.gitlab.issues,
+        },
+        mentions = {
+          limit = 100,
+          sort_by = sort.gitlab.mentions,
+          format = format.gitlab.mentions,
+        },
+        merge_requests = {
+          limit = 100,
+          state = "opened", -- opened, closed, locked, merged
+          sort_by = sort.gitlab.merge_requests,
+          format = format.gitlab.merge_requests,
+        },
+      },
     })
   end,
 }
