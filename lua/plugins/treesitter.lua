@@ -123,19 +123,4 @@ return {
       require("nvim-treesitter.configs").setup(opts)
     end,
   },
-  {
-    "HiPhish/nvim-ts-rainbow2",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-    },
-    config = function(_, _)
-      require("nvim-treesitter.configs").setup({
-        rainbow = {
-          enable = true,
-          query = "rainbow-parens",
-          strategy = require("ts-rainbow").strategy.global, -- Highlight the entire buffer all at once
-        },
-      })
-    end,
-  },
 }

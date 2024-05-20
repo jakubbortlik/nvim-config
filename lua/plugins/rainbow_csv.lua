@@ -1,6 +1,6 @@
 local nmap = require("utils").nmap
 
-M = {
+local M = {
   "cameron-wags/rainbow_csv.nvim",
   ft = {
     "csv",
