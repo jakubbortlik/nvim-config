@@ -49,12 +49,12 @@ nmap("<BS>", "<Del>", "Delete the last digit when entering a number.")
 -- TODO: add check that an LSP server is actually attached
 nmap("<leader>L", "<cmd>vertical Verbose lua =vim.lsp.get_active_clients()[1].server_capabilities<cr>", "print [L]SP server capabilities")
 
--- Greatest remaps ever, by ThePrimeagen
+-- Remaps by ThePrimeagen
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Visual mode paste without losing register" })
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Copy to system clipboard" })
-nmap("<leader>Y", [["+Y]], "Add to system clipboard")
+nmap("<leader>Y", [["+y$]], "Add to system clipboard")
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete to blackhole register" })
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<cr>", { silent = true, desc = "Make current file executable" })
+vim.keymap.set("n", "<leader>cx", "<cmd>!chmod +x %<cr>", { silent = true, desc = "Make current file executable" })
 nmap("<C-g><C-s>", "<cmd>silent !tmux neww tmux-sessionizer<cr>", "Create tmux [s]ession or attach to one")
 
 -- Adjust textwidth
@@ -66,11 +66,7 @@ nmap("<leader>w9", "<cmd>setlocal textwidth=90<cr>", "Set local text[w]idth to [
 nmap("<leader>w1", "<cmd>setlocal textwidth=100<cr>", "Set local text[w]idth to [1]00" )
 
 -- Diagnostic keymaps
-nmap("[d", vim.diagnostic.goto_prev, "Go to previous diagnostic message")
-nmap("]d", vim.diagnostic.goto_next, "Go to next diagnostic message")
-nmap("<leader>do", vim.diagnostic.open_float, "Open floating diagnostic message")
 nmap("<leader>ds", vim.diagnostic.show, "Show diagnostic message")
-nmap("<leader>q", vim.diagnostic.setloclist, "Open diagnostics list")
 
 -- Keymaps for easier work with messages
 nmap("<leader>me", "<cmd>messages<cr>", "View previously given messages")
