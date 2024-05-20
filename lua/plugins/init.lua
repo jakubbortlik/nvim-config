@@ -20,10 +20,6 @@ return {
   },
   "tommcdo/vim-exchange",    -- Easy exange of two portions of text
   {
-    "numToStr/Comment.nvim", -- Toggle comments
-    config = true,
-  },
-  {
     "tpope/vim-speeddating", -- Let <C-A>, <C-X> work on dates properly
     keys = {
       { "<C-a>", mode = { "n", "v" }, desc = "Increment component under cursor" },
