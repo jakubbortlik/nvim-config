@@ -21,7 +21,7 @@ local M = {
     "onsails/lspkind.nvim",                  -- Add vscode-like pictograms to LSP
 
     -- Snippet Engine & its associated nvim-cmp source
-    "L3MON4D3/LuaSnip",
+    { "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
     "saadparwaiz1/cmp_luasnip",
     "rafamadriz/friendly-snippets", -- A number of user-friendly snippets
   },
@@ -153,7 +153,7 @@ local M = {
         },
       },
       enabled = function()
-        return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+        return vim.api.nvim_get_option_value("buftype", {buf=0}) ~= "prompt"
             or require("cmp_dap").is_dap_buffer()
       end,
       experimental = {
