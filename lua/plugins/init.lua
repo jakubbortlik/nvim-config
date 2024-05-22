@@ -82,19 +82,6 @@ return {
     cmd = "Linediff",
   },
   {
-    "iamcco/markdown-preview.nvim",
-    keys = {
-      { "<leader>M", "<cmd>MarkdownPreviewToggle<cr>", desc = "Toggle MarkdownPreview" }
-    },
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    build = "cd app && yarn install",
-    init = function()
-      vim.g.mkdp_filetypes = { "markdown" }
-      vim.g.mkdp_browser = "firefox"
-    end,
-    ft = { "markdown" },
-  },
-  {
     "smjonas/inc-rename.nvim", -- Rename with preview
     keys = {
       {
