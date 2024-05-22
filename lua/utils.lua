@@ -28,7 +28,14 @@ local python_path = function()
   end
 end
 
+---Return true if system host name contains the string "jakub", false otherwise.
+---@return boolean 
+local host_jakub = function()
+  return vim.fn.system("hostname"):find("jakub") and true or false
+end
+
 local M = {
+  host_jakub = host_jakub,
   get_main = get_main,
   nmap = nmap,
   vmap = vmap,

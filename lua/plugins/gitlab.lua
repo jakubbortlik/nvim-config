@@ -1,4 +1,4 @@
-local nmap = require("utils").nmap
+local u = require("utils")
 
 local title_input_width
 local discussion_tree_position
@@ -19,6 +19,7 @@ return {
     "stevearc/dressing.nvim",
     "nvim-tree/nvim-web-devicons", -- not required
   },
+  enabled = u.host_jakub(),
   build = function()
     require("gitlab.server").build(true)
   end, -- Builds the Go binary
@@ -102,26 +103,26 @@ return {
       },
     })
 
-    nmap("glc", gitlab.choose_merge_request, "Gitlab choose MR")
-    nmap("glr", gitlab.review, "Gitlab Review")
-    nmap("gls", gitlab.summary, "Gitlab Summary")
-    nmap("glA", gitlab.approve, "Gitlab Approve")
-    nmap("glR", gitlab.revoke, "Gitlab Revoke")
-    nmap("glO", gitlab.create_mr, "Gitlab Create MR")
-    nmap("gln", gitlab.create_note, "Gitlab Create note")
-    nmap("gld", gitlab.toggle_discussions, "Gitlab Toggle Discussions")
-    nmap("glaa", gitlab.add_assignee, "Gitlab Add Assignee")
-    nmap("glad", gitlab.delete_assignee, "Gitlab Delete Assignee")
-    nmap("glva", gitlab.add_reviewer, "Gitlab Add Reviewer")
-    nmap("glvd", gitlab.delete_reviewer, "Gitlab Delete Reviewer")
-    nmap("glp", gitlab.pipeline, "Gitlab Pipeline")
-    nmap("glo", gitlab.open_in_browser, "Gitlab Open in browser")
-    nmap("glu", gitlab.copy_mr_url, "Copy URL of MR")
-    nmap("glM", gitlab.merge, "Merge MR")
-    nmap("gll", function()
+    u.nmap("glc", gitlab.choose_merge_request, "Gitlab choose MR")
+    u.nmap("glr", gitlab.review, "Gitlab Review")
+    u.nmap("gls", gitlab.summary, "Gitlab Summary")
+    u.nmap("glA", gitlab.approve, "Gitlab Approve")
+    u.nmap("glR", gitlab.revoke, "Gitlab Revoke")
+    u.nmap("glO", gitlab.create_mr, "Gitlab Create MR")
+    u.nmap("gln", gitlab.create_note, "Gitlab Create note")
+    u.nmap("gld", gitlab.toggle_discussions, "Gitlab Toggle Discussions")
+    u.nmap("glaa", gitlab.add_assignee, "Gitlab Add Assignee")
+    u.nmap("glad", gitlab.delete_assignee, "Gitlab Delete Assignee")
+    u.nmap("glva", gitlab.add_reviewer, "Gitlab Add Reviewer")
+    u.nmap("glvd", gitlab.delete_reviewer, "Gitlab Delete Reviewer")
+    u.nmap("glp", gitlab.pipeline, "Gitlab Pipeline")
+    u.nmap("glo", gitlab.open_in_browser, "Gitlab Open in browser")
+    u.nmap("glu", gitlab.copy_mr_url, "Copy URL of MR")
+    u.nmap("glM", gitlab.merge, "Merge MR")
+    u.nmap("gll", function()
       vim.cmd("tab new " .. vim.print(gitlab.state.settings.log_path))
     end, "Open gitlab.nvim.log in a new tab")
-    nmap("glL", function()
+    u.nmap("glL", function()
       local ok, err = os.remove(gitlab.state.settings.log_path)
       if not ok then
         vim.print(("Unable to remove file %s, error %s"):format(gitlab.state.settings.log_path, err), vim.log.levels.ERROR)
@@ -129,32 +130,32 @@ return {
         vim.print("Removed file: " .. gitlab.state.settings.log_path)
       end
     end, "Remove the gitlab.nvim.log file")
-    nmap("glb", function()
+    u.nmap("glb", function()
       vim.notify("Rebuilding Gitlab Go server.")
       gitlab_server.build(true)
     end, "Rebuild the Gitlab Go server")
-    nmap("glS", function()
+    u.nmap("glS", function()
       vim.cmd.tabnew()
       vim.cmd.Verbose('lua require("gitlab").print_settings()')
       vim.cmd.only()
     end, "Gitlab print Settings")
-    nmap("gl<C-r>", function()
+    u.nmap("gl<C-r>", function()
       gitlab_server.restart(function()
         vim.cmd.tabclose()
         gitlab.review()
       end)
     end, "Gitlab Restart Server")
-    nmap("glq", function()
+    u.nmap("glq", function()
       vim.cmd([[0,$yank *]])
       vim.cmd.normal("ZQ")
     end, "Save contents to * register & Close window")
-    nmap("ZQ", function()
+    u.nmap("ZQ", function()
       local reg_backup = gitlab.state.settings.popup.temp_registers
       gitlab.state.settings.popup.temp_registers = {}
       vim.cmd("quit!")
       gitlab.state.settings.popup.temp_registers = reg_backup
     end)
-    nmap("glD", gitlab.toggle_draft_mode, "Toggle between draft and live mode")
-    nmap("glP", gitlab.publish_all_drafts, "Publish all drafts")
+    u.nmap("glD", gitlab.toggle_draft_mode, "Toggle between draft and live mode")
+    u.nmap("glP", gitlab.publish_all_drafts, "Publish all drafts")
   end,
 }
