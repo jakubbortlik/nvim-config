@@ -66,6 +66,11 @@ nmap("<leader>w9", "<cmd>setlocal textwidth=90<cr>", "Set local text[w]idth to [
 nmap("<leader>w1", "<cmd>setlocal textwidth=100<cr>", "Set local text[w]idth to [1]00" )
 
 -- Diagnostic keymaps
+if vim.fn.has("nvim-0.10") ~= 1 then
+  nmap("[d", vim.diagnostic.goto_prev, "Go to previous diagnostic message")
+  nmap("]d", vim.diagnostic.goto_next, "Go to next diagnostic message")
+  nmap("<leader>do", vim.diagnostic.open_float, "Open floating diagnostic message")
+end
 nmap("<leader>ds", vim.diagnostic.show, "Show diagnostic message")
 
 -- Keymaps for easier work with messages
