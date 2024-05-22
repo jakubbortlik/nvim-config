@@ -19,7 +19,6 @@ return {
     "stevearc/dressing.nvim",
     "nvim-tree/nvim-web-devicons", -- not required
   },
-  dev = true,
   build = function()
     require("gitlab.server").build(true)
   end, -- Builds the Go binary
