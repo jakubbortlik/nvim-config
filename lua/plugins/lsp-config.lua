@@ -15,6 +15,7 @@ local M = {
         end,
       },
       "williamboman/mason-lspconfig.nvim",
+      "SmiteshP/nvim-navic",
       {
         "folke/neodev.nvim",
         opts = { library = { plugins = { "nvim-dap-ui", "neotest" }, types = true }, },
@@ -212,19 +213,6 @@ local M = {
         },
       }
     end,
-  },
-  -- Navigation in a popup window using LSP
-  {
-    "SmiteshP/nvim-navbuddy",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-      "SmiteshP/nvim-navic",
-      "MunifTanjim/nui.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-    keys = { { "<leader>nb", "<cmd>Navbuddy<cr>", desc = "Navbuddy" } },
-    cmd = "NavBuddy",
-    opts = { lsp = { auto_attach = true }, window = { border = "rounded" } },
   },
 }
 
