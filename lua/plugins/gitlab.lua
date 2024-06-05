@@ -20,15 +20,20 @@ return {
     "nvim-tree/nvim-web-devicons", -- not required
   },
   enabled = u.host_jakub(),
+  keys = {
+    "glr",
+    "glc",
+    "glO",
+    "gll",
+    "glb",
+    "glS",
+    "gl<C-r>",
+    "glq",
+  },
   build = function()
     require("gitlab.server").build(true)
   end, -- Builds the Go binary
   config = function()
-    require("dressing").setup({
-      input = {
-        enabled = true,
-      },
-    })
     local gitlab = require("gitlab")
     local gitlab_server = require("gitlab.server")
     gitlab.setup({
