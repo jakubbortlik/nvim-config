@@ -179,10 +179,6 @@ local M = {
       }),
     })
     local format = require("cmp_git.format")
-    local insertText = function(_, mention)
-      return string.format("@%s", mention.username)
-    end
-    format.gitlab.mentions.insertText = insertText
     local sort = require("cmp_git.sort")
     require("cmp_git").setup({
       filetypes = {"gitcommit", "octo", "markdown" },
