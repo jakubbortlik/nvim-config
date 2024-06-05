@@ -20,6 +20,8 @@ local M = {
     "lukas-reineke/cmp-under-comparator",    -- better sorting for magic methods
     "onsails/lspkind.nvim",                  -- Add vscode-like pictograms to LSP
 
+    "folke/lazydev.nvim",
+
     -- Snippet Engine & its associated nvim-cmp source
     { "L3MON4D3/LuaSnip", build = "make install_jsregexp" },
     "saadparwaiz1/cmp_luasnip",
@@ -139,6 +141,7 @@ local M = {
         { name = "path" },
         { name = "treesitter" },
         { name = "git" },
+        { name = "lazydev", group_index = 0} -- set group index to 0 to skip loading LuaLS completions
       },
       sorting = {
         comparators = {

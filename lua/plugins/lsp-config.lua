@@ -16,10 +16,6 @@ local M = {
       },
       "williamboman/mason-lspconfig.nvim",
       "SmiteshP/nvim-navic",
-      {
-        "folke/neodev.nvim",
-        opts = { library = { plugins = { "nvim-dap-ui", "neotest" }, types = true }, },
-      },
       "hrsh7th/cmp-nvim-lsp", -- Add LSP completion capabilities
       {
         "WhoIsSethDaniel/mason-tool-installer.nvim", -- autoinstall non-LSP tools
@@ -36,6 +32,7 @@ local M = {
               "debugpy",
               "json-lsp",
               "luacheck",
+              "lua-language-server",
               "mdformat",
               "selene",
               "shellcheck",
@@ -141,9 +138,6 @@ local M = {
           },
         },
       }
-
-      -- Setup neovim lua configuration
-      require("neodev").setup()
 
       -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
       local capabilities = vim.lsp.protocol.make_client_capabilities()
