@@ -50,6 +50,10 @@ return {
       discussion_signs = {
         skip_resolved_discussion = true,
         virtual_text = true,
+        icons = {
+          comment = "╭",
+          range = "│"
+        },
       },
       popup = {
         perform_action = "ZZ",
