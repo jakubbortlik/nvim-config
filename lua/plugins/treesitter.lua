@@ -29,8 +29,8 @@ return {
       "LiadOz/nvim-dap-repl-highlights",
     },
     keys = {
-      { "<c-space>", desc = "Increment selection" },
-      { "<bs>",      desc = "Decrement selection", mode = "x" },
+      { "<cr>" },
+      { "<bs>", mode = "x" },
     },
     opts = {
       ensure_installed = {
@@ -94,7 +94,7 @@ return {
         enable = true,
         disable = function()
           local ok, bufname = pcall(vim.fn.expand, "%")
-          if ok and bufname == "[Command Line]" then
+          if ok and bufname == "" or bufname == "[Command Line]" then
             return true
           end
         end,
