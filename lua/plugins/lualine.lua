@@ -45,7 +45,8 @@ local mode_map = {
 local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
   return function(str)
     local win_width = vim.fn.winwidth(0)
-    if hide_width ~= nil and win_width < hide_width then return ''
+    if hide_width ~= nil and win_width < hide_width then
+      return ''
     elseif trunc_width ~= nil then
       if win_width < trunc_width and #str > trunc_len then
         return str:sub(1, trunc_len) .. (no_ellipsis and '' or '…')
@@ -57,7 +58,7 @@ end
 
 return {
   "nvim-lualine/lualine.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons", "Exafunction/codeium.vim" },
+  dependencies = { "nvim-tree/nvim-web-devicons", "Exafunction/codeium.vim", "nvim-neotest/neotest" },
   config = function()
     local codeium_status = function()
       return "{…}" .. vim.api.nvim_call_function("codeium#GetStatusString", {})
@@ -70,6 +71,17 @@ return {
         return vim.fn.winwidth(0) > limit
       end,
     }
+    local neotest_status = function()
+      local neotest_state = require("neotest").state
+      local adapter_id = neotest_state.adapter_ids()
+      if adapter_id ~= nil then
+        local results = neotest_state.status_counts(adapter_id[1], {buffer=vim.api.nvim_get_current_buf()})
+        if results ~= nil then
+          return " " .. results.passed .. "  " .. results.failed .. "  " ..results.skipped .. "  " .. results.running
+        end
+      end
+      return ""
+    end
     require("lualine").setup({
       options = {
         theme = "powerline",
@@ -78,7 +90,7 @@ return {
         lualine_a = {
           {
             function()
-              if conditions.window_wider_than(115) then
+              if conditions.window_wider_than(165) then
                 return mode_map[vim.api.nvim_get_mode().mode] or "__"
               else
                 -- Abbreviate mode indicator
@@ -92,10 +104,18 @@ return {
           },
           function() return vim.o.keymap end
         },
-        lualine_b = {{'branch', fmt=trunc(150, 20, nil, false)}, 'diff', 'diagnostics'},
-        lualine_c = {{'filename', path=1}},
+        lualine_b = { { 'branch', fmt = trunc(165, 20, nil, false) }, 'diff', 'diagnostics' },
+        lualine_c = { { 'filename', path = 1 } },
         -- Show components only when window is wide enough
         lualine_x = {
+          {
+            function()
+              return neotest_status()
+            end,
+            cond = function()
+              return conditions.window_wider_than(75)
+            end,
+          },
           {
             function()
               return codeium_status()
@@ -124,6 +144,16 @@ return {
           },
         },
       },
+      inactive_sections = {
+        lualine_x = {
+          {
+            function()
+              return neotest_status()
+            end,
+          },
+          {"location"}
+        }
+      }
     })
   end,
 }
