@@ -11,6 +11,7 @@ return {
       DEBUGPRINT = { icon = "🐛", color = "info" },
     },
     highlight = {
+      -- DEBUGPRINT[5]:
       -- TODO (ABC-195):
       -- INFO CDE-195:
       -- NOTE EFG-195 - 
