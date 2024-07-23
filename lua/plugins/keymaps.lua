@@ -48,6 +48,18 @@ nmap("<BS>", "<Del>", "Delete the last digit when entering a number.")
 
 -- TODO: add check that an LSP server is actually attached
 nmap("<leader>L", "<cmd>vertical Verbose lua =vim.lsp.get_active_clients()[1].server_capabilities<cr>", "print [L]SP server capabilities")
+nmap(
+  "<leader>lc",
+  function()
+    local active_clients = vim.lsp.get_clients()
+    if next(active_clients) ~= nil then
+      vim.print(active_clients[1].server_capabilities)
+    else
+      vim.notify("No active LSP client is available.", vim.log.levels.WARN)
+    end
+  end,
+  "print [L]SP server capabilities"
+)
 
 -- Remaps by ThePrimeagen
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Visual mode paste without losing register" })
