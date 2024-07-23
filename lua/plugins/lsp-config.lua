@@ -98,6 +98,8 @@ local M = {
         nmap("<leader>wl", function()
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, "[W]orkspace [L]ist Folders")
+        nmap("<leader>li", "<cmd>LspInfo<cr>", "Show [L]SP [I]nfo")
+        nmap("<leader>lr", "<cmd>LspRestart<cr>", "Restart LSP")
       end
 
       -- Enable the following language servers. They will automatically be installed.
