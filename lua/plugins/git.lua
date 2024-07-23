@@ -7,6 +7,7 @@ local M = {
     "tpope/vim-fugitive",
     keys = {
       { "gb", "<cmd>Git blame<cr>", desc = "Run [G]it [b]lame"},
+      { "gB", ":Git blame ", desc = "Populate commandline with [G]it [b]lame"},
       { "gs", "<cmd>Git<cr>", desc = "Run [G]it"},
       { "gS", "<cmd>vertical Git<cr>", desc = "Run [G]it in a vertical split"},
       { "<C-g><C-d>", "<cmd>Gdiffsplit " .. get_main() .. "<cr>", desc = "[G][d]iffsplit with main"},
