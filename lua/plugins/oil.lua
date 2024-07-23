@@ -1,6 +1,9 @@
 return {
   'stevearc/oil.nvim',
   opts = {
+    float = {
+      max_width = 80,
+    },
     columns = {
       "permissions",
       "size",
@@ -12,20 +15,23 @@ return {
     },
     constrain_cursor = "name",
     keymaps = {
-      ["<C-v>"] = "actions.select_vsplit",
-      ["<C-x>"] = "actions.select_split",
+      ["<C-t>"] =  '<cmd>lua require("oil").select({close=false, tab=true}, function() require("oil").open_float() end)<cr>',
+      ["<C-v>"] =  '<cmd>lua require("oil").select({close=true, vertical=true})<cr>',
+      ["<C-x>"] =  '<cmd>lua require("oil").select({close=true, horizontal=true})<cr>',
       ["<C-s>"] = false,
       ["<C-h>"] = false,
       ["<C-d>"] = "actions.preview_scroll_down",
       ["<C-u>"] = "actions.preview_scroll_up",
       ["."] = ": <Home>",
     },
+    cmd = {"vne"},
   },
+  keys = {"-"},
   -- Optional dependencies
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function(_, opts)
     require("oil").setup(opts)
     vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+    vim.keymap.set("n", "<leader>-", "<CMD>lua require('oil').open_float()<CR>", { desc = "Open parent directory in floating window" })
   end
-
 }
