@@ -16,7 +16,6 @@ vim.opt.jumpoptions = "view"
 vim.opt.linebreak = true
 vim.opt.mouse = ""
 vim.opt.number = true
-vim.opt.relativenumber = true
 vim.opt.scrolloff = 3
 vim.opt.shiftwidth = 4
 vim.opt.showmode = false
