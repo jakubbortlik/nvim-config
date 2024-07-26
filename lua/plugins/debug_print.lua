@@ -7,6 +7,7 @@ return {
       "nvim-treesitter/nvim-treesitter" -- Needed to enable treesitter for NeoVim 0.8
   },
   keys = {
+    {"g?d"},
     {"g?v"},
     {"g?V"},
     {"g?p"},
