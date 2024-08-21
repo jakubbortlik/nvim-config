@@ -21,14 +21,14 @@ return {
   },
   enabled = u.host_jakub(),
   keys = {
-    "glr",
-    "glc",
-    "glO",
-    "gll",
-    "glb",
-    "glS",
-    "gl<C-r>",
-    "glq",
+    { "glc", desc = "Choose MR" },
+    { "glC", desc = "Create MR" },
+    { "glL", desc = "Open gitlab.nvim.log in a new tab" },
+    { "glb", desc = "Rebuild gitlab server" },
+    { "gls", desc = "Show MR status" },
+    { "glS", desc = "Select MR" },
+    { "gl<C-r>", desc = "Gitlab Restart Server" },
+    { "glp", desc = "Show Gitlab pipeline" },
   },
   build = function()
     require("gitlab.server").build(true)
@@ -38,6 +38,15 @@ return {
     local gitlab_server = require("gitlab.server")
     gitlab.setup({
       debug = { go_request = true, go_response = true }, -- Which values to log
+      keymaps = {
+        help_nowait = true,
+        popup = {
+          perform_linewise_action_nowait = true,
+        },
+        reviewer = {
+          create_comment_nowait = true,
+        },
+      },
       attachment_dir = vim.fn.expand("$HOME") .. "/Pictures",
       reviewer_settings = {
         diffview = {
@@ -45,9 +54,7 @@ return {
         },
       },
       discussion_tree = {
-        jump_to_reviewer = "a",
-        refresh_data = "",
-        size = "25%", -- Size of split
+        size = "90", -- Size of split
         position = discussion_tree_position,
         keep_current_open = true,
         expanded_by_default = { resolved = false, unresolved = true },
@@ -55,14 +62,14 @@ return {
       discussion_signs = {
         skip_resolved_discussion = true,
         virtual_text = true,
+        use_diagnostic_signs = false,
         icons = {
           comment = "╭",
           range = "│"
         },
       },
       popup = {
-        perform_action = "ZZ",
-        opacity = 0.85,
+        opacity = 0.75,
         width = "60%",
         temp_registers = { '"', "g", "+" },
       },
@@ -75,25 +82,6 @@ return {
       },
     })
 
-    ---@param cb string Name of the API function to call
-    local function execute_operatorfunc(cb)
-      local old_opfunc = vim.opt.operatorfunc
-      local cur_win = vim.api.nvim_get_current_win()
-      local cur_pos = vim.api.nvim_win_get_cursor(cur_win)
-
-      _G.CreateOperatorfunc = function(callback)
-        return function()
-          vim.cmd.execute([["normal! '[V']"]])
-          vim.api.nvim_command(('lockmarks lua require("gitlab").%s()'):format(callback))
-          vim.api.nvim_win_set_cursor(cur_win, cur_pos)
-          vim.opt.operatorfunc = old_opfunc
-        end
-      end
-
-      vim.opt.operatorfunc = ("v:lua.CreateOperatorfunc'%s'"):format(cb)
-      vim.api.nvim_feedkeys("g@", "n", false)
-    end
-
     require("diffview").setup({
       commit_log_panel = {
         win_config = function()
@@ -101,37 +89,12 @@ return {
         end
       },
       view = { default = { layout = "diff2_vertical" } },
-      keymaps = {
-        view = {
-          { "n", "c", function() execute_operatorfunc("create_multiline_comment") end, { desc = "Create comment in range of motion"} },
-          { "n", "s", function() execute_operatorfunc("create_comment_suggestion") end, { desc = "Create suggestion for range of motion"} },
-          { "n", "a", function() require("gitlab").move_to_discussion_tree_from_diagnostic() end, { desc = "Move to discussion"} },
-          { "v", "s", function () require("gitlab").create_comment_suggestion() end, {desc = "Create suggestion for selected text"}},
-          { "v", "c", function () require("gitlab").create_multiline_comment() end, {desc = "Create comment for selected text"}},
-        }
-      },
     })
 
-    u.nmap("glc", gitlab.choose_merge_request, "Gitlab choose MR")
-    u.nmap("glr", gitlab.review, "Gitlab Review")
-    u.nmap("gls", gitlab.summary, "Gitlab Summary")
-    u.nmap("glA", gitlab.approve, "Gitlab Approve")
-    u.nmap("glR", gitlab.revoke, "Gitlab Revoke")
-    u.nmap("glO", gitlab.create_mr, "Gitlab Create MR")
-    u.nmap("gln", gitlab.create_note, "Gitlab Create note")
-    u.nmap("gld", gitlab.toggle_discussions, "Gitlab Toggle Discussions")
-    u.nmap("glaa", gitlab.add_assignee, "Gitlab Add Assignee")
-    u.nmap("glad", gitlab.delete_assignee, "Gitlab Delete Assignee")
-    u.nmap("glva", gitlab.add_reviewer, "Gitlab Add Reviewer")
-    u.nmap("glvd", gitlab.delete_reviewer, "Gitlab Delete Reviewer")
-    u.nmap("glp", gitlab.pipeline, "Gitlab Pipeline")
-    u.nmap("glo", gitlab.open_in_browser, "Gitlab Open in browser")
-    u.nmap("glu", gitlab.copy_mr_url, "Copy URL of MR")
-    u.nmap("glM", gitlab.merge, "Merge MR")
-    u.nmap("gll", function()
+    u.nmap("glL", function()
       vim.cmd("tab new " .. vim.print(gitlab.state.settings.log_path))
     end, "Open gitlab.nvim.log in a new tab")
-    u.nmap("glL", function()
+    u.nmap("gl<c-l>", function()
       local ok, err = os.remove(gitlab.state.settings.log_path)
       if not ok then
         vim.print(("Unable to remove file %s, error %s"):format(gitlab.state.settings.log_path, err), vim.log.levels.ERROR)
@@ -143,28 +106,16 @@ return {
       vim.notify("Rebuilding Gitlab Go server.")
       gitlab_server.build(true)
     end, "Rebuild the Gitlab Go server")
-    u.nmap("glS", function()
+    u.nmap("gl<c-s>", function()
       vim.cmd.tabnew()
       vim.cmd.Verbose('lua require("gitlab").print_settings()')
       vim.cmd.only()
-    end, "Gitlab print Settings")
+    end, "Print gitlab.nvim settings")
     u.nmap("gl<C-r>", function()
       gitlab_server.restart(function()
         vim.cmd.tabclose()
         gitlab.review()
       end)
     end, "Gitlab Restart Server")
-    u.nmap("glq", function()
-      vim.cmd([[0,$yank *]])
-      vim.cmd.normal("ZQ")
-    end, "Save contents to * register & Close window")
-    u.nmap("ZQ", function()
-      local reg_backup = gitlab.state.settings.popup.temp_registers
-      gitlab.state.settings.popup.temp_registers = {}
-      vim.cmd("quit!")
-      gitlab.state.settings.popup.temp_registers = reg_backup
-    end)
-    u.nmap("glD", gitlab.toggle_draft_mode, "Toggle between draft and live mode")
-    u.nmap("glP", gitlab.publish_all_drafts, "Publish all drafts")
   end,
 }
