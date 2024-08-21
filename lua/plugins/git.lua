@@ -97,30 +97,26 @@ local M = {
 
           local wk = require("which-key")
           -- Register normal mode keymaps
-          wk.register({
-            h = {
-              name = "git [h]unks", -- optional group name
-              s = { gs.stage_hunk, "[s]tage" },
-              r = { gs.reset_hunk, "[r]eset" },
-              S = { gs.stage_buffer, "[S]tage buffer" },
-              u = { gs.undo_stage_hunk, "[u]ndo stage" },
-              R = { gs.reset_buffer, "[R]eset buffer" },
-              p = { gs.preview_hunk, "[p]review" },
-              b = { function() gs.blame_line { full = true } end, "[b]lame line" },
-              t = { gs.toggle_current_line_blame, "[t]oggle line blame" },
-              d = { gs.diffthis, "[d]iff this" },
-              D = { function() gs.diffthis('~') end, "[D]iff this agains '~'" },
-              T = { gs.toggle_deleted, "[T]oggle deleted" },
-            },
-          }, { prefix = "<leader>" })
-          -- Register visual mode keymaps
-          wk.register({
-            h = {
-              name = "git [h]unks", -- optional group name
-              s = { function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end, "[s]tage" },
-              r = { function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, "[r]eset" },
-            },
-          }, { prefix = "<leader>", mode = "v" })
+          wk.add({
+            { "<leader>h", group = "git [h]unks" },
+            { "<leader>hs", gs.stage_hunk, desc = "[s]tage" },
+            { "<leader>hr", gs.reset_hunk, desc = "[r]eset" },
+            { "<leader>hS", gs.stage_buffer, desc = "[S]tage buffer" },
+            { "<leader>hu", gs.undo_stage_hunk, desc = "[u]ndo stage" },
+            { "<leader>hR", gs.reset_buffer, desc = "[R]eset buffer" },
+            { "<leader>hp", gs.preview_hunk, desc = "[p]review" },
+            { "<leader>hb", function() gs.blame_line { full = true } end, desc = "[b]lame line" },
+            { "<leader>ht", gs.toggle_current_line_blame, desc = "[t]oggle line blame" },
+            { "<leader>hd", gs.diffthis, desc = "[d]iff this" },
+            { "<leader>hD", function() gs.diffthis('~') end, desc = "[D]iff this agains '~'" },
+            { "<leader>hT", gs.toggle_deleted, desc = "[T]oggle deleted" },
+            {
+              mode = { "v" },
+              { "<leader>h", group = "git [h]unks" },
+              { "<leader>hs", function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end, desc = "[s]tage" },
+              { "<leader>hr", function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, desc = "[r]eset" },
+            }
+          })
 
           -- Text object
           map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
