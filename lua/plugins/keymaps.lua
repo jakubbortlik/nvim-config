@@ -1,12 +1,23 @@
 local M = {
   {
     "folke/which-key.nvim", -- Show pending keybinds
+    dependencies = {
+      "echasnovski/mini.icons",
+      "nvim-tree/nvim-web-devicons",
+    },
     event = "VeryLazy",
-    opts = {
-      window = {
+    config = function()
+      local wk = require("which-key")
+      wk.setup({
+      win = {
         border = "rounded",
       },
-    }
+    })
+      wk.add(
+        { "gl", group = "Gitlab" }
+      )
+
+    end
   },
 }
 
