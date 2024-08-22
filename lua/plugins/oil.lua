@@ -24,8 +24,8 @@ return {
       ["<C-u>"] = "actions.preview_scroll_up",
       ["."] = ": <Home>",
     },
-    cmd = {"vne"},
   },
+  event = { "ModeChanged" },
   keys = {"-"},
   -- Optional dependencies
   dependencies = { "nvim-tree/nvim-web-devicons" },
