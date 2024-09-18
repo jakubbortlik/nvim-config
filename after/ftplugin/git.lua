@@ -1,1 +1,1 @@
-vim.keymap.set("n", "q", "<cmd>close<cr>", { desc = "Close the Git window" })
+vim.keymap.set("n", "q", "<cmd>close<cr>", { desc = "Close the Git window", buffer = 0 })
