@@ -27,7 +27,7 @@ return {
     nmap("<C-;>", function()
       harpoon:list():select(4)
     end, "Navigate to harpoon file 4")
-    nmap("<⁏>", function()
+    nmap("⁏", function()
       harpoon:list():select(4)
     end, "Navigate to harpoon file 4")  -- Alacritty hack
     harpoon:extend({
