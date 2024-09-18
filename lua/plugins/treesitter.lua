@@ -61,6 +61,7 @@ return {
         "query",
         "sql",
         "toml",
+        "tsx",
         "typescript",
         "vim",
         "vimdoc",
