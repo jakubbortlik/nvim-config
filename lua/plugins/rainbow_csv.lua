@@ -20,6 +20,19 @@ local M = {
   config = function()
     require("rainbow_csv").setup()
     nmap("<leader>rd", "<cmd>RainbowDelim<cr>", "Setup [R]ainbow[D]elim")
+
+    vim.g.rcsv_colorlinks = {
+      'String',
+      'Comment',
+      'NONE',
+      'Special',
+      'Identifier',
+      'Type',
+      'Exception',
+      'SpecialKey',
+      'CursorLineNr',
+      'Title',
+    }
   end,
 }
 
