@@ -109,17 +109,13 @@ return {
         -- Show components only when window is wide enough
         lualine_x = {
           {
-            function()
-              return neotest_status()
-            end,
+            neotest_status,
             cond = function()
               return conditions.window_wider_than(75)
             end,
           },
           {
-            function()
-              return codeium_status()
-            end,
+            codeium_status,
             cond = function()
               return conditions.window_wider_than(95)
             end,
@@ -145,14 +141,7 @@ return {
         },
       },
       inactive_sections = {
-        lualine_x = {
-          {
-            function()
-              return neotest_status()
-            end,
-          },
-          {"location"}
-        }
+        lualine_x = { { neotest_status }, { "location" } }
       }
     })
   end,
