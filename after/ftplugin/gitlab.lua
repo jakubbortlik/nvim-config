@@ -2,36 +2,36 @@ local discussions = require("gitlab.actions.discussions")
 local nmap = require("utils").nmap
 
 local toggle_if_match = function(pattern)
-  if not vim.api.nvim_get_current_line():match("^%s*[].*[✓-]$") then
-    vim.fn.search([[\(^\s*\)\@<=[].*[✓-]$]], "b")
+  if not vim.api.nvim_get_current_line():match("^%s*[].*[✓-] ?") then
+    vim.fn.search([[\(^\s*\)\@<=[].*[✓-] \?]], "b")
   end
   if vim.api.nvim_get_current_line():match(pattern) then
     vim.cmd.normal("t")
   end
 end
 
-nmap("j", [[<Cmd>call search('[] @')<CR>]], "Go to next node", true)
-nmap("k", [[<Cmd>call search('[] @', 'b')<CR>]], "Go to previous node", true)
+nmap("j", [[<Cmd>call search('[] @')<CR>]], "Go to next node", 0)
+nmap("k", [[<Cmd>call search('[] @', 'b')<CR>]], "Go to previous node", 0)
 
 nmap("J", function()
-  toggle_if_match("^%s*.*[✓-]$")
-  vim.fn.search([[\(^\s*\)\@<=[].*[✓-]$]])
+  toggle_if_match("^%s*.*[✓-] ?")
+  vim.fn.search([[\(^\s*\)\@<=[].*[✓-] \?]])
   toggle_if_match("^%s*")
 end, "Go to next thread", true)
 nmap("K", function()
-  toggle_if_match("^%s*.*[✓-]$")
-  vim.fn.search([[\(^\s*\)\@<=[].*[✓-]$]], "b")
+  toggle_if_match("^%s*.*[✓-] ?")
+  vim.fn.search([[\(^\s*\)\@<=[].*[✓-] \?]], "b")
   toggle_if_match("^%s*")
 end, "Go to previous thread", true)
 
 nmap("<C-j>", function()
-  toggle_if_match("^%s*.*[✓-]$")
-  vim.fn.search([[[] @\S*.*-$]])
+  toggle_if_match("^%s*.*[✓-] ?")
+  vim.fn.search([[[] @\S*.*[-] \?]])
   toggle_if_match("^%s*")
 end, "Go to next unresolved thread", true)
 nmap("<C-k>", function()
-  toggle_if_match("^%s*.*[✓-]$")
-  vim.fn.search([[[] @\S*.*-$]], "b")
+  toggle_if_match("^%s*.*[✓-] ?")
+  vim.fn.search([[[] @\S*.*[-] \?]], "b")
   toggle_if_match("^%s*")
 end, "Go to previous unresolved thread", true)
 
@@ -49,13 +49,13 @@ nmap(
 )
 nmap(
   "<C-h>",
-  [[<Cmd>call search('[] @jakub.bortlik.*-$')<CR>]],
+  [[<Cmd>call search('[] @jakub.bortlik.*-')<CR>]],
   "Go to my next unresolved thread",
   true
 )
 nmap(
   "<C-l>",
-  [[<Cmd>call search('[] @jakub.bortlik.*-$', 'b')<CR>]],
+  [[<Cmd>call search('[] @jakub.bortlik.*-', 'b')<CR>]],
   "Go to my previous unresolved thread",
   true
 )
