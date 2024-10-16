@@ -1,12 +1,15 @@
 local u = require("utils")
 
 local title_input_width
+local discussion_tree_size
 local discussion_tree_position
 if vim.o.columns > 170 then
   title_input_width = 120
+  discussion_tree_size = 90
   discussion_tree_position = "right"
 else
   title_input_width = vim.fn.winwidth(0) - 10
+  discussion_tree_size = 25
   discussion_tree_position = "bottom"
 end
 
@@ -52,7 +55,12 @@ return {
     local gitlab = require("gitlab")
     local gitlab_server = require("gitlab.server")
     gitlab.setup({
-      debug = { go_request = true, go_response = true }, -- Which values to log
+      debug = { -- Which values to log
+        request = true,
+        response = true,
+        gitlab_request = true,
+        gitlab_response = true,
+      },
       keymaps = {
         help_nowait = true,
         popup = {
@@ -73,7 +81,7 @@ return {
         },
       },
       discussion_tree = {
-        size = "90", -- Size of split
+        size = discussion_tree_size, -- Size of split
         position = discussion_tree_position,
         keep_current_open = true,
         expanded_by_default = { resolved = false, unresolved = true },
