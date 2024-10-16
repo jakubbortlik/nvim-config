@@ -76,3 +76,17 @@ dataclass
 diarize
 servicer
 docstring
+FtRT
+DevOps
+AWS
+Gitlab's
+#ardcode
+hardcode/!
+ValidationError
+InternalError
+StorageCapacityExceeded
+TaskDoesNotExist
+protobuf
+coroutine
+OpenAPI
+Pydantic
