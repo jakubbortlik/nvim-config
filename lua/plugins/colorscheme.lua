@@ -14,6 +14,8 @@ vim.api.nvim_create_autocmd('ColorScheme', {
     set_hl(0, "MatchParen", { bg="#363646", fg="#ff9e3b" })
     set_hl(0, "CursorLine", { bg="#161616" })
     set_hl(0, "Substitute", { bg="#c34043", fg="#000000"})
+    set_hl(0, "DiffAdd",  { bg="#182015" })
+    set_hl(0, "DiffChange", { bg="#151525" })
   end
 })
 
