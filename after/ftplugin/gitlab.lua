@@ -60,13 +60,6 @@ nmap(
   true
 )
 
-nmap(
-  "<C-r>", function()
-    discussions.load_discussions(discussions.rebuild_discussion_tree)
-    vim.print("Discussions reloaded")
-  end, "Reload discussions", true
-)
-
 nmap("<Tab>", require("diffview.actions").select_next_entry, "Open the diff for the next file")
 nmap("<S-Tab>", require("diffview.actions").select_prev_entry, "Open the diff for the previous file")
 nmap("<leader>e", require("diffview.actions").focus_files, "Bring focus to the file panel")
