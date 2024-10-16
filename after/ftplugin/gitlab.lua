@@ -59,6 +59,7 @@ nmap(
   "Go to my previous unresolved thread",
   true
 )
+vim.keymap.set("n", "<", "Kt", { desc = "Toggle root node", buffer = true, nowait = true, remap = true })
 
 nmap("<Tab>", require("diffview.actions").select_next_entry, "Open the diff for the next file")
 nmap("<S-Tab>", require("diffview.actions").select_prev_entry, "Open the diff for the previous file")
