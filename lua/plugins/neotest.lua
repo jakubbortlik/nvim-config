@@ -44,10 +44,10 @@ return {
       {"<leader>nO", function() neotest.output_panel.toggle() end, desc = "Open [n]eotest [O]utput panel" },
       {"<leader>ns", neotest.summary.toggle, desc = "Toggle [n]eotest [s]ummary" },
     })
-    u.nmap("[n", function()
+    u.nmap("[F", function()
       neotest.jump.prev({ status = "failed" })
     end, "Jump to previous failed test" )
-    u.nmap("]n", function()
+    u.nmap("]F", function()
       neotest.jump.next({ status = "failed" })
     end, "Jump to next failed test")
   end,
