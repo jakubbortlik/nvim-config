@@ -49,3 +49,14 @@ vim.api.nvim_create_autocmd({"TextYankPost"}, {
     vim.highlight.on_yank({higroup="IncSearch", timeout=250})
   end
 })
+vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+  group = editor_id,
+  callback = function()
+    if not vim.bo.modifiable then
+      local keymaps_to_delete = { "<P", "<p", ">p", "<s", "<s<ESC>" }
+      for _, keymap in ipairs(keymaps_to_delete) do
+          pcall(vim.keymap.del, "n", keymap)
+      end
+    end
+  end
+})
