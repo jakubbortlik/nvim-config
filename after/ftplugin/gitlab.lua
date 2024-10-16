@@ -75,3 +75,4 @@ vim.o.number = false
 vim.o.relativenumber = false
 vim.o.textwidth = 0
 vim.o.breakindent = true
+vim.o.showbreak = "+ "
