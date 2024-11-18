@@ -57,6 +57,10 @@ nmap("<leader>c<c-l>", [[<cmd>let @+ = expand('%:t') .. ':' .. line('.') | echo 
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], {desc = "Exit terminal-mode"})
 nmap("<BS>", "<Del>", "Delete the last digit when entering a number.")
 
+-- Make n and N behave the same regardless of previous search direction
+vim.keymap.set({"n"}, "n", "/<CR>", {silent = true, desc = "Search forward"})
+vim.keymap.set({"n"}, "N", "?<CR>", {silent = true, desc = "Search backward"})
+
 -- TODO: add check that an LSP server is actually attached
 nmap("<leader>L", "<cmd>vertical Verbose lua =vim.lsp.get_active_clients()[1].server_capabilities<cr>", "print [L]SP server capabilities")
 nmap(
