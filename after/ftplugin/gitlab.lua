@@ -61,12 +61,20 @@ nmap(
 )
 vim.keymap.set("n", "<", "Kt", { desc = "Toggle root node", buffer = true, nowait = true, remap = true })
 
-nmap("<Tab>", require("diffview.actions").select_next_entry, "Open the diff for the next file")
-nmap("<S-Tab>", require("diffview.actions").select_prev_entry, "Open the diff for the previous file")
-nmap("<leader>e", require("diffview.actions").focus_files, "Bring focus to the file panel")
+nmap("<Tab>", require("diffview.actions").select_next_entry, "Open diff for the next file", true)
+nmap("<S-Tab>", require("diffview.actions").select_prev_entry, "Open diff for the prev file", true)
+nmap("<leader>e", require("diffview.actions").focus_files, "Bring focus to file panel", true)
+nmap("gn", require("diffview.actions").focus_entry, "Bring focus to NEW file", true)
+nmap("go", function()
+    require("diffview.actions").focus_entry()
+    vim.cmd.wincmd("W")
+  end,
+  "Bring focus to OLD file",
+  true
+)
 
-vim.o.number = false
-vim.o.relativenumber = false
-vim.o.textwidth = 0
-vim.o.breakindent = true
-vim.o.showbreak = "+ "
+vim.opt_local.number = false
+vim.opt_local.relativenumber = false
+vim.opt_local.textwidth = 0
+vim.opt_local.breakindent = true
+vim.opt_local.showbreak = "+ "
