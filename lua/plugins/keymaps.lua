@@ -22,6 +22,7 @@ local M = {
 }
 
 local nmap = require("utils").nmap
+local vmap = require("utils").vmap
 
 -- Override default behaviour
 nmap("<C-e>", "3<C-E>", "Scroll down more")
@@ -51,9 +52,27 @@ nmap("<leader>su", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "[s]u
 nmap("<leader>cp", [[<cmd>let @+ = expand('%') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy [p]ath of buffer to clipboard")
 nmap("<leader>cP", [[<cmd>let @+ = expand('%:p') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy full [P]ath of buffer to clipboard")
 nmap("<leader>c<c-p>", [[<cmd>let @+ = expand('%:t') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy basename of buffer to clipboard")
-nmap("<leader>cl", [[<cmd>let @+ = expand('%') .. ':' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy [p]ath of buffer to clipboard")
-nmap("<leader>cL", [[<cmd>let @+ = expand('%:p') .. ':' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy full [P]ath of buffer to clipboard")
-nmap("<leader>c<c-l>", [[<cmd>let @+ = expand('%:t') .. ':' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy basename of buffer to clipboard")
+nmap("<leader>cl", [[<cmd>let @+ =  '`' .. expand('%') .. '` line ' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy buffer path with [l]ine number to clipboard")
+nmap("<leader>cL", [[<cmd>let @+ = '`' .. expand('%:p') .. '` line ' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy full buffer path with [l]ine number to clipboard")
+nmap("<leader>c<c-l>", [[<cmd>let @+ = '`' .. expand('%:t') .. '` line ' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy buffer basename with [l]ine number to clipboard")
+
+local copy_path_to_clipboard = function(path)
+  local sel_start = vim.fn.line("'<")
+  local sel_end = vim.fn.line("'>")
+  local text = string.format("`%s` lines %s-%s", path, sel_start, sel_end)
+  vim.print("Copied to clipboard: " .. text)
+  vim.fn.setreg("+", text)
+end
+vmap("<leader>cl", function()
+  copy_path_to_clipboard(vim.fn.expand("%"))
+end, "[c]opy path with [l]ine numbers to clipboard")
+vmap("<leader>cL", function()
+  copy_path_to_clipboard(vim.fn.expand("%:p"))
+end, "[c]opy full path with [l]ine numbers to clipboard")
+vmap("<leader>c<C-l>", function()
+  copy_path_to_clipboard(vim.fn.expand("%:t"))
+end, "[c]opy basename with [l]ine numbers to clipboard")
+
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], {desc = "Exit terminal-mode"})
 nmap("<BS>", "<Del>", "Delete the last digit when entering a number.")
 
