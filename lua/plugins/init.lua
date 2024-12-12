@@ -143,7 +143,7 @@ return {
   {
     "chrisgrieser/nvim-various-textobjs",
     lazy = false,
-    opts = { useDefaultKeymaps = true, disabledKeymaps = { "gw", "gc" } },
+    opts = { keymaps = { useDefaults = true, disabledDefaults = { "gw", "gc" }} },
     config = function(_, opts)
       require("various-textobjs").setup(opts)
       vim.keymap.set(
