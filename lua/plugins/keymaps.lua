@@ -9,10 +9,10 @@ local M = {
     config = function()
       local wk = require("which-key")
       wk.setup({
-      win = {
-        border = "rounded",
-      },
-    })
+        win = {
+          border = "rounded",
+        },
+      })
       wk.add(
         { "gl", group = "Gitlab" }
       )
