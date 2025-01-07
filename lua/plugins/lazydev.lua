@@ -2,6 +2,9 @@ return {
   {
     -- Setup neovim lua configuration
     "folke/lazydev.nvim",
+    enabled = function()
+      return vim.fn.has("nvim-0.10") == 1
+    end,
     ft = "lua",
     opts = {
       library = {
