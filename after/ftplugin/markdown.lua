@@ -5,10 +5,12 @@ nmap(
   function()
     if vim.g.markdownCodeBlockSpell == true then
       vim.cmd.syn('region', 'markdownCodeBlock', 'matchgroup=markdownCodeDelimiter', [[start="^\s*\z(`\{3,\}\).*$"]], [[end="^\s*\z1\ze\s*$"]], 'keepend')
+      vim.cmd.syn('region', 'markdownCode', 'matchgroup=markdownCodeDelimiter', [[start="`"]], [[end="`"]], 'keepend', 'contains=markdownLineStart')
       vim.g.markdownCodeBlockSpell = false
       vim.print("Don't check spelling in markdownCodeBlock.")
     else
       vim.cmd.syn('region', 'markdownCodeBlock', 'matchgroup=markdownCodeDelimiter', [[start="^\s*\z(`\{3,\}\).*$"]], [[end="^\s*\z1\ze\s*$"]], 'keepend', [[contains=@Spell]])
+      vim.cmd.syn('region', 'markdownCode', 'matchgroup=markdownCodeDelimiter', [[start="`"]], [[end="`"]], 'keepend', 'contains=markdownLineStart,@Spell')
       vim.g.markdownCodeBlockSpell = true
       vim.print("Check spelling in markdownCodeBlock.")
     end
