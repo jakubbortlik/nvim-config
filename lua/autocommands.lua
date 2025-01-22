@@ -53,7 +53,7 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
   group = editor_id,
   callback = function()
     if not vim.bo.modifiable then
-      local keymaps_to_delete = { "<P", "<p", ">p", "<s", "<s<ESC>" }
+      local keymaps_to_delete = { "<P", "<p", ">p", "<s", "<s<ESC>", "cm", "cxc", "cx", "cxx", "cs", "cS" }
       for _, keymap in ipairs(keymaps_to_delete) do
           pcall(vim.keymap.del, "n", keymap)
       end
