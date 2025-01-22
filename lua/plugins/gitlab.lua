@@ -86,6 +86,7 @@ return {
         position = discussion_tree_position,
         keep_current_open = true,
         expanded_by_default = { resolved = false, unresolved = true },
+        draft_mode = true,
       },
       discussion_signs = {
         skip_resolved_discussion = true,
