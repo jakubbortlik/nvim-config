@@ -57,6 +57,7 @@ nmap("<leader>cL", [[<cmd>let @+ = '`' .. expand('%:p') .. '` line ' .. line('.'
 nmap("<leader>c<c-l>", [[<cmd>let @+ = '`' .. expand('%:t') .. '` line ' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy buffer basename with [l]ine number to clipboard")
 
 local copy_path_to_clipboard = function(path)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", false, true, true), "nx", false)
   local sel_start = vim.fn.line("'<")
   local sel_end = vim.fn.line("'>")
   local text = string.format("`%s` lines %s-%s", path, sel_start, sel_end)
