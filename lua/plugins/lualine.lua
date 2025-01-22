@@ -82,7 +82,40 @@ return {
       end
       return ""
     end
+
+    local gitlab_extension = {
+      sections = {
+        lualine_a = {
+          {
+            function()
+              local state = require("gitlab.state")
+              return state.INFO and state.INFO.detailed_merge_status
+            end,
+            color = function()
+              local state = require("gitlab.state")
+              if state.INFO ~= nil then
+                local powerline = require("lualine.themes.powerline")
+                return state.INFO.detailed_merge_status == "mergable" and powerline.normal.a or powerline.visual.a
+              else
+                return "unknown"
+              end
+
+            end,
+          }
+        },
+        lualine_b = {
+          {
+            function()
+              local state = require("gitlab.state")
+              return state.INFO.title
+            end
+          },
+        },
+      },
+      filetypes = {'gitlab'},
+    }
     require("lualine").setup({
+      extensions = { gitlab_extension },
       options = {
         theme = "powerline",
       },
