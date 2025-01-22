@@ -3,6 +3,8 @@ local u = require("utils")
 local title_input_width
 local discussion_tree_size
 local discussion_tree_position
+local comment_position = {row = "92%", col = "100%"}
+local comment_opts = {width = 112, height = 30, position = comment_position}
 if vim.o.columns > 170 then
   title_input_width = 120
   discussion_tree_size = 90
@@ -113,6 +115,11 @@ return {
         opacity = 0.75,
         width = "60%",
         temp_registers = { "g", "+" },
+        comment = comment_opts,
+        reply = comment_opts,
+        edit = comment_opts,
+        note = comment_opts,
+        summary = {border = "single", height = "80%", width = "60%"},
       },
       create_mr = {
         title_input = {
