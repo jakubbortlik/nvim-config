@@ -89,6 +89,17 @@ return {
         draft_mode = true,
         sort_by = "original_comment",
       },
+      emojis = {
+        formatter = function(val)
+          local tmux = os.getenv("TMUX")
+          local emoji = val.moji:gsub("^([\226][\152][\157])([\239][\184][\143]?)", tmux and " %1%2 " or "%1%2 ") -- point up
+          emoji = emoji:gsub("^([\226][\156][\140])([\239][\184][\143]?)", tmux and " %1%2 " or "%1%2 ") -- victory
+          emoji = emoji:gsub("^([\226][\156][\141])([\239][\184][\143]?)", tmux and " %1%2 " or "%1%2 ") -- writing hand
+          emoji = emoji:gsub("[\240][\159][\143][\187-\191]", "") -- remove skin tones
+          emoji = emoji:gsub(tmux and "^ " or "^" .. "([\240][\159][\135][\166-\191])  ", tmux and "  %1" or "%1") -- prepend flags with a space
+          return string.format("%s  %s  %s", emoji, val.shortname, val.name)
+        end,
+      },
       discussion_signs = {
         skip_resolved_discussion = true,
         virtual_text = true,
