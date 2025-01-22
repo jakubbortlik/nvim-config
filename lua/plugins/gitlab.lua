@@ -112,7 +112,7 @@ return {
       popup = {
         opacity = 0.75,
         width = "60%",
-        temp_registers = { '"', "g", "+" },
+        temp_registers = { "g", "+" },
       },
       create_mr = {
         title_input = {
