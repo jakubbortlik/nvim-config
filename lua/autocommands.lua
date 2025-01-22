@@ -60,3 +60,16 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
     end
   end
 })
+
+vim.api.nvim_create_autocmd("User", {
+  pattern = "TelescopePreviewerLoaded",
+  callback = function(args)
+    if args.data ~= nil then
+      if args.data.filetype ~= "help" then
+        vim.wo.number = true
+      elseif args.data.bufname:match("*.csv") then
+        vim.wo.wrap = false
+      end
+    end
+  end,
+})
