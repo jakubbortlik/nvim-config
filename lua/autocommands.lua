@@ -73,3 +73,16 @@ vim.api.nvim_create_autocmd("User", {
     end
   end,
 })
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'GitSignsChanged',
+  callback = function()
+    local fugitive_bufnr = vim.fn.bufnr("fugitive://")
+    if fugitive_bufnr == -1 then
+      return
+    end
+    vim.api.nvim_buf_call(fugitive_bufnr, function()
+      vim.cmd("G")
+    end)
+  end
+})
