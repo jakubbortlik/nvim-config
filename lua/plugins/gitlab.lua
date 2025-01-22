@@ -71,7 +71,7 @@ return {
           create_comment_nowait = true,
         },
         discussion_tree = {
-          switch_view_nowait = true,
+          switch_view = "C",
         },
       },
       attachment_dir = vim.fn.expand("$HOME") .. "/Screenshots",
