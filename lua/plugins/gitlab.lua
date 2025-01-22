@@ -25,6 +25,7 @@ return {
   enabled = u.host_jakub(),
   keys = {
     { "gl<C-r>", desc = "Gitlab Restart Server" },
+    { "gl<C-a>", desc = "Show eligible approvers" },
     { "glA", desc = "Approve MR" },
     { "glC", desc = "Create MR" },
     { "glD", desc = "Toggle MR comment draft mode" },
@@ -118,6 +119,7 @@ return {
       view = { default = { layout = "diff2_vertical" } },
     })
 
+    u.nmap("gl<C-a>", "<cmd>!glab mr approvers<cr>", "Show eligible approvers")
     u.nmap("glL", function()
       vim.cmd("tab new " .. vim.print(gitlab.state.settings.log_path))
     end, "Open gitlab.nvim.log in a new tab")
