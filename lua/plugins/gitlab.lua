@@ -74,7 +74,7 @@ return {
           switch_view_nowait = true,
         },
       },
-      attachment_dir = vim.fn.expand("$HOME") .. "/Pictures",
+      attachment_dir = vim.fn.expand("$HOME") .. "/Screenshots",
       reviewer_settings = {
         jump_with_no_diagnostics = true,
         diffview = {
