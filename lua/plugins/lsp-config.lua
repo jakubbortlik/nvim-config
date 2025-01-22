@@ -74,7 +74,7 @@ local M = {
         nmap("<leader>cf", vim.lsp.buf.format, "[c]ode action: [f]ormat current buffer")
 
         nmap("gd", vim.lsp.buf.definition, "[g]oto [d]efinition")
-        nmap("gD", "<cmd>tab split | lua vim.lsp.buf.definition()<cr>", "[g]o to [D]efinition in new tab")
+        nmap("gD", "<cmd>normal! gd<cr>", "[g]o to local [D]efinition")
         nmap("g<C-d>", telescope_builtin.lsp_definitions, "[g]oto [d]efinitions with telescope")
         nmap("gr", telescope_builtin.lsp_references, "[g]oto [r]eferences")
         nmap("gR", vim.lsp.buf.references, "Show [R]eferences in quickfix")
