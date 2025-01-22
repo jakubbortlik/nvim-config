@@ -130,8 +130,8 @@ local M = {
       { "<leader>vc", "<cmd>DiffviewClose<cr>", desc = "Run Diff[v]iew[C]lose"},
       { "<leader>vH", ":DiffviewFileHistory --no-merges", desc = "Prepopulate commandline with Diff[v]iewFile[H]istory"},
       { "<leader>vh", "<cmd>DiffviewFileHistory --no-merges %<cr>", desc = "Run Diff[v]iewFile[H]istory for current file"},
+      { "<leader>vo", "<cmd>DiffviewFileHistory --range=origin..HEAD<cr>", desc = "Run Diff[v]iewFile[H]istory for origin..HEAD"},
       { "<leader>vm", "<cmd>DiffviewOpen --no-merges " .. get_main() .. "<cr>", desc = "Run Diff[v]iew[O]pen"},
-      { "<leader>vo", ":DiffviewOpen --no-merges ", desc = "Prepopulate commandline with Diff[v]iew[O]pen"},
       { "<leader>vr", "<cmd>DiffviewRefresh<cr>", desc = "Run Diff[v]iew[R]efresh"},
     },
     cmd = {
