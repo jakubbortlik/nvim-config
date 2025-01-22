@@ -87,6 +87,7 @@ return {
         keep_current_open = true,
         expanded_by_default = { resolved = false, unresolved = true },
         draft_mode = true,
+        sort_by = "original_comment",
       },
       discussion_signs = {
         skip_resolved_discussion = true,
