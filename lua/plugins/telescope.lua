@@ -35,7 +35,13 @@ local M = {
             sort_lastused = true,
             mappings = {
               i = {
-                ["<c-k>"] = "delete_buffer",
+                ["<c-k><c-o>"] = "delete_buffer",
+                ["<c-s>"] = function()
+                  local selection = action_state.get_selected_entry()
+                  vim.api.nvim_buf_call(selection.bufnr, function()
+                    vim.cmd.update()
+                  end)
+                end,
               }
             }
           }
