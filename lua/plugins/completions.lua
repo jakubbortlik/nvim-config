@@ -141,7 +141,8 @@ local M = {
         { name = "path" },
         { name = "treesitter" },
         { name = "git" },
-        { name = "lazydev", group_index = 0} -- set group index to 0 to skip loading LuaLS completions
+        { name = "lazydev", group_index = 0}, -- set group index to 0 to skip loading LuaLS completions
+        { name = "conventionalcommits" },
       },
       sorting = {
         comparators = {
@@ -168,15 +169,6 @@ local M = {
         { name = "dap" },
         { name = "buffer" },
       },
-    })
-    cmp.setup.filetype("gitcommit", {
-      sources = cmp.config.sources({
-        { name = "git" }, -- You can specify the `git` source if [you have installed it](https://github.com/petertriho/cmp-git).
-      }, {
-        { name = "buffer" },
-      }, {
-        { name = "conventionalcommits" },
-      }),
     })
     local format = require("cmp_git.format")
     local sort = require("cmp_git.sort")
