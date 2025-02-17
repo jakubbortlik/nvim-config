@@ -24,6 +24,7 @@ return {
     "stevearc/dressing.nvim",
     "nvim-tree/nvim-web-devicons", -- not required
   },
+  lazy = false,
   enabled = u.host_jakub(),
   keys = {
     { "gl<C-r>", desc = "Gitlab Restart Server" },
