@@ -4,8 +4,6 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
   },
-  config = function()
-    require("gentags").setup({})
-  end,
+  config = true,
   event = "VeryLazy",
 }
