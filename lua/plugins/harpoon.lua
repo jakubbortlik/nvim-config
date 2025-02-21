@@ -11,6 +11,7 @@ return {
     harpoon:setup()
     local harpoon_extensions = require("harpoon.extensions")
     harpoon:extend(harpoon_extensions.builtins.highlight_current_file())
+    nmap("<leader>ha", function()
       harpoon:list():add()
     end, "Add file to Harpoon list")
     nmap("<C-h>", function()
