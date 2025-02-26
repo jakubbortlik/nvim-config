@@ -2,7 +2,6 @@ local M = {
   {
     "folke/which-key.nvim", -- Show pending keybinds
     dependencies = {
-      "echasnovski/mini.icons",
       "nvim-tree/nvim-web-devicons",
     },
     event = "VeryLazy",
