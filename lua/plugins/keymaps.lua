@@ -123,8 +123,8 @@ end
 nmap("<leader>ds", vim.diagnostic.show, "Show diagnostic message")
 
 -- Keymaps for easier work with messages
-nmap("<leader>me", "<cmd>messages<cr>", "View previously given messages")
-nmap("<leader>mc", "<cmd>messages clear<cr>", "Clear all messages")
+nmap("<leader>mv", "<cmd>messages<cr>", "[m]essages [v]iew")
+nmap("<leader>mc", "<cmd>messages clear<cr>", "[m]essages [c]lear")
 nmap(
   "<leader>mt",
   function()
