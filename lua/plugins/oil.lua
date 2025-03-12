@@ -25,8 +25,6 @@ return {
       ["<C-.>"] = ": <Home>",
     },
   },
-  event = { "ModeChanged" },
-  keys = {"-"},
   -- Optional dependencies
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function(_, opts)
