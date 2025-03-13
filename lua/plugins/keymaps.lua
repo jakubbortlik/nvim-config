@@ -5,13 +5,17 @@ local M = {
       "nvim-tree/nvim-web-devicons",
     },
     event = "VeryLazy",
-    config = function()
+    opts = {
+      delay = function(ctx)
+        return ctx.plugin and 0 or 300
+      end,
+      win = {
+        border = "rounded",
+      },
+    },
+    config = function(_, opts)
       local wk = require("which-key")
-      wk.setup({
-        win = {
-          border = "rounded",
-        },
-      })
+      wk.setup(opts)
       wk.add(
         { "gl", group = "Gitlab" }
       )
