@@ -69,16 +69,12 @@ local M = {
 
         local telescope_builtin = require("telescope.builtin")
 
-        nmap("<leader>rn", vim.lsp.buf.rename, "[r]e[n]ame")
-        nmap("<leader>ca", vim.lsp.buf.code_action, "[c]ode [a]ction")
         nmap("<leader>cf", vim.lsp.buf.format, "[c]ode action: [f]ormat current buffer")
 
         nmap("gd", vim.lsp.buf.definition, "[g]oto [d]efinition")
         nmap("gD", "<cmd>normal! gd<cr>", "[g]o to local [D]efinition")
         nmap("g<C-d>", telescope_builtin.lsp_definitions, "[g]oto [d]efinitions with telescope")
-        nmap("gr", telescope_builtin.lsp_references, "[g]oto [r]eferences")
-        nmap("gR", vim.lsp.buf.references, "Show [R]eferences in quickfix")
-        nmap("gi", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+        nmap("grR", telescope_builtin.lsp_references, "[g]oto [r]eferences")
         nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
 
         nmap("<leader>ss", telescope_builtin.lsp_document_symbols, "[s]earch document [s]ymbols")
