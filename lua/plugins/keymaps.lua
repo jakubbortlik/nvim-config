@@ -94,7 +94,9 @@ nmap(
   function()
     local active_clients = vim.lsp.get_clients()
     if next(active_clients) ~= nil then
-      vim.print(active_clients[1].server_capabilities)
+      for _, client in ipairs(active_clients) do
+        vim.print(client.name, client.server_capabilities)
+      end
     else
       vim.notify("No active LSP client is available.", vim.log.levels.WARN)
     end
