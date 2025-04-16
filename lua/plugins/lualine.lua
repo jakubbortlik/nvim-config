@@ -58,7 +58,7 @@ end
 
 return {
   "nvim-lualine/lualine.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons", "Exafunction/codeium.vim", "nvim-neotest/neotest" },
+  dependencies = { "nvim-tree/nvim-web-devicons", "Exafunction/windsurf.vim", "nvim-neotest/neotest" },
   config = function()
     local codeium_status = function()
       return "{…}" .. vim.api.nvim_call_function("codeium#GetStatusString", {})

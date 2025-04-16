@@ -1,7 +1,7 @@
 local u = require("utils")
 
 local M = {
-  "Exafunction/codeium.vim",
+  "Exafunction/windsurf.vim",
   enabled = u.host_jakub(),
   event = "BufEnter",
   config = function()
