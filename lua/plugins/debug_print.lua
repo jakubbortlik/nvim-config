@@ -1,8 +1,12 @@
-local nmap = require("utils").nmap
-
 return {
   "andrewferrier/debugprint.nvim",
-  opts = {},
+  opts = {
+    keymaps = {
+      normal = {
+        delete_debug_prints = "g?d",
+      }
+    }
+  },
   dependencies = {
       "nvim-treesitter/nvim-treesitter" -- Needed to enable treesitter for NeoVim 0.8
   },
@@ -15,9 +19,4 @@ return {
     {"g?o"},
     {"g?O"},
   },
-  config = function(_, opts)
-    local debugprint = require("debugprint")
-    debugprint.setup({opts})
-    nmap("g?d", debugprint.deleteprints, "Delete all debug lines in buffer")
-  end
 }
