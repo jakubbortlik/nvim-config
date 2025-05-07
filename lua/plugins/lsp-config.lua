@@ -6,7 +6,7 @@ local M = {
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       {
-        "williamboman/mason.nvim",
+        "mason-org/mason.nvim",
         keys = { { "<leader>ma", "<cmd>Mason<cr>", desc = "Mason" } },
         config = function()
           require("mason").setup({
@@ -14,14 +14,14 @@ local M = {
           })
         end,
       },
-      "williamboman/mason-lspconfig.nvim",
+      "mason-org/mason-lspconfig.nvim",
       "SmiteshP/nvim-navic",
       "hrsh7th/cmp-nvim-lsp", -- Add LSP completion capabilities
       {
         "WhoIsSethDaniel/mason-tool-installer.nvim", -- autoinstall non-LSP tools
         dependencies = {
-          "williamboman/mason.nvim",
-          "williamboman/mason-lspconfig.nvim",
+          "mason-org/mason.nvim",
+          "mason-org/mason-lspconfig.nvim",
         },
         config = function()
           require("mason-tool-installer").setup({
