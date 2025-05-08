@@ -7,6 +7,7 @@ local M = {
       "nvim-lua/plenary.nvim",
       "nyarthan/telescope-code-actions.nvim",
       'nvim-telescope/telescope-ui-select.nvim',
+      "xiyaowong/telescope-emoji.nvim",
       -- Fuzzy Finder Algorithm which requires local dependencies to be built.
       -- Only load if `make` is available. Make sure you have the system
       -- requirements installed.
