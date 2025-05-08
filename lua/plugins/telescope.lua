@@ -43,7 +43,7 @@ local M = {
               i = {
                 ["<c-k><c-o>"] = "delete_buffer",
                 ["<c-s>"] = function()
-                  local selection = action_state.get_selected_entry()
+                  local selection = actions.state.get_selected_entry()
                   vim.api.nvim_buf_call(selection.bufnr, function()
                     vim.cmd.update()
                   end)
@@ -60,19 +60,22 @@ local M = {
       })
       pcall(telescope.load_extension, "fzf")          -- Enable telescope fzf native, if installed
       pcall(telescope.load_extension, "code_actions") -- Enable telescope code actions, if installed
-      pcall(telescope.load_extension, "ui-select")    -- Enable telescope code actions, if installed
+      pcall(telescope.load_extension, "ui-select")    -- Enable telescope for UI selection if installed
+      pcall(telescope.load_extension, "emoji")
       local builtin = require("telescope.builtin")
 
-      local nmap = function(keys, func, desc)
+      local keymap = function(keys, func, desc, mode)
+        mode = mode ~= nil and mode or "n"
         if desc then
           desc = "Telescope: " .. desc
         end
-        vim.keymap.set("n", keys, func, { desc = desc })
+        vim.keymap.set(mode, keys, func, { desc = desc })
       end
 
-      nmap("<leader>?", builtin.oldfiles, "[?] Find recently opened files")
-      nmap("<leader><space>", builtin.buffers, "[ ] Find existing buffers")
-      nmap("<leader>/", function()
+      keymap("<leader>te", ":Telescope ", "Fill the commnd line with :Telescope")
+      keymap("<leader>?", builtin.oldfiles, "[?] Find recently opened files")
+      keymap("<leader><space>", builtin.buffers, "[ ] Find existing buffers")
+      keymap("<leader>/", function()
         -- You can pass additional configuration to telescope to change theme, layout, etc.
         builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
           winblend = 10,
@@ -80,14 +83,17 @@ local M = {
         }))
       end, "[/] Fuzzily search in current buffer")
 
-      nmap("<leader>sd", builtin.diagnostics, "[s]earch [d]iagnostics")
-      nmap("<leader>sf", builtin.find_files, "[s]earch [f]iles")
-      nmap("<leader>sG", builtin.git_files, "[s]earch [G]it files")
-      nmap("<leader>sg", builtin.live_grep, "[s]earch by [g]rep")
-      nmap("<leader>sh", builtin.help_tags, "[s]earch [h]elp")
-      nmap("<leader>sr", builtin.resume, "[s]earch - [r]esume")
-      nmap("<leader>sw", builtin.grep_string, "[s]earch current [w]ord")
-      nmap("<leader>sz",
+      keymap("<leader>sd", builtin.diagnostics, "[s]earch [d]iagnostics")
+      keymap("<leader>sf", builtin.find_files, "[s]earch [f]iles")
+      keymap("<leader>sF", builtin.git_files, "[s]earch [F]iles relative to Git repo")
+      keymap("<leader>sg", builtin.live_grep, "[s]earch by [g]rep")
+      keymap("<leader>sG", function()
+        builtin.live_grep({ cwd = "../../" })
+      end, "[s]earch by [G]rep relative to Git repo")
+      keymap("<leader>sh", builtin.help_tags, "[s]earch [h]elp")
+      keymap("<leader>sr", builtin.resume, "[s]earch - [r]esume")
+      keymap("<leader>sw", builtin.grep_string, "[s]earch current [w]ord", {"n", "v"})
+      keymap("<leader>sz",
         function()
           builtin.grep_string({
             shorten_path = true,
