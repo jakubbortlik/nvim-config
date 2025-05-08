@@ -15,6 +15,10 @@ local M = {
       { "<C-g>d", ":Gdiffsplit ", desc = "Prepopulate commandline with [G][d]iffsplit"},
       { "<C-g>v", ":Gvdiffsplit ", desc = "Prepopulate commandline with [G][v]diffsplit"},
       { "<leader>gb", "<cmd>GBrowse<cr>", desc = "Run GBrowse"},
+      { "<leader>gB", "<cmd>GBrowse!<cr>", desc = "Run GBrowse"},
+      { "<leader>gb", ":'<,'>GBrowse<cr>", mode = "v", desc = "Run GBrowse"},
+      { "<leader>gB", ":'<,'>GBrowse!<cr>", mode = "v", desc = "Run GBrowse"},
+      { "<leader>gp", "<cmd>G pull<cr>", desc = "Run G pull"},
     },
     cmd = {
       "G",
