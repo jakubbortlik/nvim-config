@@ -28,6 +28,11 @@ local M = {
           dynamic_preview_title = true,
         },
         pickers = {
+          live_grep = {
+            mappings = {
+              i = { ["<c-;>"] = actions.to_fuzzy_refine },
+            },
+          },
           lsp_references = {
             show_line = false,
           },
