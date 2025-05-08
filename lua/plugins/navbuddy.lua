@@ -1,6 +1,6 @@
 -- Navigation in a popup window using LSP
 return {
-  "SmiteshP/nvim-navbuddy",
+  "hasansujon786/nvim-navbuddy",
   dependencies = {
     "neovim/nvim-lspconfig",
     "SmiteshP/nvim-navic",
