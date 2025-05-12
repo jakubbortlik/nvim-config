@@ -36,3 +36,4 @@ vim.opt.undofile = true
 vim.opt.updatetime = 50
 vim.opt.wildmode = "longest,full"
 vim.opt.shada:append("r/media")
+vim.opt.winborder = "rounded"
