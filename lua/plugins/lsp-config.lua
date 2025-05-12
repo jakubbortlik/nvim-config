@@ -69,7 +69,7 @@ local M = {
 
         local telescope_builtin = require("telescope.builtin")
 
-        nmap("<leader>cf", vim.lsp.buf.format, "[c]ode action: [f]ormat current buffer")
+        nmap("grf", vim.lsp.buf.format, "[c]ode action: [f]ormat current buffer")
 
         nmap("gd", vim.lsp.buf.definition, "[g]oto [d]efinition")
         nmap("gD", "<cmd>normal! gd<cr>", "[g]o to local [D]efinition")
@@ -160,15 +160,7 @@ local M = {
       })
 
       -- Put nice borders around lsp-related floating windows
-      local _border = "rounded"
-      require('lspconfig.ui.windows').default_options = { border = _border }
-      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-        vim.lsp.handlers.hover, { border = _border }
-      )
-      vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-        vim.lsp.handlers.signature_help, { border = _border }
-      )
-      vim.diagnostic.config({ float = { border = _border } })
+      vim.diagnostic.config({ float = { border =  "rounded" } })
     end,
   },
   -- Non-lsp tools
