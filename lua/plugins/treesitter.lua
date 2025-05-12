@@ -7,7 +7,7 @@ return {
       {
         "nvim-treesitter/nvim-treesitter-textobjects",
         init = function()
-          -- PERF: no need to load the plugin, if we only need its queries for mini.ai
+          -- PERF: no need to load the plugin, if we only need its opts
           local plugin = require("lazy.core.config").spec.plugins["nvim-treesitter"]
           local opts = require("lazy.core.plugin").values(plugin, "opts", false)
           local enabled = false
@@ -43,6 +43,7 @@ return {
         "gitcommit",
         "gitignore",
         "git_rebase",
+        "go",
         "html",
         "java",
         "javascript",
@@ -81,6 +82,64 @@ return {
         additional_vim_regex_highlighting = { "org" },
       },
       indent = { enable = true, disable = { "python" } },
+      textobjects = {
+        select = {
+          enable = true,
+          lookahead = true, -- Automatically jump forward to textobjects
+          keymaps = {
+            ["aa"] = { query = "@parameter.outer", desc = "Select outer parameter region" },
+            ["ia"] = { query = "@parameter.inner", desc = "Select inner parameter region" },
+            ["af"] = { query = "@function.outer", desc = "Select outer function region" },
+            ["if"] = { query = "@function.inner", desc = "Select inner function region" },
+            ["ac"] = { query = "@class.outer", desc = "Select outer class region" },
+            ["ic"] = { query = "@class.inner", desc = "Select inner class region" },
+            ["aP"] = { query = "@parameter.outer", desc = "Select outer parameter region" },
+            ["iP"] = { query = "@parameter.inner", desc = "Select inner parameter region" },
+            ["aI"] = { query = "@conditional.outer", desc = "Select outer conditional region" },
+            ["iI"] = { query = "@conditional.inner", desc = "Select inner conditional region" },
+            ["al"] = { query = "@loop.outer", desc = "Select outer loop region" },
+            ["il"] = { query = "@loop.inner", desc = "Select inner loop region" },
+            ["at"] = { query = "@comment.outer", desc = "Select outer comment region" },
+            ["it"] = { query = "@comment.inner", desc = "Select inner comment region" },
+          },
+          selection_modes = {
+            ['@parameter.outer'] = 'v', -- charwise
+            ['@function.outer'] = 'V',  -- linewise
+            ['@class.outer'] = 'V',
+            ['@loop.outer'] = 'V',
+            ['@loop.inner'] = 'V',
+          },
+        },
+        move = {
+          enable = true,
+          set_jumps = true, -- whether to set jumps in the jumplist
+          disable = {"help"},
+          goto_next = {
+            ["]i"] = "@conditional.inner",
+          },
+          goto_previous = {
+            ["[i"] = "@conditional.inner",
+          },
+          goto_next_start = {
+            ["]m"] = "@function.outer",
+            ["]]"] = "@class.outer",
+            ["]o"] = "@loop.outer",
+          },
+          goto_next_end = {
+            ["]M"] = "@function.outer",
+            ["]["] = "@class.outer",
+          },
+          goto_previous_start = {
+            ["[m"] = "@function.outer",
+            ["[["] = "@class.outer",
+            ["[o"] = "@loop.outer",
+          },
+          goto_previous_end = {
+            ["[M"] = "@function.outer",
+            ["[]"] = "@class.outer",
+          },
+        },
+      },
       incremental_selection = {
         enable = true,
         disable = function()
