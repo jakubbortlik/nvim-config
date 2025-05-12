@@ -16,6 +16,11 @@ M.vmap = function(keys, func, desc, buffer)
   vim.keymap.set("v", keys, func, { desc = desc, buffer = buffer })
 end
 
+-- Simplify insert mode mappings
+M.imap = function(keys, func, desc, buffer)
+  vim.keymap.set("i", keys, func, { desc = desc, buffer = buffer })
+end
+
 ---Return the path to the Python executable within the `VIRTUAL_ENV`, default to system
 ---Python.
 M.python_path = function()
