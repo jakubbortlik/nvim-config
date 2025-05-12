@@ -160,7 +160,7 @@ local M = {
           -- formatters
           null_ls.builtins.formatting.buf,         -- Protobuf formatting
           null_ls.builtins.formatting.mdformat,
-          null_ls.builtins.formatting.prettierd,
+          null_ls.builtins.formatting.prettierd.with({ filetypes = { "javascript", "typescript", "markdown" } }),
           null_ls.builtins.formatting.stylua.with({
             extra_args = {
             "--column-width=120 --line-endings=Unix --indent-type=Spaces --indent-width=2 --quote-style=AutoPreferDouble --call-parentheses=Always --collapse-simple-statement=Never"
