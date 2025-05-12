@@ -134,7 +134,7 @@ return {
     require("diffview").setup({
       commit_log_panel = {
         win_config = function()
-          return { type = "float", border = "rounded", }
+          return { type = "float", border = u.border, }
         end
       },
       view = { default = { layout = "diff2_vertical" } },

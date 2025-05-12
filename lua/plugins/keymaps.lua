@@ -1,3 +1,5 @@
+local u = require("utils")
+
 local M = {
   {
     "folke/which-key.nvim", -- Show pending keybinds
@@ -10,7 +12,7 @@ local M = {
         return ctx.plugin and 0 or 300
       end,
       win = {
-        border = "rounded",
+        border = u.border,
       },
     },
     config = function(_, opts)

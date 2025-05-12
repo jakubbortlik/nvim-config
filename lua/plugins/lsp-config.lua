@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 local M = {
   -- lspconfig
   {
@@ -10,7 +12,7 @@ local M = {
         keys = { { "<leader>ma", "<cmd>Mason<cr>", desc = "Mason" } },
         config = function()
           require("mason").setup({
-            ui = { border = "rounded" },
+            ui = { border = utils.border },
           })
         end,
       },
@@ -158,9 +160,6 @@ local M = {
           })
         end,
       })
-
-      -- Put nice borders around lsp-related floating windows
-      vim.diagnostic.config({ float = { border =  "rounded" } })
     end,
   },
   -- Non-lsp tools

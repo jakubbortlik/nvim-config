@@ -1,3 +1,5 @@
+local u = require("utils")
+
 return {
   -- "A universal set of defaults"
   "tpope/vim-sensible",
@@ -106,7 +108,7 @@ return {
     config = function()
       require("registers").setup({
         show_empty = false,
-        window = { border = "rounded" },
+        window = { border = u.border },
       })
     end,
   },
