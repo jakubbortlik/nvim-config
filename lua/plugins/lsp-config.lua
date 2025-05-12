@@ -9,6 +9,7 @@ local M = {
       -- Automatically install LSPs to stdpath for neovim
       {
         "mason-org/mason.nvim",
+        version = "1.11.0",
         keys = { { "<leader>ma", "<cmd>Mason<cr>", desc = "Mason" } },
         config = function()
           require("mason").setup({
@@ -16,7 +17,7 @@ local M = {
           })
         end,
       },
-      "mason-org/mason-lspconfig.nvim",
+      {"mason-org/mason-lspconfig.nvim", version = "1.32.0" },
       "SmiteshP/nvim-navic",
       "hrsh7th/cmp-nvim-lsp", -- Add LSP completion capabilities
       {
