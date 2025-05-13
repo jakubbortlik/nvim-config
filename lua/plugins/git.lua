@@ -1,5 +1,7 @@
 -- Git related plugins
 
+local u = require("utils")
+
 local get_main = require("utils").get_main
 
 local M = {
@@ -71,7 +73,7 @@ local M = {
     config = function()
       require('gitsigns').setup({
         preview_config = {
-          border = "rounded",
+          border = u.border,
         },
         on_attach = function(bufnr)
           local gs = package.loaded.gitsigns
@@ -151,7 +153,7 @@ local M = {
       require("diffview").setup({
         commit_log_panel = {
           win_config = function()
-            return { type = "float", border = "rounded", }
+            return { type = "float", border = u.border, }
           end
         },
         view = { default = { layout = "diff2_vertical" } }
