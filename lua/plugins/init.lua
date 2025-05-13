@@ -239,32 +239,6 @@ return {
     end,
   },
   {
-    "RRethy/vim-illuminate", -- Highlight references
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {
-      delay = 0,
-      providers = { "lsp", "treesitter", "regex" },
-      filetypes_denylist = {
-        "codecompanion",
-        "csv",
-        "dirvish",
-        "fugitive",
-        "json",
-        "phxstm",
-        "text",
-        "tsv",
-        "txt",
-      },
-      large_file_cutoff = 2000,
-      large_file_overrides = {
-        providers = { "regex" },
-      },
-    },
-    config = function(_, opts)
-      require("illuminate").configure(opts)
-    end,
-  },
-  {
     "petertriho/nvim-scrollbar",
     dependencies = { "kevinhwang91/nvim-hlslens" },
     config = function()
