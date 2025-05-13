@@ -18,3 +18,24 @@ nmap(
   "Enable spelling in markdown code block",
   0
 )
+
+local make_filename = function(filename, index)
+  return vim.fn.expand("$HOME") .. "/Screenshots/" .. filename .. index .. ".png"
+end
+
+nmap(
+  "gLP",
+  function()
+    local filename = "screenshot_"
+    local index = 1
+    while vim.fn.filereadable(make_filename(filename, index)) == 1 do
+      index = index + 1
+    end
+    filename = make_filename(filename, index)
+    vim.fn.system("wl-paste > " .. filename )
+    vim.print("Image saved as " .. filename)
+    vim.cmd.normal({ args = { "o" }, bang = true })
+    vim.cmd.normal({ args = { "ZA" }, bang = false })
+  end,
+  "save current clipboard to image"
+)
