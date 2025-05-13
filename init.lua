@@ -44,4 +44,5 @@ local opts = {
 -- Set options, install plugins, and define autocommands:
 require("options")
 require("lazy").setup("plugins", opts)
+require("keymaps")
 require("autocommands")
