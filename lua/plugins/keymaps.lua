@@ -32,7 +32,6 @@ local vmap = require("utils").vmap
 -- Override default behaviour
 nmap("<C-e>", "3<C-E>", "Scroll down more")
 nmap("<C-y>", "3<C-Y>", "Scroll up more")
-nmap("J", "mzJ`z", "Join lines without moving cursor")
 nmap("1<C-g>", "1<C-g>", "Print full path of current file name") -- Otherwise tmux-sessionizer is started
 
 -- Navigation
@@ -76,6 +75,7 @@ nmap("<leader>c<c-p>", [[<cmd>let @+ = expand('%:t') | echo "Copied to clipboard
 nmap("<leader>cl", [[<cmd>let @+ =  '`' .. expand('%') .. '` line ' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy buffer path with [l]ine number to clipboard")
 nmap("<leader>cL", [[<cmd>let @+ = '`' .. expand('%:p') .. '` line ' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy full buffer path with [l]ine number to clipboard")
 nmap("<leader>c<c-l>", [[<cmd>let @+ = '`' .. expand('%:t') .. '` line ' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy buffer basename with [l]ine number to clipboard")
+nmap("g<C-j>", "mzJ`z", "Join lines without moving cursor")
 
 local copy_path_to_clipboard = function(path)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", false, true, true), "nx", false)
