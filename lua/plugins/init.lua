@@ -244,6 +244,17 @@ return {
     opts = {
       delay = 0,
       providers = { "lsp", "treesitter", "regex" },
+      filetypes_denylist = {
+        "codecompanion",
+        "csv",
+        "dirvish",
+        "fugitive",
+        "json",
+        "phxstm",
+        "text",
+        "tsv",
+        "txt",
+      },
       large_file_cutoff = 2000,
       large_file_overrides = {
         providers = { "regex" },
@@ -251,7 +262,6 @@ return {
     },
     config = function(_, opts)
       require("illuminate").configure(opts)
-      vim.g.Illuminate_ftblacklist = { "phxstm", "text", "txt" }
     end,
   },
   {
