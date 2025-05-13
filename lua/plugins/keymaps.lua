@@ -45,6 +45,19 @@ nmap("g<c-t>", "<cmd>tab split | execute 'normal <c-]>'<cr>", "Jump to definitio
 nmap("g<c-v>", "<cmd>vsplit | execute 'normal <c-]>'<cr>", "Jump to definition in new vertical split.")
 nmap("g<c-x>", "<cmd>split | execute 'normal <c-]>'<cr>", "Jump to definition in new horizontal split.")
 nmap("<leader>tc", vim.cmd.tabclose, "Close the current tab")
+nmap("g<c-o>", function()
+  local previous_file = vim.fn.expand('%:p')
+  local jump_count = 0
+  while jump_count < 100 do
+    vim.cmd.normal({args = {""}, bang = true })
+    jump_count = jump_count + 1
+    local current_file = vim.fn.expand('%:p')
+    if current_file ~= previous_file and current_file ~= "" then
+      vim.api.nvim_command("bwipe #")
+      return
+    end
+  end
+end, "Go back to previously visited file and bufwipe current file")
 
 -- Miscellaneous mappings
 vim.keymap.set({ "i", "n", "s", "v" }, "<C-s>", "<cmd>update<cr><esc>", { desc = "[s]ave file" })
