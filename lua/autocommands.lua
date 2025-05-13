@@ -43,19 +43,39 @@ vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter" }, {
 local editor_id = vim.api.nvim_create_augroup("Editor", {
   clear = true
 })
+
 vim.api.nvim_create_autocmd({"TextYankPost"}, {
   group = editor_id,
   callback  = function()
     vim.highlight.on_yank({higroup="IncSearch", timeout=250})
   end
 })
-vim.api.nvim_create_autocmd({"BufEnter", "BufWinEnter"}, {
+
+local mappings = {}
+vim.api.nvim_create_autocmd({"BufEnter"}, {
   group = editor_id,
-  callback = function()
+  callback = function(_)
     if not vim.bo.modifiable then
-      local keymaps_to_delete = { "<P", "<p", ">p", "<s", "<s<ESC>", "cm", "cxc", "cx", "cxx", "cs", "cS" }
+      local keymaps_to_delete = { "<P", "<p", ">p", "<s", "<s<ESC>", "cxc", "cx", "cxx", "cs", "cS" }
       for _, keymap in ipairs(keymaps_to_delete) do
+        local keymap_dict = vim.fn.maparg(keymap, "n", false, true)
+        if keymap_dict["buffer"] == 0 then
+          mappings[keymap] = keymap_dict
           pcall(vim.keymap.del, "n", keymap)
+        end
+      end
+    elseif vim.bo.modifiable then
+      for _, keymap_dict in pairs(mappings) do
+        vim.keymap.set(
+          "n",
+          keymap_dict["lhs"],
+          keymap_dict["rhs"],
+          {
+            noremap = keymap_dict["noremap"],
+            nowait = keymap_dict["nowait"],
+            silent = keymap_dict["silent"]
+          }
+        )
       end
     end
   end
