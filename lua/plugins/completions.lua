@@ -16,6 +16,7 @@ local M = {
     "ray-x/cmp-treesitter",                  -- nvim-cmp source for treesitter nodes
     "rcarriga/cmp-dap",                      -- completion in DAP
     "davidsierradz/cmp-conventionalcommits", -- nvim-cmp source for Conventional Commits
+    "kristijanhusak/vim-dadbod-completion",
 
     "lukas-reineke/cmp-under-comparator",    -- better sorting for magic methods
     "onsails/lspkind.nvim",                  -- Add vscode-like pictograms to LSP
@@ -167,6 +168,12 @@ local M = {
     cmp.setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
       sources = {
         { name = "dap" },
+        { name = "buffer" },
+      },
+    })
+    cmp.setup.filetype({ "sql", "mysql", "plsql" }, {
+      sources = {
+        { name = "vim-dadbod-completion" },
         { name = "buffer" },
       },
     })
