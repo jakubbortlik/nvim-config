@@ -22,7 +22,7 @@ local M = {
       "LiadOz/nvim-dap-repl-highlights",
 
       -- Show variable values as virtual text
-      "theHamsta/nvim-dap-virtual-text",
+      {"theHamsta/nvim-dap-virtual-text", config = true},
       -- Work with breakpoints
       {
         "Weissle/persistent-breakpoints.nvim",
@@ -32,7 +32,7 @@ local M = {
       },
       "ofirgall/goto-breakpoints.nvim",
       -- Automate debug adapter installation
-      "williamboman/mason.nvim",
+      "mason-org/mason.nvim",
       "jay-babu/mason-nvim-dap.nvim",
       -- Add debuggers here:
       "mfussenegger/nvim-dap-python",
@@ -59,8 +59,6 @@ local M = {
       end
 
       require("mason-nvim-dap").setup({
-        -- Makes a best effort to setup the various debuggers with
-        -- reasonable debug configurations
         automatic_setup = true,
         -- TODO: Provide additional configuration to the handlers, see mason-nvim-dap
         -- README for more information.
@@ -151,21 +149,7 @@ local M = {
       -- Dap UI setup
       dapui.setup({
         -- Icons for trees
-        icons = { expanded = "▾", collapsed = "▸", current_frame = "*" },
-        controls = {
-          -- Icons for the REPL
-          icons = {
-            disconnect = "",
-            pause = "",
-            play = "",
-            run_last = "",
-            step_back = "",
-            step_into = "",
-            step_out = "",
-            step_over = "",
-            terminate = "",
-          },
-        },
+        icons = { current_frame = "*" },
         layouts = {
           {
             elements = {
