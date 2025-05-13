@@ -143,6 +143,16 @@ if vim.fn.has("nvim-0.10") ~= 1 then
 end
 nmap("<leader>ds", vim.diagnostic.show, "Show diagnostic message")
 
+nmap(
+  "<leader>dt",
+  function()
+    local config = vim.diagnostic.config() or {}
+    local virtual_lines = not config.virtual_lines
+    vim.diagnostic.config({virtual_lines=virtual_lines})
+  end,
+  "Toggle virtual_lines for diagnostics"
+)
+
 -- Keymaps for easier work with messages
 nmap("<leader>mv", "<cmd>messages<cr>", "[m]essages [v]iew")
 nmap("<leader>mc", "<cmd>messages clear<cr>", "[m]essages [c]lear")
