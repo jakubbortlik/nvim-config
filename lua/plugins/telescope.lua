@@ -1,3 +1,18 @@
+local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
+
+local function focus_preview(prompt_bufnr)
+  local picker = action_state.get_current_picker(prompt_bufnr)
+  local prompt_win = picker.prompt_win
+  local previewer = picker.previewer
+  local bufnr = previewer.state.bufnr or previewer.state.termopen_bufnr
+  local winid = previewer.state.winid or vim.fn.win_findbuf(bufnr)[1]
+  vim.keymap.set("n", "<tab>", function()
+    vim.cmd(string.format("noautocmd lua vim.api.nvim_set_current_win(%s)", prompt_win))
+  end, { buffer = bufnr })
+  vim.cmd(string.format("noautocmd lua vim.api.nvim_set_current_win(%s)", winid))
+end
+
 local M = {
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -26,6 +41,11 @@ local M = {
       telescope.setup({
         defaults = {
           dynamic_preview_title = true,
+          mappings = {
+            n = {
+              ["<Tab>"] = focus_preview,
+            },
+          },
         },
         pickers = {
           live_grep = {
