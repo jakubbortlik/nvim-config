@@ -26,6 +26,7 @@ local M = {
   },
 }
 
+local imap = require("utils").imap
 local nmap = require("utils").nmap
 local vmap = require("utils").vmap
 
@@ -118,6 +119,25 @@ nmap(
   end,
   "print [L]SP server capabilities"
 )
+
+local telescope_builtin = require("telescope.builtin")
+nmap("grf", vim.lsp.buf.format, "vim.lsp.buf.format()")
+nmap("gd", vim.lsp.buf.definition, "vim.lsp.buf.definition()")
+nmap("gD", "<cmd>normal! gd<cr>", "[g]o to local [D]efinition")
+nmap("g<C-d>", telescope_builtin.lsp_definitions, "telescope_builtin.lsp_definitions()")
+nmap("grR", telescope_builtin.lsp_references, "telescope_builtin.lsp_references()")
+nmap("<leader>D", vim.lsp.buf.type_definition, "vim.lsp.buf.type_definition()")
+nmap("<leader>ss", telescope_builtin.lsp_document_symbols, "telescope_builtin.lsp_document_symbols()")
+nmap(
+  "<leader>sW",
+  telescope_builtin.lsp_dynamic_workspace_symbols,
+  "telescope_builtin.lsp_dynamic_workspace_symbols()"
+)
+nmap("K", vim.lsp.buf.hover, "vim.lsp.buf.hover()")
+imap("<C-k>", vim.lsp.buf.signature_help, "vim.lsp.buf.signature_help()")
+nmap("<leader>li", "<cmd>LspInfo<cr>", "Show [L]SP [I]nfo")
+nmap("<leader>lr", "<cmd>LspRestart<cr>", "Restart LSP")
+nmap("<leader>ls", "<cmd>LspStop<cr>", "Stop LSP")
 
 -- Remaps by ThePrimeagen
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Visual mode paste without losing register" })

@@ -55,25 +55,6 @@ local M = {
         if client.server_capabilities.documentSymbolProvider then
           navic.attach(client, bufnr)
         end
-        local telescope_builtin = require("telescope.builtin")
-        u.nmap("grf", vim.lsp.buf.format, "vim.lsp.buf.format()", bufnr)
-        u.nmap("gd", vim.lsp.buf.definition, "vim.lsp.buf.definition()", bufnr)
-        u.nmap("gD", "<cmd>normal! gd<cr>", "[g]o to local [D]efinition", bufnr)
-        u.nmap("g<C-d>", telescope_builtin.lsp_definitions, "telescope_builtin.lsp_definitions()", bufnr)
-        u.nmap("grR", telescope_builtin.lsp_references, "telescope_builtin.lsp_references()", bufnr)
-        u.nmap("<leader>D", vim.lsp.buf.type_definition, "vim.lsp.buf.type_definition()", bufnr)
-        u.nmap("<leader>ss", telescope_builtin.lsp_document_symbols, "telescope_builtin.lsp_document_symbols()", bufnr)
-        u.nmap(
-          "<leader>sW",
-          telescope_builtin.lsp_dynamic_workspace_symbols,
-          "telescope_builtin.lsp_dynamic_workspace_symbols()",
-          bufnr
-        )
-        u.nmap("K", vim.lsp.buf.hover, "vim.lsp.buf.hover()", bufnr)
-        u.imap("<C-k>", vim.lsp.buf.signature_help, "vim.lsp.buf.signature_help()", bufnr)
-        u.nmap("<leader>li", "<cmd>LspInfo<cr>", "Show [L]SP [I]nfo", bufnr)
-        u.nmap("<leader>lr", "<cmd>LspRestart<cr>", "Restart LSP", bufnr)
-        u.nmap("<leader>ls", "<cmd>LspStop<cr>", "Stop LSP", bufnr)
       end
 
       -- Enable the following language servers. They will automatically be installed.
