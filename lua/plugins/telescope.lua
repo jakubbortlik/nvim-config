@@ -119,8 +119,7 @@ local M = {
             shorten_path = true,
             word_match = "-w",
             only_sort_text = true,
-            search =
-            ''
+            search = ''
           })
         end, "[s]earch by grep fu[z]zily")
     end,
