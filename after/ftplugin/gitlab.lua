@@ -1,4 +1,3 @@
-local discussions = require("gitlab.actions.discussions")
 local nmap = require("utils").nmap
 
 local toggle_if_match = function(pattern)
@@ -10,29 +9,66 @@ local toggle_if_match = function(pattern)
   end
 end
 
-nmap("j", [[<Cmd>call search('[] @')<CR>]], "Go to next node", 0)
-nmap("k", [[<Cmd>call search('[] @', 'b')<CR>]], "Go to previous node", 0)
+if vim.g.gitlab_reviewer_follow_node == nil then
+  vim.g.gitlab_reviewer_follow_node = true
+end
+
+nmap("F", function()
+  if vim.g.gitlab_reviewer_follow_node then
+    vim.g.gitlab_reviewer_follow_node = false
+    vim.notify("gitlab.nvim: Don't follow node")
+  else
+    vim.g.gitlab_reviewer_follow_node = true
+    vim.notify("gitlab.nvim: Follow node")
+  end
+end, "Toggle reviewer follow node", 0)
+
+nmap("j", function()
+  vim.cmd.normal("$")
+  vim.fn.search("[] @")
+  vim.cmd.normal("0")
+end, "Go to next node", 0)
+nmap("k", function()
+  vim.fn.search("[] @", "b")
+  vim.cmd.normal("0")
+end, "Go to previous node", 0)
 
 nmap("J", function()
   toggle_if_match("^%s*.*[✓-] ?")
   vim.fn.search([[\(^\s*\)\@<=[].*[✓-] \?]])
   toggle_if_match("^%s*")
+  vim.cmd.normal("zt")
+  if vim.g.gitlab_reviewer_follow_node then
+    vim.cmd.normal("aa")
+  end
 end, "Go to next thread", true)
 nmap("K", function()
   toggle_if_match("^%s*.*[✓-] ?")
   vim.fn.search([[\(^\s*\)\@<=[].*[✓-] \?]], "b")
   toggle_if_match("^%s*")
+  vim.cmd.normal("zt")
+  if vim.g.gitlab_reviewer_follow_node then
+    vim.cmd.normal("aa")
+  end
 end, "Go to previous thread", true)
 
 nmap("<C-j>", function()
   toggle_if_match("^%s*.*[✓-] ?")
   vim.fn.search("[] @\\S*.*[-]")
   toggle_if_match("^%s*")
+  vim.cmd.normal("zt")
+  if vim.g.gitlab_reviewer_follow_node then
+    vim.cmd.normal("aa")
+  end
 end, "Go to next unresolved thread", true)
 nmap("<C-k>", function()
   toggle_if_match("^%s*.*[✓-] ?")
   vim.fn.search("[] @\\S*.*[-]", "b")
   toggle_if_match("^%s*")
+  vim.cmd.normal("zt")
+  if vim.g.gitlab_reviewer_follow_node then
+    vim.cmd.normal("aa")
+  end
 end, "Go to previous unresolved thread", true)
 
 nmap(
