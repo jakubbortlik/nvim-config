@@ -103,23 +103,21 @@ nmap("<BS>", "<Del>", "Delete the last digit when entering a number.")
 vim.keymap.set({"n"}, "n", "/<CR>", {silent = true, desc = "Search forward"})
 vim.keymap.set({"n"}, "N", "?<CR>", {silent = true, desc = "Search backward"})
 
--- TODO: add check that an LSP server is actually attached
-nmap("<leader>L", "<cmd>vertical Verbose lua =vim.lsp.get_active_clients()[1].server_capabilities<cr>", "print [L]SP server capabilities")
+-- LSP-related keymaps
 nmap(
   "<leader>lc",
   function()
     local active_clients = vim.lsp.get_clients()
     if next(active_clients) ~= nil then
       for _, client in ipairs(active_clients) do
-        vim.print(client.name, client.server_capabilities)
+        vim.print(client.name .. ":", client.server_capabilities)
       end
     else
       vim.notify("No active LSP client is available.", vim.log.levels.WARN)
     end
   end,
-  "print [L]SP server capabilities"
+  "[l]ist LSP server [c]apabilities"
 )
-
 local telescope_builtin = require("telescope.builtin")
 nmap("grf", vim.lsp.buf.format, "vim.lsp.buf.format()")
 nmap("gd", vim.lsp.buf.definition, "vim.lsp.buf.definition()")
