@@ -31,10 +31,7 @@ local M = {
         end,
       },
       "ofirgall/goto-breakpoints.nvim",
-      -- Automate debug adapter installation
-      "mason-org/mason.nvim",
-      "jay-babu/mason-nvim-dap.nvim",
-      -- Add debuggers here:
+      -- Add debuggers:
       "mfussenegger/nvim-dap-python",
       "leoluz/nvim-dap-go",
       "jbyuki/one-small-step-for-vimkind",
@@ -58,15 +55,6 @@ local M = {
         })
       end
 
-      require("mason-nvim-dap").setup({
-        automatic_setup = true,
-        -- TODO: Provide additional configuration to the handlers, see mason-nvim-dap
-        -- README for more information.
-        handlers = {},
-        ensure_installed = {
-          "python",
-        },
-      })
       require("nvim-dap-virtual-text").setup({})
 
       local keymap = vim.keymap.set
