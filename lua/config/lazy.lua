@@ -21,8 +21,13 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Specify setup options for lazy.nvim
-local opts = {
+-- Set variables (like mapleader), options, install plugins, set keymaps, and define autocommands
+require("variables")
+require("options")
+require("lazy").setup({
+  spec = {
+    { import = "plugins" },
+  },
   ui = {
     browser = "firefox",
     border = "rounded",
@@ -38,11 +43,6 @@ local opts = {
       },
     },
   },
-}
-
--- Set variables (like mapleader), options, install plugins, set keymaps, and define autocommands:
-require("variables")
-require("options")
-require("lazy").setup("plugins", opts)
+})
 require("keymaps")
 require("autocommands")
