@@ -155,27 +155,3 @@ nmap(
   end,
   "Open [m]essages in new [t]ab"
 )
-
--- Browsing
-local open = function(issue)
-  issue = issue:gsub("[():.,;]", "")
-  if issue:match("^[A-Z]+[-]%d+$") then
-    vim.cmd(
-      "silent !firefox " .. vim.fn.expand("$JIRA_DOMAIN") .. "/browse/" .. issue
-    )
-  end
-end
-
-vim.keymap.set("n", "gX", function()
-  local issue = vim.fn.expand("<cWORD>")
-  open(issue)
-end, { desc = "Open Jira issue", noremap = true})
-
-vim.keymap.set("x", "gX", function()
-  vim.cmd.normal("")
-  local sl, sc = unpack(vim.api.nvim_buf_get_mark(0, "<"))
-  local el, ec = unpack(vim.api.nvim_buf_get_mark(0, ">"))
-  local issue = unpack(vim.api.nvim_buf_get_text(0, sl-1, sc, el-1, ec, {}))
-  open(issue)
-end, { desc = "Open selected Jira issue", noremap = true})
-
