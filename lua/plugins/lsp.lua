@@ -140,6 +140,7 @@ local M = {
         "shellcheck",
         "stylua",
         "textlint",
+        "typescript-language-server",
         "vint",
         "yamllint",
       },
