@@ -206,20 +206,6 @@ return {
     },
     cmd = "UnicodeTable",
   },
-
-  -- highlighting and other visual stuff
-  -- TODO: figure out how to disable folding upon enteing the window
-  --[[ {
-    "tmhedberg/SimpylFold",
-    dependencies = {
-      "Konfekt/FastFold",
-    },
-    config = function()
-      vim.keymap.set("n", "zuz", "<Plug>(FastFoldUpdate)<cr>", { desc = "Update folds" })
-      vim.g.SimpylFold_fold_dosctring = 0
-      vim.g.SimpylFold_fold_import = 0
-    end
-  }, ]]
   {
     "m-demare/hlargs.nvim",
     config = function()
@@ -264,7 +250,6 @@ return {
     opts = {
       enabled = true,
       indent = {
-        -- char = "┆",
         char = "│",
         highlight = { "IBLIndent" },
       },
