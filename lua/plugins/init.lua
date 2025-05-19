@@ -65,21 +65,6 @@ return {
     },
   },
   {
-    "mbbill/undotree", -- Show undo history in a tree
-    keys = { { "<leader>u", "<cmd>UndotreeToggle<cr>", desc = "Toggle UndoTree" } },
-    config = function()
-      vim.g.undotree_WindowLayout = 2
-    end,
-  },
-  {
-    "simnalamburt/vim-mundo",
-    keys = { { "<leader>U", "<cmd>MundoToggle<cr>", desc = "Toggle Mundo Tree" } },
-    config = function()
-      vim.g.mundo_preview_bottom = 1
-      vim.g.mundo_verbose_graph = 0
-    end,
-  },
-  {
     "vim-scripts/linediff.vim", -- Diff two different parts of the same file
     cmd = "Linediff",
   },
