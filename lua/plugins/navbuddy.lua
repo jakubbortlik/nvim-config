@@ -7,7 +7,7 @@ return {
     "neovim/nvim-lspconfig",
     "SmiteshP/nvim-navic",
     "MunifTanjim/nui.nvim",
-    "nvim-telescope/telescope.nvim",
+    "folke/snacks.nvim",
   },
   keys = { { "<leader>nb", "<cmd>Navbuddy<cr>", desc = "Navbuddy" } },
   cmd = "NavBuddy",

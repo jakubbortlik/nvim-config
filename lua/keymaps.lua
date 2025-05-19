@@ -41,7 +41,6 @@ nmap("<leader>cc", "<cmd>cclose<cr>", "[c]lose [c]uickfix window")
 nmap("<leader>la", "<cmd>Lazy<cr>", "Show plugins")
 nmap("<leader>I", "<cmd>Inspect<cr>", "[i]nspect current position")
 nmap("<leader>sa", [[:s/\%>.c]], "[s]ubstitute [a]fter")
-nmap("<leader>su", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], "[s]ubstitute word [u]nder cursor")
 nmap("<leader>cp", [[<cmd>let @+ = expand('%') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy [p]ath of buffer to clipboard")
 nmap("<leader>cP", [[<cmd>let @+ = expand('%:p') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy full [P]ath of buffer to clipboard")
 nmap("<leader>c<c-p>", [[<cmd>let @+ = expand('%:t') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy basename of buffer to clipboard")
@@ -90,19 +89,9 @@ nmap(
   end,
   "[l]ist LSP server [c]apabilities"
 )
-local telescope_builtin = require("telescope.builtin")
+
 nmap("grf", vim.lsp.buf.format, "vim.lsp.buf.format()")
-nmap("gd", vim.lsp.buf.definition, "vim.lsp.buf.definition()")
 nmap("gD", "<cmd>normal! gd<cr>", "[g]o to local [D]efinition")
-nmap("g<C-d>", telescope_builtin.lsp_definitions, "telescope_builtin.lsp_definitions()")
-nmap("grR", telescope_builtin.lsp_references, "telescope_builtin.lsp_references()")
-nmap("<leader>D", vim.lsp.buf.type_definition, "vim.lsp.buf.type_definition()")
-nmap("<leader>ss", telescope_builtin.lsp_document_symbols, "telescope_builtin.lsp_document_symbols()")
-nmap(
-  "<leader>sW",
-  telescope_builtin.lsp_dynamic_workspace_symbols,
-  "telescope_builtin.lsp_dynamic_workspace_symbols()"
-)
 nmap("K", vim.lsp.buf.hover, "vim.lsp.buf.hover()")
 imap("<C-k>", vim.lsp.buf.signature_help, "vim.lsp.buf.signature_help()")
 nmap("<leader>li", "<cmd>LspInfo<cr>", "Show [L]SP [I]nfo")
