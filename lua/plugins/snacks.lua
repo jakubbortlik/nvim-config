@@ -14,7 +14,10 @@ return {
     explorer = { enabled = true },
     indent = { enabled = false, indent = {hl = "IBLIndent"}, animate = { enabled = false }, scope = {} },
     input = { enabled = true },
-    picker = { enabled = true, win = {input = {keys = {["<a-h>"] = "noop" }}} },
+    picker = { enabled = true, win = {input = {keys = {
+      ["<C-j>"] = { "history_forward", mode = { "i", "n" } },
+      ["<C-k>"] = { "history_back", mode = { "i", "n" } },
+    }}} },
     notifier = {
       enabled = true,
       timeout = 5000,
@@ -28,6 +31,7 @@ return {
   },
   keys = {
     -- Top Pickers & Explorer
+    { "<leader>sP", function() Snacks.picker() end, desc = "Buffers" },
     { "<leader><space>", function() Snacks.picker.buffers() end, desc = "Buffers" },
     { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
     { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
