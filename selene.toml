@@ -2,3 +2,7 @@ std="vim"
 
 [lints]
 mixed_table = "allow"
+undefined_variable = "allow"
+
+[config.allowed_globals]
+"Snacks" = true

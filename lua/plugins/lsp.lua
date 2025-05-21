@@ -22,7 +22,7 @@ local server_settings = {
       },
       diagnostics = {
         disable = { "missing-fields" },
-        globals = { "vim" },
+        globals = { "vim", "Snacks" },
       },
       workspace = {
         library = vim.api.nvim_get_runtime_file("", true),
