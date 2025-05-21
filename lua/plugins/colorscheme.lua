@@ -16,6 +16,7 @@ vim.api.nvim_create_autocmd('ColorScheme', {
     set_hl(0, "Substitute", { bg="#c34043", fg="#000000"})
     set_hl(0, "DiffAdd",  { bg="#182015" })
     set_hl(0, "DiffChange", { bg="#151525" })
+    set_hl(0, "SnacksPickerListCursorLine", { link = "Cursorline" })
   end
 })
 
