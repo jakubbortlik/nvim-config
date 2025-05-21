@@ -14,10 +14,28 @@ return {
     explorer = { enabled = true },
     indent = { enabled = false, indent = {hl = "IBLIndent"}, animate = { enabled = false }, scope = {} },
     input = { enabled = true },
-    picker = { enabled = true, win = {input = {keys = {
-      ["<C-j>"] = { "history_forward", mode = { "i", "n" } },
-      ["<C-k>"] = { "history_back", mode = { "i", "n" } },
-    }}} },
+    picker = {
+      enabled = true,
+      win = {input = {keys = {
+        ["<C-j>"] = { "history_forward", mode = { "i", "n" } },
+        ["<C-k>"] = { "history_back", mode = { "i", "n" } },
+        ["<M-h>"] = { "tmux_navigate_left", mode = { "i", "n" } },
+        ["<M-l>"] = { "tmux_navigate_right", mode = { "i", "n" } },
+        ["<M-j>"] = { "tmux_navigate_down", mode = { "i", "n" } },
+        ["<M-k>"] = { "tmux_navigate_up", mode = { "i", "n" } },
+        ["<C-h>"] = { "toggle_hidden", mode = { "i", "n" } },
+      }}},
+      actions = {
+        tmux_navigate = function(_, _, action)
+          local directions = { ["left"] = "-L", ["right"] = "-R", ["down"] = "-D", ["up"] = "-U" }
+          vim.system({"tmux", "select-pane", directions[action.field]})
+        end,
+        tmux_navigate_left = { action = "tmux_navigate", field = "left" },
+        tmux_navigate_right = { action = "tmux_navigate", field = "right" },
+        tmux_navigate_down = { action = "tmux_navigate", field = "down" },
+        tmux_navigate_up = { action = "tmux_navigate", field = "up" },
+      },
+    },
     notifier = {
       enabled = true,
       timeout = 5000,
