@@ -78,14 +78,13 @@ M.registers_opts = {
   actions = {
     linewise_put = function(picker, item, action)
       picker:close()
+      if not vim.o.modifiable then
+        vim.print("Buffer is not modifiable")
+        return
+      end
       if item then
-        local value = item[action.field] or item.data or item.text
-        local after = action and action.field == "after" or false
-        if not vim.o.modifiable then
-          vim.print("Buffer is not modifiable")
-          return
-        end
-        vim.api.nvim_put(vim.split(value, "\n"), "l", after, true)
+        local after = action and action.field == "after"
+        vim.api.nvim_put(vim.split(item.data, "\n"), "l", after, true)
       end
     end,
     linewise_put_after = { action = "linewise_put", field = "after" },
