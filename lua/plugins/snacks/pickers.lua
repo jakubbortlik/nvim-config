@@ -81,6 +81,10 @@ M.registers_opts = {
       if item then
         local value = item[action.field] or item.data or item.text
         local after = action and action.field == "after" or false
+        if not vim.o.modifiable then
+          vim.print("Buffer is not modifiable")
+          return
+        end
         vim.api.nvim_put(vim.split(value, "\n"), "l", after, true)
       end
     end,
