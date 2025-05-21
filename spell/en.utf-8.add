@@ -111,3 +111,6 @@ nginx
 Stringify
 Deepfake
 callable's
+Testability
+Modularity
+Observability
