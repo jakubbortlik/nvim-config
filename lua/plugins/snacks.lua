@@ -14,28 +14,7 @@ return {
     explorer = { enabled = true },
     indent = { enabled = false, indent = {hl = "IBLIndent"}, animate = { enabled = false }, scope = {} },
     input = { enabled = true },
-    picker = {
-      enabled = true,
-      win = {input = {keys = {
-        ["<C-j>"] = { "history_forward", mode = { "i", "n" } },
-        ["<C-k>"] = { "history_back", mode = { "i", "n" } },
-        ["<M-h>"] = { "tmux_navigate_left", mode = { "i", "n" } },
-        ["<M-l>"] = { "tmux_navigate_right", mode = { "i", "n" } },
-        ["<M-j>"] = { "tmux_navigate_down", mode = { "i", "n" } },
-        ["<M-k>"] = { "tmux_navigate_up", mode = { "i", "n" } },
-        ["<C-h>"] = { "toggle_hidden", mode = { "i", "n" } },
-      }}},
-      actions = {
-        tmux_navigate = function(_, _, action)
-          local directions = { ["left"] = "-L", ["right"] = "-R", ["down"] = "-D", ["up"] = "-U" }
-          vim.system({"tmux", "select-pane", directions[action.field]})
-        end,
-        tmux_navigate_left = { action = "tmux_navigate", field = "left" },
-        tmux_navigate_right = { action = "tmux_navigate", field = "right" },
-        tmux_navigate_down = { action = "tmux_navigate", field = "down" },
-        tmux_navigate_up = { action = "tmux_navigate", field = "up" },
-      },
-    },
+    picker = require("plugins.snacks.pickers").default_opts,
     notifier = {
       enabled = true,
       timeout = 5000,
@@ -76,8 +55,7 @@ return {
     { "<leader>sG", function() Snacks.picker.git_grep() end, desc = "Grep" },
     { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
     -- search
-    -- {layout = { preset = "vertical" }}
-    { "<leader>'", function() Snacks.picker.registers() end, desc = "Registers" },
+    { "<c-'>", function() Snacks.picker.registers(require("plugins.snacks.pickers").registers_opts) end, desc = "Registers" },
     { '<leader>s/', function() Snacks.picker.search_history() end, desc = "Search History" },
     { "<leader>sa", function() Snacks.picker.autocmds() end, desc = "Autocmds" },
     { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
