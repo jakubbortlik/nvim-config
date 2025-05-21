@@ -79,13 +79,29 @@ nmap(
   "<leader>lc",
   function()
     local active_clients = vim.lsp.get_clients()
+    local buf = vim.api.nvim_create_buf(false, true)
     if next(active_clients) ~= nil then
+      local lines = {}
       for _, client in ipairs(active_clients) do
-        vim.print(client.name .. ":", client.server_capabilities)
+        table.insert(lines, client.name .. ":")
+        local capabilities_str = vim.inspect(client.server_capabilities)
+        for line in capabilities_str:gmatch("[^\r\n]+") do
+          table.insert(lines, line)
+        end
+        table.insert(lines, "") -- Add an empty line between clients
       end
+
+      -- Set the buffer lines
+      vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
     else
-      vim.notify("No active LSP client is available.", vim.log.levels.WARN)
+      vim.api.nvim_buf_set_lines(buf, 0, -1, false, {"No active LSP client is available."})
     end
+
+    -- Open the buffer in a new window
+    vim.api.nvim_command('split')
+    local win = vim.api.nvim_get_current_win()
+    vim.api.nvim_win_set_buf(win, buf)
+    vim.keymap.set("n", "q", "<cmd>quit<cr>", { buffer = buf })
   end,
   "[l]ist LSP server [c]apabilities"
 )
