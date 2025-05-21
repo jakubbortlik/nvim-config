@@ -108,7 +108,9 @@ return {
     { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
     -- Other
     { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
-    -- { "<leader>Z",   "<cmd>lua Snacks.zen() | set nodiff<cr>", desc = "Toggle Zoom" },
+    { "<leader>Z",  function() Snacks.zen({on_open = function()
+      vim.o.diff = false
+    end}) end, desc = "Toggle Zen Mode without diff" },
     { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
     { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
     { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
