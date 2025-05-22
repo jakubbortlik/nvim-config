@@ -123,11 +123,6 @@ return {
     end,
   },
   {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    config = true,
-  },
-  {
     "chrisgrieser/nvim-various-textobjs",
     lazy = false,
     opts = { keymaps = { useDefaults = true, disabledDefaults = { "gw", "gc" }} },
