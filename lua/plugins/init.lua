@@ -20,7 +20,6 @@ return {
       { "gC",     mode = "n", desc = "Toggle caps lock" },
     },
   },
-  "tommcdo/vim-exchange",    -- Easy exange of two portions of text
   {
     "tpope/vim-speeddating", -- Let <C-A>, <C-X> work on dates properly
     keys = {
