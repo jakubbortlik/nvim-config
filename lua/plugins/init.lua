@@ -205,7 +205,12 @@ return {
   },
   {
     "petertriho/nvim-scrollbar",
-    dependencies = { "kevinhwang91/nvim-hlslens" },
+    dependencies = {
+      "kevinhwang91/nvim-hlslens",
+      config = function()
+        require("scrollbar.handlers.search").setup()
+      end
+    },
     config = function()
       require("scrollbar").setup({
         show_in_active_only = true,
@@ -215,11 +220,6 @@ return {
           blend = 15,
           highlight = "Search",
         },
-      })
-      require("hlslens").setup({
-        build_position_cb = function(plist, _, _, _)
-          require("scrollbar.handlers.search").handler.show(plist.start_pos)
-        end,
       })
     end,
   },
