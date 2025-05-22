@@ -8,11 +8,36 @@ nmap("<C-y>", "3<C-Y>", "Scroll up more")
 nmap("1<C-g>", "1<C-g>", "Print full path of current file name") -- Otherwise tmux-sessionizer is started
 
 -- Navigation
+local tmux_navigate = function(keymap)
+  local cfg = vim.api.nvim_win_get_config(0)
+  local directions = {
+    ["<A-h>"] = { "Left", "-L" },
+    ["<A-l>"] = { "Right", "-R" },
+    ["<A-j>"] = { "Down", "-D" },
+    ["<A-k>"] = { "Up", "-U" },
+  }
+  -- Navigate with Tmux when in a floating window
+  if cfg.external or #cfg.relative ~= 0 then
+    vim.system({ "tmux", "select-pane", directions[keymap][2] })
+  else
+    vim.cmd(string.format("TmuxNavigate%s", directions[keymap][1]))
+  end
+end
+
 vim.cmd [[let g:tmux_navigator_no_mappings = 1]]
-vim.keymap.set({"n", "t"}, "<A-h>", "<cmd>TmuxNavigateLeft<cr>", { silent = true, desc = "Navigate left" })
-vim.keymap.set({"n", "t"}, "<A-j>", "<cmd>TmuxNavigateDown<cr>", { silent = true, desc = "Navigate down" })
-vim.keymap.set({"n", "t"}, "<A-k>", "<cmd>TmuxNavigateUp<cr>", { silent = true, desc = "Navigate up" })
-vim.keymap.set({"n", "t"}, "<A-l>", "<cmd>TmuxNavigateRight<cr>", { silent = true, desc = "Navigate right" })
+vim.keymap.set({"n", "t", "i"}, "<A-h>", function()
+  tmux_navigate("<A-h>")
+end, { silent = true, desc = "Navigate left" })
+vim.keymap.set({"n", "t", "i"}, "<A-j>", function()
+  tmux_navigate("<A-j>")
+end, { silent = true, desc = "Navigate down" })
+vim.keymap.set({"n", "t", "i"}, "<A-k>", function()
+  tmux_navigate("<A-k>")
+end, { silent = true, desc = "Navigate up" })
+vim.keymap.set({"n", "t", "i"}, "<A-l>", function()
+  tmux_navigate("<A-l>")
+end, { silent = true, desc = "Navigate right" })
+
 nmap("g<c-t>", "<cmd>tab split | execute 'normal <c-]>'<cr>", "Jump to definition in new tab.")
 nmap("g<c-v>", "<cmd>vsplit | execute 'normal <c-]>'<cr>", "Jump to definition in new vertical split.")
 nmap("g<c-x>", "<cmd>split | execute 'normal <c-]>'<cr>", "Jump to definition in new horizontal split.")
