@@ -125,14 +125,6 @@ return {
     "chrisgrieser/nvim-various-textobjs",
     lazy = false,
     opts = { keymaps = { useDefaults = true, disabledDefaults = { "gw", "gc" }} },
-    config = function(_, opts)
-      require("various-textobjs").setup(opts)
-      vim.keymap.set(
-        "o",
-        "gc",
-        "<cmd>lua require('various-textobjs').multiCommentedLines()<CR>"
-      )
-    end,
   },
 
   -- Navigation
