@@ -116,7 +116,7 @@ return {
             function()
               local state = require("gitlab.state")
               local status = state.INFO.pipeline.status ~= nil and state.INFO.pipeline.status or "unknown"
-              return "Pipeline: " .. status
+              return " " .. status
             end
           }
         }
