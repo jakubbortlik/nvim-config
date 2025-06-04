@@ -29,7 +29,7 @@ return {
   keys = {
     -- Top Pickers & Explorer
     { "<leader>sP", function() Snacks.picker() end, desc = "Buffers" },
-    { "<leader><space>", function() Snacks.picker.buffers() end, desc = "Buffers" },
+    { "<leader><space>", function() Snacks.picker.buffers(require("plugins.snacks.pickers").buffers_opts) end, desc = "Buffers" },
     { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
     { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
     { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },

@@ -9,6 +9,7 @@ M.default_opts = {
         ["<C-k>"] = { "history_back", mode = { "i", "n" } },
         ["<M-h>"] = false,
         ["<C-h>"] = { "toggle_hidden", mode = { "i", "n" } },
+        ["<C-x>"] = { "split", mode = { "i", "n" } },
       },
     },
   },
@@ -93,6 +94,17 @@ M.registers_opts = {
       picker.input:update()
     end,
   },
+}
+
+M.buffers_opts = {
+  win = {
+    input = {
+      keys = {
+        ["<M-u>"] = { "bufdelete", mode = { "i", "n" } },
+        ["<C-x>"] = { "split", mode = { "i", "n" } },
+      },
+    },
+  }
 }
 
 return M
