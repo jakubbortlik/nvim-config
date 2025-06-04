@@ -96,7 +96,13 @@ return {
     { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
     { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
     { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
-    { "<c-t>",      function() Snacks.terminal() end, desc = "Toggle Terminal", mode = { "n", "t", "x", "i" } },
+    { "<c-t>",      function()
+      if vim.v.count1 % 2 == 0 then
+        Snacks.terminal(nil, {win = {position = "right"}})
+      else
+        Snacks.terminal()
+      end
+    end, desc = "Toggle Terminal", mode = { "n", "t", "x", "i" } },
     { "<m-n>",         function() Snacks.words.jump(vim.v.count1, true) end, desc = "Next Reference", mode = { "n", "t", "x" } },
     { "<m-p>",         function() Snacks.words.jump(-vim.v.count1, true) end, desc = "Prev Reference", mode = { "n", "t", "x" } },
   },
