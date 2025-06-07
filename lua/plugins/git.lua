@@ -160,10 +160,6 @@ local M = {
       })
     end,
   },
-  {
-    "rbong/vim-flog",
-    dependencies = { "tpope/vim-fugitive" },
-  },
 }
 
 return M
