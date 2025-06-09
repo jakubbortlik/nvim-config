@@ -5,7 +5,6 @@ return {
     config = function()
       require("kanagawa").setup({
         compile = true,
-        transparent = true,
         background = {
           dark = "wave",
           light = "lotus",
@@ -36,6 +35,7 @@ return {
             ["@type.builtin.python"] = { fg = "#cc4dcc" },
             QuickFixLine = { link = "WarningMsg" },
             Substitute = { bg="#c34043", fg="#000000"},
+            EndOfBuffer = { link = "NonText" },
 
             -- Save a hlgroup with dark background and dimmed foreground
             -- so that you can use it where your still want darker windows.
