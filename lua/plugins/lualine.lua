@@ -58,10 +58,15 @@ end
 
 return {
   "nvim-lualine/lualine.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons", "Exafunction/windsurf.vim", "nvim-neotest/neotest" },
+  dependencies = { "nvim-tree/nvim-web-devicons", "Exafunction/windsurf.nvim", "nvim-neotest/neotest" },
   config = function()
     local codeium_status = function()
-      return "{…}" .. vim.api.nvim_call_function("codeium#GetStatusString", {})
+      local prefix = "{…}"
+      if not require("codeium").s.enabled then
+        return prefix .. "OFF"
+      end
+      local nvim_status = require('codeium.virtual_text').status_string()
+      return prefix .. nvim_status
     end
     local conditions = {
       window_wider_than = function(limit)

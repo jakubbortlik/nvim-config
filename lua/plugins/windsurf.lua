@@ -2,65 +2,36 @@ local u = require("utils")
 
 local M = {
   {
-    "Exafunction/windsurf.vim",
+    "Exafunction/windsurf.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "hrsh7th/nvim-cmp",
+    },
+    keys = { { "<leader>ct", "<cmd>Codeium Toggle<cr>", "Toggle Codeium" } },
+    cmd = { "Codeium" },
     enabled = u.host_jakub(),
-    event = "BufEnter",
     config = function()
-      vim.keymap.set("i", "<M-;>", function()
-        return vim.fn["codeium#Accept"]()
-      end, { expr = true })
-      u.nmap("<leader>ct", "<cmd>CodeiumToggle<cr>", "Toggle Codeium")
-      vim.g.codeium_no_map_tab = true
-      vim.g.codeium_enabled = false
+      require("codeium").setup({
+        enable_cmp_source = false,
+        virtual_text = {
+          enabled = true,
+          -- The key to press when hitting the accept keybinding but no completion is showing.
+          accept_fallback = nil,
+          key_bindings = {
+            accept = "<M-;>", -- Accept the current completion.
+            accept_word = "<M-w>", -- Accept the next word.
+            accept_line = "<M-s>", -- Accept the next line.
+            clear = "<M-c>", -- Clear the virtual text.
+            next = "<M-]>", -- Cycle to the next completion.
+            prev = "<M-[>", -- Cycle to the previous completion.
+          },
+        },
+      })
+      local original_notify = require("codeium.notify").info
+      require("codeium.notify").info = function() end
+      require("codeium").disable()
+      require("codeium.notify").info = original_notify
     end,
   },
-  -- {
-  --   "Exafunction/windsurf.nvim",
-  --   dependencies = {
-  --     "nvim-lua/plenary.nvim",
-  --     "hrsh7th/nvim-cmp",
-  --   },
-  --   config = function()
-  --     require("codeium").setup({
-  --       virtual_text = {
-  --         enabled = true,
-  --
-  --         -- Set to true if you never want completions to be shown automatically.
-  --         manual = false,
-  --         -- A mapping of filetype to true or false, to enable virtual text.
-  --         filetypes = {},
-  --         -- Whether to enable virtual text of not for filetypes not specifically listed above.
-  --         default_filetype_enabled = true,
-  --         -- How long to wait (in ms) before requesting completions after typing stops.
-  --         idle_delay = 75,
-  --         -- Priority of the virtual text. This usually ensures that the completions appear on top of
-  --         -- other plugins that also add virtual text, such as LSP inlay hints, but can be modified if
-  --         -- desired.
-  --         virtual_text_priority = 65535,
-  --         -- Set to false to disable all key bindings for managing completions.
-  --         map_keys = true,
-  --         -- The key to press when hitting the accept keybinding but no completion is showing.
-  --         -- Defaults to \t normally or <c-n> when a popup is showing.
-  --         accept_fallback = nil,
-  --         -- Key bindings for managing completions in virtual text mode.
-  --         key_bindings = {
-  --           -- Accept the current completion.
-  --           accept = "<M-;>",
-  --           -- Accept the next word.
-  --           accept_word = false,
-  --           -- Accept the next line.
-  --           accept_line = false,
-  --           -- Clear the virtual text.
-  --           clear = false,
-  --           -- Cycle to the next completion.
-  --           next = "<M-]>",
-  --           -- Cycle to the previous completion.
-  --           prev = "<M-[>",
-  --         }
-  --       }
-  --     })
-  --   end
-  -- },
 }
-
 return M
