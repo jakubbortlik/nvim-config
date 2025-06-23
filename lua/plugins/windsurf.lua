@@ -31,6 +31,7 @@ local M = {
       require("codeium.notify").info = function() end
       require("codeium").disable()
       require("codeium.notify").info = original_notify
+      vim.api.nvim_set_hl(0, "CodeiumSuggestion", { fg = "#cc8080" })
     end,
   },
 }
