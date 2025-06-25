@@ -19,26 +19,14 @@ return {
     vim.keymap.set("n", "<leader>rb", ":Refactor extract_block")
     vim.keymap.set("n", "<leader>rbf", ":Refactor extract_block_to_file")
 
-    -- You can also use below = true here to to change the position of the printf
-    -- statement (or set two remaps for either one). This remap must be made in normal mode.
-    vim.keymap.set(
-      "n",
-      "<leader>rp",
-      function() require('refactoring').debug.printf({ below = true }) end
-    )
-    vim.keymap.set(
-      "n",
-      "<leader>rP",
-      function() require('refactoring').debug.printf({ below = false }) end
-    )
     vim.keymap.set({ "x", "n" }, "<leader>rp", function()
       refactoring.debug.print_var({ below = true })
-    end)
+    end, { desc = "Print var below" })
     vim.keymap.set({ "x", "n" }, "<leader>rP", function()
       refactoring.debug.print_var({ below = false })
-    end)
+    end, { desc = "Print var above" })
     vim.keymap.set("n", "<leader>rc", function()
       refactoring.debug.cleanup({})
-    end)
+    end, { desc = "Remove Refactoring debugprints" })
   end,
 }

@@ -17,7 +17,7 @@ return {
       send_motion = "+",
       mark_visual = "<leader>m",
       cr = "<leader><cr>",
-      interrupt = "<leader>ri",
+      interrupt = "<leader>ii",
       exit = "<leader>rq",
       clear = "<leader>rl",
     },
