@@ -6,7 +6,7 @@ return {
   },
   config = function()
     local refactoring = require("refactoring")
-    refactoring.setup()
+    refactoring.setup({})
     vim.keymap.set("x", "<leader>re", ":Refactor extract ")
     vim.keymap.set("x", "<leader>rf", ":Refactor extract_to_file ")
 
@@ -31,8 +31,11 @@ return {
       "<leader>rP",
       function() require('refactoring').debug.printf({ below = false }) end
     )
-    vim.keymap.set({ "x", "n" }, "<leader>rv", function()
-      refactoring.debug.print_var()
+    vim.keymap.set({ "x", "n" }, "<leader>rp", function()
+      refactoring.debug.print_var({ below = true })
+    end)
+    vim.keymap.set({ "x", "n" }, "<leader>rP", function()
+      refactoring.debug.print_var({ below = false })
     end)
     vim.keymap.set("n", "<leader>rc", function()
       refactoring.debug.cleanup({})
