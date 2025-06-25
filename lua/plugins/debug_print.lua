@@ -8,7 +8,7 @@ return {
     }
   },
   dependencies = {
-      "nvim-treesitter/nvim-treesitter" -- Needed to enable treesitter for NeoVim 0.8
+    "folke/snacks.nvim",
   },
   keys = {
     {"g?d"},
