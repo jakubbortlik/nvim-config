@@ -18,5 +18,8 @@ return {
     {"g?P"},
     {"g?o"},
     {"g?O"},
+    {"g?sv"},
+    {"g?sp"},
+    {"<leader>s<c-d>", "<cmd>Debugprint search<cr>", mode = {"n"}},
   },
 }
