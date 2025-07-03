@@ -15,10 +15,7 @@ return {
     indent = { enabled = false, indent = {hl = "IBLIndent"}, animate = { enabled = false }, scope = {} },
     input = { enabled = true },
     picker = require("plugins.snacks.pickers").default_opts,
-    notifier = {
-      enabled = true,
-      timeout = 5000,
-    },
+    notifier = { enabled = true },
     quickfile = { enabled = true },
     scope = { enabled = true, cursor = false },
     scroll = { enabled = false },
