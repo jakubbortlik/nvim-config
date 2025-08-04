@@ -99,7 +99,7 @@ return {
       else
         Snacks.terminal()
       end
-    end, desc = "Toggle Terminal", mode = { "n", "t", "x", "i" } },
+    end, desc = "Toggle Terminal", mode = { "n", "t", "x" } },
     { "<m-n>",         function() Snacks.words.jump(vim.v.count1, true) end, desc = "Next Reference", mode = { "n", "t", "x" } },
     { "<m-p>",         function() Snacks.words.jump(-vim.v.count1, true) end, desc = "Prev Reference", mode = { "n", "t", "x" } },
   },
