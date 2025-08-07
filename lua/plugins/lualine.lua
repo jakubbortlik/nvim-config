@@ -56,6 +56,24 @@ local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
   end
 end
 
+vim.api.nvim_set_hl(0, "TestError", { bg = "#303030", fg = "#e82424" })
+vim.api.nvim_set_hl(0, "TestOk", { bg = "#303030", fg = "#98dd6c" })
+vim.api.nvim_set_hl(0, "TestWarn", { bg = "#303030", fg = "#ff9e3b" })
+
+local colorize_test_results = function(results)
+  local passed = (results.running > 0 or results.passed == 0) and "%#lualine_c_normal#" or "%#TestOk#"
+  local failed = (results.running > 0 or results.failed == 0) and "%#lualine_c_normal#" or "%#TestError#"
+  local skipped = (results.running > 0 or results.skipped == 0) and "%#lualine_c_normal#" or "%#TestWarn#"
+  local running = (results.running > 0) and "%#TestWarn#" or "%#lualine_c_normal#"
+
+  passed = passed .. " " .. results.passed
+  failed = failed .. "  " .. results.failed
+  skipped = skipped .. "  " ..results.skipped
+  running = running .. "  " .. results.running
+
+  return passed .. failed .. skipped .. running
+end
+
 return {
   "nvim-lualine/lualine.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons", "Exafunction/windsurf.nvim", "nvim-neotest/neotest" },
@@ -82,7 +100,7 @@ return {
       if adapter_id ~= nil then
         local results = neotest_state.status_counts(adapter_id[1], {buffer=vim.api.nvim_get_current_buf()})
         if results ~= nil then
-          return " " .. results.passed .. "  " .. results.failed .. "  " ..results.skipped .. "  " .. results.running
+          return colorize_test_results(results)
         end
       end
       return ""
