@@ -32,6 +32,12 @@ return {
     nmap("⁏", function()
       harpoon:list():select(4)
     end, "Navigate to harpoon file 4")  -- Alacritty hack
+    nmap("<C-n>", function()
+      harpoon:list():select(5)
+    end, "Navigate to harpoon file 5")
+    nmap("<C-p>", function()
+      harpoon:list():select(6)
+    end, "Navigate to harpoon file 6")
     harpoon:extend({
       UI_CREATE = function(cx)
         vim.keymap.set("n", "<C-v>", function()
