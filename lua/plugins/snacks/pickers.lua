@@ -10,6 +10,7 @@ M.default_opts = {
         ["<M-h>"] = false,
         ["<C-h>"] = { "toggle_hidden", mode = { "i", "n" } },
         ["<C-x>"] = { "split", mode = { "i", "n" } },
+        ["<M-r>"] = { "toggle_regex", mode = { "i", "n" } },
       },
     },
     -- Make file truncation consider window width.
