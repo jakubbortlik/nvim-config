@@ -42,7 +42,11 @@ return {
       {"<leader>nL", function() neotest.run.run_last({ strategy = "dap" }) end, desc = "Run [n]eotest for [L]ast position (same args but with DAP)" },
       {"<leader>nw", function() neotest.watch.toggle(vim.fn.expand("%")) end, desc = "Toggle [n]eotest [w]atching the current file" },
       {"<leader>nW", neotest.watch.toggle, desc = "Toggle [n]eotest [W]atching the nearest test" },
-      {"<leader>no", function() neotest.output.open({ enter = true, auto_close = true }) end, desc = "Open [n]eotest [o]utput" },
+      {"<leader>no", function() neotest.output.open({ enter = true, auto_close = true, open_win = function()
+        vim.cmd('tabnew')
+        local win_id = vim.api.nvim_get_current_win()
+        return win_id
+      end}) end, desc = "Open [n]eotest [o]utput" },
       {"<leader>nO", function() neotest.output_panel.toggle() end, desc = "Open [n]eotest [O]utput panel" },
       {"<leader>ns", neotest.summary.toggle, desc = "Toggle [n]eotest [s]ummary" },
     })
