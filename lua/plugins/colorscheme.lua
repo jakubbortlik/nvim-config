@@ -38,6 +38,7 @@ return {
             Substitute = { bg="#c34043", fg="#000000"},
             EndOfBuffer = { link = "NonText" },
             Comment = { fg="#929189"},
+            CodeiumSuggestion = { fg = "#cc8080" },
 
             -- Save a hlgroup with dark background and dimmed foreground
             -- so that you can use it where your still want darker windows.
