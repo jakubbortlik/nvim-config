@@ -97,31 +97,6 @@ return {
     end,
   },
   {
-    "gerazov/toggle-bool.nvim",
-    keys = { "cm" },
-    config = function()
-      require("toggle-bool").setup({
-        mapping = "cm",
-        description = "Toggle bool value",
-        additional_toggles = {
-          Yes = "No",
-          On = "Off",
-          enable = "disable",
-          Enable = "Disable",
-          Enabled = "Disabled",
-          First = "Last",
-          before = "after",
-          Before = "After",
-          Persistent = "Ephemeral",
-          Internal = "External",
-          Ingress = "Egress",
-          Allow = "Deny",
-          All = "None",
-        },
-      })
-    end,
-  },
-  {
     "chrisgrieser/nvim-various-textobjs",
     lazy = false,
     opts = { keymaps = { useDefaults = true, disabledDefaults = { "gw", "gc" }} },
