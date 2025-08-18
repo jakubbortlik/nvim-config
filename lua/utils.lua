@@ -25,7 +25,7 @@ end
 ---Python.
 M.python_path = function()
   -- TODO: find out if it's possible to get the VIRTUAL_ENV activated in the DAP REPL.
-  -- Debugpy supports launching an application with a different interpreter then
+  -- Debugpy supports launching an application with a different interpreter than
   -- the one used to launch debugpy itself.
   local vdir = os.getenv("VIRTUAL_ENV")
   if vdir then
