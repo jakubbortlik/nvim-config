@@ -119,6 +119,7 @@ M.registers_opts = {
 }
 
 M.buffers_opts = {
+  sort_lastused = false,
   win = {
     input = {
       keys = {
