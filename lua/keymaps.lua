@@ -66,30 +66,63 @@ nmap("<leader>cc", "<cmd>cclose<cr>", "[c]lose [c]uickfix window")
 nmap("<leader>la", "<cmd>Lazy<cr>", "Show plugins")
 nmap("<leader>I", "<cmd>Inspect<cr>", "[i]nspect current position")
 nmap("<leader>sa", [[:s/\%>.c]], "[s]ubstitute [a]fter")
-nmap("<leader>cp", [[<cmd>let @+ = expand('%') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy [p]ath of buffer to clipboard")
-nmap("<leader>cP", [[<cmd>let @+ = expand('%:p') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy full [P]ath of buffer to clipboard")
-nmap("<leader>c<c-p>", [[<cmd>let @+ = expand('%:t') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy basename of buffer to clipboard")
-nmap("<leader>cl", [[<cmd>let @+ =  '`' .. expand('%') .. '` line ' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy buffer path with [l]ine number to clipboard")
-nmap("<leader>cL", [[<cmd>let @+ = '`' .. expand('%:p') .. '` line ' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy full buffer path with [l]ine number to clipboard")
-nmap("<leader>c<c-l>", [[<cmd>let @+ = '`' .. expand('%:t') .. '` line ' .. line('.') | echo "Copied to clipboard: " .. @+<cr>]], "[c]opy buffer basename with [l]ine number to clipboard")
+
 nmap("g<C-j>", "mzJ`z", "Join lines without moving cursor")
 
-local copy_path_to_clipboard = function(path)
+local get_relative_path = function()
+  local path = vim.fn.expand("%")
+  local workspaces = vim.lsp.buf.list_workspace_folders()
+  if workspaces[1] then
+    path = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":s?" .. workspaces[1] .. "/??")
+  end
+  return path
+end
+
+local copy_path_to_clipboard = function(path, with_line)
+  if with_line then
+    path = string.format("`%s` line %s", path, vim.fn.line("."))
+  end
+  print("Copied to clipboard: " .. path)
+  vim.fn.setreg("+", path)
+end
+
+nmap("<leader>cp", function()
+  copy_path_to_clipboard(get_relative_path())
+end, "[c]opy [p]ath of buffer to clipboard")
+nmap("<leader>cP", function()
+  copy_path_to_clipboard(vim.fn.expand("%:p"))
+end, "[c]opy full [P]ath of buffer to clipboard")
+nmap("<leader>c<c-p>", function()
+  copy_path_to_clipboard(vim.fn.expand("%:t"))
+end, "[c]opy basename of buffer to clipboard")
+
+nmap("<leader>cl", function()
+  copy_path_to_clipboard(get_relative_path(), true)
+end, "[c]opy [p]ath of buffer to clipboard")
+nmap("<leader>cL", function()
+  copy_path_to_clipboard(vim.fn.expand("%:p"), true)
+end, "[c]opy full [P]ath of buffer to clipboard")
+nmap("<leader>c<c-l>", function()
+  copy_path_to_clipboard(vim.fn.expand("%:t"), true)
+end, "[c]opy basename of buffer to clipboard")
+
+
+local v_copy_path_to_clipboard = function(path)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", false, true, true), "nx", false)
   local sel_start = vim.fn.line("'<")
   local sel_end = vim.fn.line("'>")
   local text = string.format("`%s` lines %s-%s", path, sel_start, sel_end)
-  vim.print("Copied to clipboard: " .. text)
+  print("Copied to clipboard: " .. text)
   vim.fn.setreg("+", text)
 end
 vmap("<leader>cl", function()
-  copy_path_to_clipboard(vim.fn.expand("%"))
+  v_copy_path_to_clipboard(vim.fn.expand("%"))
 end, "[c]opy path with [l]ine numbers to clipboard")
 vmap("<leader>cL", function()
-  copy_path_to_clipboard(vim.fn.expand("%:p"))
+  v_copy_path_to_clipboard(vim.fn.expand("%:p"))
 end, "[c]opy full path with [l]ine numbers to clipboard")
 vmap("<leader>c<C-l>", function()
-  copy_path_to_clipboard(vim.fn.expand("%:t"))
+  v_copy_path_to_clipboard(vim.fn.expand("%:t"))
 end, "[c]opy basename with [l]ine numbers to clipboard")
 
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], {desc = "Exit terminal-mode"})
