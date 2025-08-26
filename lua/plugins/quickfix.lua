@@ -1,6 +1,6 @@
 return {
   "kevinhwang91/nvim-bqf",
-  event = { "QuickFixCmdPost" },
+  ft = { "qf" },
   dependencies = { {
     "junegunn/fzf",
     build = ":call fzf#install()"
