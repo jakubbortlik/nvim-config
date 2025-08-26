@@ -3,13 +3,11 @@ return {
   ft = { "qf" },
   dependencies = { {
     "junegunn/fzf",
-    build = ":call fzf#install()"
+    build = ":call fzf#install()",
   } },
-  config = function()
-    require("bqf").setup({
-      preview = {
-        auto_preview = false,
-      }
-    })
-  end
+  opts = {
+    preview = {
+      auto_preview = false,
+    },
+  },
 }
