@@ -17,6 +17,9 @@ local M = {
           enabled = true,
           -- The key to press when hitting the accept keybinding but no completion is showing.
           accept_fallback = nil,
+          filetypes = {
+            gitcommit = false,
+          },
           key_bindings = {
             accept = "<M-;>", -- Accept the current completion.
             accept_word = "<M-w>", -- Accept the next word.
