@@ -167,7 +167,10 @@ return {
               end
             end,
           },
-          function() return vim.o.keymap end
+          function() return vim.o.keymap end,
+          function()
+            return vim.fn.CapsLockStatusline()
+          end
         },
         lualine_b = { { 'branch', fmt = trunc(265, 20, nil, false) }, 'diff', 'diagnostics' },
         lualine_c = { { 'filename', path = 1 } },
