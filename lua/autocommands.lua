@@ -81,18 +81,16 @@ vim.api.nvim_create_autocmd({"BufEnter"}, {
   end
 })
 
-vim.api.nvim_create_autocmd("User", {
-  pattern = "TelescopePreviewerLoaded",
-  callback = function(args)
-    if args.data ~= nil then
-      if args.data.filetype ~= "help" then
-        vim.wo.number = true
-      elseif args.data.bufname:match("*.csv") then
-        vim.wo.wrap = false
-      end
+vim.api.nvim_create_autocmd({"VimEnter"}, {
+  group = editor_id,
+  callback = function(_)
+    local keymaps_to_delete = { "[CC", "]CC" }
+    for _, keymap in ipairs(keymaps_to_delete) do
+      pcall(vim.keymap.del, "n", keymap)
     end
-  end,
+  end
 })
+
 vim.api.nvim_create_autocmd('InsertEnter', {
   group = editor_id,
   pattern = "COMMIT_EDITMSG",
