@@ -2,6 +2,9 @@ local M = {}
 
 M.default_opts = {
   enabled = true,
+  sources = {
+    explorer = { win = { list = { keys = { ["<c-t>"] = "tab" } } } },
+  },
   win = {
     input = {
       keys = {
