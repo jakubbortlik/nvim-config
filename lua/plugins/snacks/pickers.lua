@@ -14,11 +14,16 @@ M.default_opts = {
         ["<C-h>"] = { "toggle_hidden", mode = { "i", "n" } },
         ["<C-x>"] = { "split", mode = { "i", "n" } },
         ["<M-r>"] = { "toggle_regex", mode = { "i", "n" } },
+        ["<M-q>"] = { "loclist", mode = { "i", "n" } },
       },
     },
     -- Make file truncation consider window width.
     -- <https://github.com/folke/snacks.nvim/issues/1217#issuecomment-2661465574>
     list = {
+      keys = {
+        ["<M-h>"] = false,
+        ["<M-q>"] = { "loclist", mode = { "i", "n" } },
+      },
       on_buf = function(self)
         self:execute("calculate_file_truncate_width")
       end,
