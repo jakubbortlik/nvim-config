@@ -115,3 +115,18 @@ vim.api.nvim_create_autocmd('User', {
     end)
   end
 })
+
+vim.api.nvim_create_autocmd("OptionSet", {
+  group = editor_id,
+  pattern = "keymap",
+  callback = function()
+    local keymap = vim.v.option_new
+    if keymap == "czech" then
+      vim.opt.spelllang = "cs"
+    elseif keymap == "" or keymap == "ipa" then
+      vim.opt.spelllang = "en_us"
+    elseif keymap == "russian" then
+      vim.opt.spelllang = "ru"
+    end
+  end,
+})
