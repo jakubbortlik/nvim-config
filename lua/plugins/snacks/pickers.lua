@@ -3,7 +3,12 @@ local M = {}
 M.default_opts = {
   enabled = true,
   sources = {
-    explorer = { win = { list = { keys = { ["<c-t>"] = "tab" } } } },
+    explorer = {
+      win = {
+        list = { keys = { ["<c-t>"] = "tab" } },
+        preview = { wo = { wrap = false } },
+      },
+    },
   },
   win = {
     input = {
