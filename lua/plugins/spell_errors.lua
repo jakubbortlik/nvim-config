@@ -8,6 +8,7 @@ return {
             local errors = {}
             local save_cursor = vim.api.nvim_win_get_cursor(0)
             local save_wrapscan = vim.o.wrapscan
+            local save_iskeyword = vim.bo.iskeyword
             local save_spell = vim.o.spell
             local buf = vim.api.nvim_get_current_buf()
             local file = vim.api.nvim_buf_get_name(buf)
@@ -20,6 +21,7 @@ return {
             }
 
             vim.o.spell = true
+            vim.opt.iskeyword:remove({ '_' })
 
             -- Go to end of buffer to get misspelled word in first column of first line.
             -- This doesn't handle the corner case of a single character in buffer.
@@ -70,6 +72,7 @@ return {
             -- Restore settings
             vim.o.wrapscan = save_wrapscan
             vim.o.spell = save_spell
+            vim.bo.iskeyword = save_iskeyword
             vim.api.nvim_win_set_cursor(0, save_cursor)
             return errors
           end,
