@@ -3,6 +3,19 @@ local M = {}
 M.default_opts = {
   enabled = true,
   sources = {
+    buffers = {
+      auto_confirm = true,
+      current = false,
+      sort_lastused = false,
+      win = {
+        input = {
+          keys = {
+            ["<M-u>"] = { "bufdelete", mode = { "i", "n" } },
+            ["<C-x>"] = { "split", mode = { "i", "n" } },
+          },
+        },
+      },
+    },
     explorer = {
       win = {
         list = { keys = { ["<c-t>"] = "tab" } },
@@ -129,18 +142,6 @@ M.registers_opts = {
       picker.input:update()
     end,
   },
-}
-
-M.buffers_opts = {
-  sort_lastused = false,
-  win = {
-    input = {
-      keys = {
-        ["<M-u>"] = { "bufdelete", mode = { "i", "n" } },
-        ["<C-x>"] = { "split", mode = { "i", "n" } },
-      },
-    },
-  }
 }
 
 return M
