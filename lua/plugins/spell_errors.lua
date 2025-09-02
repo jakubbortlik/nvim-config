@@ -6,6 +6,7 @@ return {
         spell_errors = {
           finder = function(opts)
           finder = function(_, ctx)
+          finder = function(opts, ctx)
             ctx.picker.finder.longest = 0
             local errors = {}
             local save_cursor = vim.api.nvim_win_get_cursor(0)
@@ -21,6 +22,8 @@ return {
               ["local"] = "Local",
               rare = "Rare",
             }
+
+            local suggestions_tbl = {}
 
             vim.o.spell = true
             vim.opt.iskeyword:remove({ '_' })
@@ -58,15 +61,23 @@ return {
                 if #spell_info[1] > ctx.picker.finder.longest then
                   ctx.picker.finder.longest = #spell_info[1]
                 end
+                local type = string.sub(spell_info[2], 1, 1)
+                local cached = suggestions_tbl[spell_info[1]]
+                local suggestions = cached or vim.fn.spellsuggest(spell_info[1], opts.max_suggestions or 5, type == "c")
+                if cached == nil then
+                  suggestions_tbl[spell_info[1]] = suggestions
+                end
+
                 errors[#errors + 1] = {
                   text = spell_info[1],
                   highlight = highlights[spell_info[2]],
-                  type = string.sub(spell_info[2], 1, 1),
+                  type = type,
                   file = file,
                   buf = buf,
                   lnum = pos[1],
                   pos = pos,
                   end_pos = { pos[1], pos[2] + #spell_info[1] },
+                  suggestions = suggestions,
                 }
               end
 
@@ -84,9 +95,13 @@ return {
           format = function(item, picker)
             local a = Snacks.picker.util.align
             local ret = {} ---@type snacks.picker.Highlight[]
-
             ret[#ret + 1] = { a("", picker.finder.longest - vim.fn.strcharlen(item.text), {align = "right"}) }
             ret[#ret + 1] = { item.text, "Spell" .. item.highlight }
+            ret[#ret + 1] = { "  " }
+            for i, sug in ipairs(item.suggestions) do
+              ret[#ret + 1] = { tostring(i) .. ".", "Number" }
+              ret[#ret + 1] = {a(sug, picker.finder.longest + 2, {align = "left"}), "Normal" }
+            end
             return ret
           end,
           win = {
