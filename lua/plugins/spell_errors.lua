@@ -5,6 +5,8 @@ return {
       sources = {
         spell_errors = {
           finder = function(opts)
+          finder = function(_, ctx)
+            ctx.picker.finder.longest = 0
             local errors = {}
             local save_cursor = vim.api.nvim_win_get_cursor(0)
             local save_wrapscan = vim.o.wrapscan
@@ -53,6 +55,9 @@ return {
               end
 
               if spell_info[1] ~= "" then
+                if #spell_info[1] > ctx.picker.finder.longest then
+                  ctx.picker.finder.longest = #spell_info[1]
+                end
                 errors[#errors + 1] = {
                   text = spell_info[1],
                   highlight = highlights[spell_info[2]],
@@ -76,8 +81,11 @@ return {
             vim.api.nvim_win_set_cursor(0, save_cursor)
             return errors
           end,
-          format = function(item)
+          format = function(item, picker)
+            local a = Snacks.picker.util.align
             local ret = {} ---@type snacks.picker.Highlight[]
+
+            ret[#ret + 1] = { a("", picker.finder.longest - vim.fn.strcharlen(item.text), {align = "right"}) }
             ret[#ret + 1] = { item.text, "Spell" .. item.highlight }
             return ret
           end,
