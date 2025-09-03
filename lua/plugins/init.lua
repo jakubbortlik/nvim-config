@@ -64,10 +64,6 @@ return {
     },
   },
   {
-    "vim-scripts/linediff.vim", -- Diff two different parts of the same file
-    keys = {{ "<leader>l", ":'<,'>Linediff<cr>", desc = "[l]inediff", mode = "x" }}
-  },
-  {
     "smjonas/inc-rename.nvim", -- Rename with preview
     keys = {
       {
