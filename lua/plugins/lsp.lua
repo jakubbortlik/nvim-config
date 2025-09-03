@@ -1,47 +1,89 @@
 local u = require("utils")
 
-local server_settings = {
+local on_attach = function(client, bufnr)
+  if client.server_capabilities.documentSymbolProvider then
+    require("nvim-navic").attach(client, bufnr)
+  end
+end
+
+local server_options = {
   pylsp = {
-    plugins = {
-      rope_completion = {
-        enabled = false,
-      },
-      rope_autoimport = {
-        enabled = true,
-      },
-      mypy = {
-        enabled = true,
-        dmypy = true,
+    settings = {
+      plugins = {
+        rope_completion = {
+          enabled = false,
+        },
+        rope_autoimport = {
+          enabled = true,
+        },
+        mypy = {
+          enabled = true,
+          dmypy = true,
+        },
       },
     },
   },
   lua_ls = {
-    Lua = {
-      runtime = {
-        version = "LuaJIT",
+    settings = {
+      Lua = {
+        runtime = {
+          version = "LuaJIT",
+          path = {
+            "lua/?.lua",
+            "lua/?/init.lua",
+          },
+        },
+        diagnostics = {
+          disable = { "missing-fields" },
+          globals = { "vim", "Snacks" },
+        },
+        workspace = {
+          checkThirdParty = false,
+          library = {
+            vim.env.VIMRUNTIME,
+            -- Depending on the usage, you might want to add additional paths
+            -- here.
+            -- '${3rd}/luv/library'
+            -- '${3rd}/busted/library'
+          },
+          -- Or pull in all of 'runtimepath'.
+          -- NOTE: this is a lot slower and will cause issues when working on
+          -- your own configuration.
+          -- See https://github.com/neovim/nvim-lspconfig/issues/3189
+          -- library = {
+          --   vim.api.nvim_get_runtime_file('', true),
+          -- }
+        },
+        telemetry = { enable = false },
       },
-      diagnostics = {
-        disable = { "missing-fields" },
-        globals = { "vim", "Snacks" },
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-        checkThirdParty = false,
-      },
-      telemetry = { enable = false },
     },
   },
   ts_ls = {},
   buf_ls = {},
   jsonls = {},
   protols = {},
+  pyright = {
+    settings = {
+      python = {
+        analysis = {
+          typeCheckingMode = "basic", -- or "strict"
+          diagnosticSeverityOverrides = {
+            reportReturnType = "none",
+          },
+        },
+      },
+    },
+    on_attach = function(client, bufnr)
+      -- Disable all capabilities
+      for capability, _ in pairs(client.server_capabilities) do
+        if capability ~= "textDocumentSync" and capability ~= "hoverProvider" and capability ~= "signatureHelpProvider" then
+          client.server_capabilities[capability] = false
+        end
+      end
+      on_attach(client, bufnr)
+    end,
+  },
 }
-
-local on_attach = function(client, bufnr)
-  if client.server_capabilities.documentSymbolProvider then
-    require("nvim-navic").attach(client, bufnr)
-  end
-end
 
 local M = {
   {
@@ -53,11 +95,11 @@ local M = {
     config = function()
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-      for server_name, settings in pairs(server_settings) do
+      for server_name, options in pairs(server_options) do
         vim.lsp.config(server_name, {
           capabilities = capabilities,
-          on_attach = on_attach,
-          settings = settings,
+          on_attach = options.on_attach or on_attach,
+          settings = options.settings or {},
         })
       end
     end,
