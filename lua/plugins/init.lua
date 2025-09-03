@@ -64,20 +64,6 @@ return {
     },
   },
   {
-    "smjonas/inc-rename.nvim", -- Rename with preview
-    keys = {
-      {
-        "<leader>ir",
-        function()
-          return ":IncRename " .. vim.fn.expand("<cword>")
-        end,
-        expr = true,
-        desc = "[i]ncrementally [r]ename",
-      },
-    },
-    config = true,
-  },
-  {
     "tversteeg/registers.nvim",
     name = "registers",
     keys = {
