@@ -15,11 +15,15 @@ return {
   },
   opts = {
     post_hook = function(result)
+      if not result.changes then
+        vim.cmd("update")
+        return
+      end
       for file in pairs(result.changes) do
         local bufnr = vim.fn.bufnr(file:sub(8))
         if bufnr ~= -1 then
           vim.api.nvim_buf_call(bufnr, function()
-            vim.cmd("write")
+            vim.cmd("update")
           end)
         end
       end
