@@ -1,5 +1,4 @@
 -- Git related plugins
-
 local get_main = require("utils").get_main
 
 local M = {
@@ -65,68 +64,6 @@ local M = {
     dependencies = {
       "tpope/vim-fugitive",
     },
-  },
-  {
-    "lewis6991/gitsigns.nvim",
-    config = function()
-      require('gitsigns').setup({
-        preview_config = {
-          border = u.border,
-        },
-        on_attach = function(bufnr)
-          local gs = package.loaded.gitsigns
-
-          local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
-          end
-
-          -- Navigation
-          map("n", "]c", function()
-            if vim.wo.diff then return "]c" end
-            vim.schedule(function()
-              gs.nav_hunk("next", {wrap=false, greedy=false})
-            end)
-            return '<Ignore>'
-          end, { expr = true })
-
-          map("n", "[c", function()
-            if vim.wo.diff then return "[c" end
-            vim.schedule(function()
-              gs.nav_hunk("prev", {wrap=false, greedy=false})
-            end)
-            return "<Ignore>"
-          end, { expr = true })
-
-          local wk = require("which-key")
-          -- Register normal mode keymaps
-          wk.add({
-            { "<leader>h", group = "git [h]unks" },
-            { "<leader>hs", gs.stage_hunk, desc = "[s]tage" },
-            { "<leader>hr", gs.reset_hunk, desc = "[r]eset" },
-            { "<leader>hS", gs.stage_buffer, desc = "[S]tage buffer" },
-            { "<leader>hu", gs.undo_stage_hunk, desc = "[u]ndo stage" },
-            { "<leader>hR", gs.reset_buffer, desc = "[R]eset buffer" },
-            { "<leader>hp", gs.preview_hunk, desc = "[p]review" },
-            { "<leader>hb", function() gs.blame_line { full = true } end, desc = "[b]lame line" },
-            { "<leader>ht", gs.toggle_current_line_blame, desc = "[t]oggle line blame" },
-            { "<leader>hd", gs.diffthis, desc = "[d]iff this" },
-            { "<leader>hD", function() gs.diffthis('~') end, desc = "[D]iff this agains '~'" },
-            { "<leader>hT", gs.toggle_deleted, desc = "[T]oggle deleted" },
-            {
-              mode = { "v" },
-              { "<leader>h", group = "git [h]unks" },
-              { "<leader>hs", function() gs.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end, desc = "[s]tage" },
-              { "<leader>hr", function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end, desc = "[r]eset" },
-            }
-          })
-
-          -- Text object
-          map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-        end
-      })
-    end,
   },
   {
     "sindrets/diffview.nvim", -- a single tabpage interface for reviewing all git changes
