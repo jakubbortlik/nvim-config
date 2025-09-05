@@ -177,48 +177,39 @@ nmap("<leader>ls", "<cmd>LspStop<cr>", "Stop LSP")
 -- Remaps by ThePrimeagen
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Visual mode paste without losing register" })
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]], { desc = "Copy to system clipboard" })
-nmap("<leader>Y", [["+y$]], "Add to system clipboard")
+nmap("<leader>Y", [["+y$]], "Copy cursor->EOL to system clipboard")
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]], { desc = "Delete to blackhole register" })
 vim.keymap.set("n", "<leader>cx", "<cmd>!chmod +x %<cr>", { silent = true, desc = "Make current file executable" })
 nmap("<C-g><C-s>", "<cmd>silent !tmux neww tmux-sessionizer<cr>", "Create tmux [s]ession or attach to one")
 
 -- Adjust textwidth
-nmap("<leader>w0", "<cmd>setlocal textwidth=0<cr>", "Set local text[w]idth to [0]" )
-nmap("<leader>w7", "<cmd>setlocal textwidth=72<cr>", "Set local text[w]idth to [7]2" )
-nmap("<leader>w*", "<cmd>setlocal textwidth=80<cr>", "Set local text[w]idth to [8]0" )
-nmap("<leader>w8", "<cmd>setlocal textwidth=88<cr>", "Set local text[w]idth to [8]8" )
-nmap("<leader>w9", "<cmd>setlocal textwidth=90<cr>", "Set local text[w]idth to [9]0" )
-nmap("<leader>w1", "<cmd>setlocal textwidth=100<cr>", "Set local text[w]idth to [1]00" )
+nmap("<leader>w0", "<cmd>setlocal textwidth=0<cr>", "Set local text[w]idth to [0]")
+nmap("<leader>w7", "<cmd>setlocal textwidth=72<cr>", "Set local text[w]idth to [7]2")
+nmap("<leader>w*", "<cmd>setlocal textwidth=80<cr>", "Set local text[w]idth to [8]0")
+nmap("<leader>w8", "<cmd>setlocal textwidth=88<cr>", "Set local text[w]idth to [8]8")
+nmap("<leader>w9", "<cmd>setlocal textwidth=90<cr>", "Set local text[w]idth to [9]0")
+nmap("<leader>w1", "<cmd>setlocal textwidth=100<cr>", "Set local text[w]idth to [1]00")
 
 -- Diagnostic keymaps
 if vim.fn.has("nvim-0.10") ~= 1 then
   nmap("[d", vim.diagnostic.jump, "Go to previous diagnostic message")
   nmap("]d", function()
-    vim.diagnostic.jump({count=-1})
+    vim.diagnostic.jump({ count = -1 })
   end, "Go to next diagnostic message")
   nmap("<leader>do", vim.diagnostic.open_float, "Open floating diagnostic message")
 end
 nmap("<leader>ds", vim.diagnostic.show, "Show diagnostic message")
 
-nmap(
-  "<leader>dt",
-  function()
-    local config = vim.diagnostic.config() or {}
-    local virtual_lines = not config.virtual_lines
-    vim.diagnostic.config({virtual_lines=virtual_lines})
-  end,
-  "Toggle virtual_lines for diagnostics"
-)
+nmap("<leader>uv", function()
+  local config = vim.diagnostic.config() or {}
+  local virtual_lines = not config.virtual_lines
+  vim.diagnostic.config({ virtual_lines = virtual_lines })
+end, "Toggle virtual_lines for diagnostics")
 
 -- Keymaps for easier work with messages
 nmap("<leader>mv", "<cmd>messages<cr>", "[m]essages [v]iew")
 nmap("<leader>mc", "<cmd>messages clear<cr>", "[m]essages [c]lear")
-nmap(
-  "<leader>mt",
-  function()
-    vim.cmd.tabnew()
-    vim.cmd.Messages()
-    vim.cmd.only()
-  end,
-  "Open [m]essages in new [t]ab"
-)
+nmap("<leader>mt", function()
+  vim.cmd.tabnew()
+  vim.cmd("put =execute('messages')")
+end, "Open [m]essages in new [t]ab")
