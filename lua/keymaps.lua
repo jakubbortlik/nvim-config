@@ -76,7 +76,7 @@ nmap("cp", "m`:g//p<cr>", "o[c]currences [p]review")
 nmap("<C-w>N", "<cmd>vnew<cr>", "Create [N]ew vertical window")
 nmap("<leader>ch", "<cmd>nohlsearch<cr>", "[c]lear [h]ighlighting")
 nmap("<leader>cc", "<cmd>cclose<cr>", "[c]lose [c]uickfix window")
-nmap("<leader>la", "<cmd>Lazy<cr>", "Show plugins")
+nmap("<leader>ly", "<cmd>Lazy<cr>", "Show plugins")
 nmap("<leader>I", "<cmd>Inspect<cr>", "[i]nspect current position")
 nmap("<leader>sa", [[:s/\%>.c]], "[s]ubstitute [a]fter")
 
