@@ -7,6 +7,20 @@ nmap("<C-e>", "3<C-E>", "Scroll down more")
 nmap("<C-y>", "3<C-Y>", "Scroll up more")
 nmap("1<C-g>", "1<C-g>", "Print full path of current file name") -- Otherwise tmux-sessionizer is started
 
+nmap("_", function()
+  if vim.v.count == 0 then
+    local cur_height = vim.api.nvim_win_get_height(0)
+    local total_height = vim.o.lines - 2
+    if (total_height > cur_height) and (cur_height > total_height / 2) then
+      vim.cmd("resize " .. math.floor(total_height / 2)) -- equalize
+    else
+      vim.cmd("wincmd _") -- maximize
+    end
+  else
+    vim.cmd(vim.v.count .. "wincmd _") -- set to count
+  end
+end, "Maximize/equalize win height or set to [count]")
+
 -- Navigation
 local tmux_navigate = function(keymap)
   local cfg = vim.api.nvim_win_get_config(0)
@@ -132,42 +146,32 @@ vim.keymap.set({ "n" }, "n", "/<CR>", { silent = true, desc = "Search forward" }
 vim.keymap.set({ "n" }, "N", "?<CR>", { silent = true, desc = "Search backward" })
 
 -- LSP-related keymaps
-nmap(
-  "<leader>lc",
-  function()
-    local active_clients = vim.lsp.get_clients()
-    local buf = vim.api.nvim_create_buf(false, true)
-    if next(active_clients) ~= nil then
-      local lines = {}
-      for _, client in ipairs(active_clients) do
-        table.insert(lines, client.name .. ":")
-        local capabilities_str = vim.inspect(client.server_capabilities)
-        for line in capabilities_str:gmatch("[^\r\n]+") do
-          table.insert(lines, line)
-        end
-        table.insert(lines, "") -- Add an empty line between clients
-      end
-
-      -- Set the buffer lines
-      vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-    else
-      vim.api.nvim_buf_set_lines(buf, 0, -1, false, {"No active LSP client is available."})
+nmap("<leader>lc", function()
+  local active_clients = vim.lsp.get_clients()
+  if next(active_clients) == nil then
+    vim.notify("No active LSP client is available.")
+    return
+  end
+  local lines = {}
+  for _, client in ipairs(active_clients) do
+    table.insert(lines, client.name .. ":")
+    local capabilities_str = vim.inspect(client.server_capabilities)
+    for line in capabilities_str:gmatch("[^\r\n]+") do
+      table.insert(lines, line)
     end
-
-    -- Open the buffer in a new window
-    vim.api.nvim_command('split')
-    local win = vim.api.nvim_get_current_win()
-    vim.api.nvim_win_set_buf(win, buf)
-    vim.keymap.set("n", "q", "<cmd>quit<cr>", { buffer = buf })
-  end,
-  "[l]ist LSP server [c]apabilities"
-)
+    table.insert(lines, "") -- Add an empty line between clients
+  end
+  vim.api.nvim_command("new")
+  vim.bo.buftype = "nofile"
+  local buf = vim.api.nvim_get_current_buf()
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  vim.keymap.set("n", "q", "<cmd>bwipeout<cr>", { buffer = buf })
+end, "[l]ist LSP server [c]apabilities")
 
 nmap("grf", vim.lsp.buf.format, "vim.lsp.buf.format()")
 nmap("gD", "<cmd>normal! gd<cr>", "[g]o to local [D]efinition")
 nmap("K", vim.lsp.buf.hover, "vim.lsp.buf.hover()")
 imap("<C-k>", vim.lsp.buf.signature_help, "vim.lsp.buf.signature_help()")
-nmap("<leader>li", "<cmd>LspInfo<cr>", "Show [L]SP [I]nfo")
 nmap("<leader>lr", "<cmd>LspRestart<cr>", "Restart LSP")
 nmap("<leader>ls", "<cmd>LspStop<cr>", "Stop LSP")
 
