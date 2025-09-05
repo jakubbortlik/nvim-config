@@ -1,7 +1,5 @@
 -- Git related plugins
 
-local u = require("utils")
-
 local get_main = require("utils").get_main
 
 local M = {

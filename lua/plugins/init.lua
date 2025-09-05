@@ -1,5 +1,3 @@
-local u = require("utils")
-
 return {
   -- "A universal set of defaults"
   "tpope/vim-sensible",
@@ -71,12 +69,10 @@ return {
       { "<C-R>", mode = "i" },
     },
     cmd = "Registers",
-    config = function()
-      require("registers").setup({
-        show_empty = false,
-        window = { border = u.border },
-      })
-    end,
+    opts = {
+      show_empty = false,
+      window = { border = vim.o.winborder },
+    }
   },
   {
     "chrisgrieser/nvim-various-textobjs",

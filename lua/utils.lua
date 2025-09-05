@@ -41,6 +41,4 @@ M.host_jakub = function()
   return vim.fn.system("hostname"):find("jakub") and true or false
 end
 
-M.border = "rounded"
-
 return M

@@ -1,5 +1,3 @@
-local u = require("utils")
-
 local on_attach = function(client, bufnr)
   if client.server_capabilities.documentSymbolProvider then
     require("nvim-navic").attach(client, bufnr)
@@ -156,9 +154,7 @@ local M = {
       end)
     end,
     keys = { { "<leader>ma", "<cmd>Mason<cr>", desc = "Mason" } },
-    opts = {
-      ui = { border = u.border },
-    },
+    config = true,
   },
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
