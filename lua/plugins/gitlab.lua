@@ -20,7 +20,9 @@ return {
   dependencies = {
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
-    "sindrets/diffview.nvim",
+    {"sindrets/diffview.nvim", opts = {
+      view = { default = { layout = "diff2_vertical" } },
+    }},
     "stevearc/dressing.nvim",
     "nvim-tree/nvim-web-devicons", -- not required
   },
@@ -129,15 +131,6 @@ return {
         squash = true,
         delete_branch = true,
       },
-    })
-
-    require("diffview").setup({
-      commit_log_panel = {
-        win_config = function()
-          return { type = "float", border = u.border, }
-        end
-      },
-      view = { default = { layout = "diff2_vertical" } },
     })
 
     u.nmap("gl<C-a>", "<cmd>!glab mr approvers<cr>", "Show eligible approvers")
