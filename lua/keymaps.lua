@@ -24,17 +24,17 @@ local tmux_navigate = function(keymap)
   end
 end
 
-vim.cmd [[let g:tmux_navigator_no_mappings = 1]]
-vim.keymap.set({"n", "t", "i"}, "<A-h>", function()
+vim.cmd([[let g:tmux_navigator_no_mappings = 1]])
+vim.keymap.set({ "n", "t", "i" }, "<A-h>", function()
   tmux_navigate("<A-h>")
 end, { silent = true, desc = "Navigate left" })
-vim.keymap.set({"n", "t", "i"}, "<A-j>", function()
+vim.keymap.set({ "n", "t", "i" }, "<A-j>", function()
   tmux_navigate("<A-j>")
 end, { silent = true, desc = "Navigate down" })
-vim.keymap.set({"n", "t", "i"}, "<A-k>", function()
+vim.keymap.set({ "n", "t", "i" }, "<A-k>", function()
   tmux_navigate("<A-k>")
 end, { silent = true, desc = "Navigate up" })
-vim.keymap.set({"n", "t", "i"}, "<A-l>", function()
+vim.keymap.set({ "n", "t", "i" }, "<A-l>", function()
   tmux_navigate("<A-l>")
 end, { silent = true, desc = "Navigate right" })
 
@@ -43,12 +43,12 @@ nmap("g<c-v>", "<cmd>vsplit | execute 'normal <c-]>'<cr>", "Jump to definition i
 nmap("g<c-x>", "<cmd>split | execute 'normal <c-]>'<cr>", "Jump to definition in new horizontal split.")
 nmap("<leader>tc", vim.cmd.tabclose, "Close the current tab")
 nmap("g<c-o>", function()
-  local previous_file = vim.fn.expand('%:p')
+  local previous_file = vim.fn.expand("%:p")
   local jump_count = 0
   while jump_count < 100 do
-    vim.cmd.normal({args = {""}, bang = true })
+    vim.cmd.normal({ args = { "" }, bang = true })
     jump_count = jump_count + 1
-    local current_file = vim.fn.expand('%:p')
+    local current_file = vim.fn.expand("%:p")
     if current_file ~= previous_file and current_file ~= "" then
       vim.api.nvim_command("bwipe #")
       return
@@ -106,7 +106,6 @@ nmap("<leader>c<c-l>", function()
   copy_path_to_clipboard(vim.fn.expand("%:t"), true)
 end, "[c]opy basename of buffer to clipboard")
 
-
 local v_copy_path_to_clipboard = function(path)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", false, true, true), "nx", false)
   local sel_start = vim.fn.line("'<")
@@ -125,12 +124,12 @@ vmap("<leader>c<C-l>", function()
   v_copy_path_to_clipboard(vim.fn.expand("%:t"))
 end, "[c]opy basename with [l]ine numbers to clipboard")
 
-vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], {desc = "Exit terminal-mode"})
+vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { desc = "Exit terminal-mode" })
 nmap("<BS>", "<Del>", "Delete the last digit when entering a number.")
 
 -- Make n and N behave the same regardless of previous search direction
-vim.keymap.set({"n"}, "n", "/<CR>", {silent = true, desc = "Search forward"})
-vim.keymap.set({"n"}, "N", "?<CR>", {silent = true, desc = "Search backward"})
+vim.keymap.set({ "n" }, "n", "/<CR>", { silent = true, desc = "Search forward" })
+vim.keymap.set({ "n" }, "N", "?<CR>", { silent = true, desc = "Search backward" })
 
 -- LSP-related keymaps
 nmap(
