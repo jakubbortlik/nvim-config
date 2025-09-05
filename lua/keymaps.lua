@@ -71,7 +71,6 @@ nmap("g<c-o>", function()
 end, "Go back to previously visited file and bufwipe current file")
 
 -- Miscellaneous mappings
-vim.keymap.set({ "i", "n", "s", "v" }, "<C-s>", "<cmd>update<cr><esc>", { desc = "[s]ave file" })
 nmap("co", "m`0:%s///gn<cr>", "[c]ount [o]ccurrences")
 nmap("cp", "m`:g//p<cr>", "o[c]currences [p]review")
 nmap("<C-w>N", "<cmd>vnew<cr>", "Create [N]ew vertical window")
