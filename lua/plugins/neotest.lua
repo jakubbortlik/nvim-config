@@ -23,7 +23,6 @@ return {
         enabled = true,
         severity = 1
       },
-
       quickfix = {
         enabled = true,
         open = false,
@@ -35,8 +34,10 @@ return {
     wk.add({
       {"<leader>n", group = "Neotest" },
       {"<leader>na", function() neotest.run.run(vim.fn.getcwd()) end, desc = "Run [n]eotest for current project" },
+      {"<leader>nc", neotest.output_panel.clear, desc = "[n]eotest output panel - [c]lear" },
       {"<leader>nd", function() neotest.run.run({ vim.fn.expand("%"), strategy = "dap" }) end, desc = "Run [n]eotest for current file with [d]ap" },
       {"<leader>nf", function() neotest.run.run({ vim.fn.expand("%") }) end, desc = "Run [n]eotest for current [f]ile" },
+      {"<leader>nu", neotest.run.stop, desc = "Stop running [n]eotest process" },
       {"<leader>nn", neotest.run.run, desc = "Run [n]eotest for [n]earest test" },
       {"<leader>nl", neotest.run.run_last, desc = "Run [n]eotest for [l]ast position (same args and strategy)" },
       {"<leader>nL", function() neotest.run.run_last({ strategy = "dap" }) end, desc = "Run [n]eotest for [L]ast position (same args but with DAP)" },

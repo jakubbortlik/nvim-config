@@ -39,6 +39,9 @@ return {
             EndOfBuffer = { link = "NonText" },
             Comment = { fg="#929189"},
             CodeiumSuggestion = { fg = "#cc8080" },
+            SpellCap = {undercurl=true, sp="#ff9e3b"},
+            SpellLocal = {undercurl=true, sp="#7e9cd8"},
+            SpellRare = {undercurl=true, sp="#98bb6c"},
 
             -- Save a hlgroup with dark background and dimmed foreground
             -- so that you can use it where your still want darker windows.
