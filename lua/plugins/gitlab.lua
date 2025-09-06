@@ -23,7 +23,6 @@ return {
     {"sindrets/diffview.nvim", opts = {
       view = { default = { layout = "diff2_vertical" } },
     }},
-    "stevearc/dressing.nvim",
     "nvim-tree/nvim-web-devicons", -- not required
   },
   lazy = false,
