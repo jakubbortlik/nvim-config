@@ -213,3 +213,10 @@ nmap("<leader>mt", function()
   vim.cmd.tabnew()
   vim.cmd("put =execute('messages')")
 end, "Open [m]essages in new [t]ab")
+
+vim.keymap.set({"o", "x"}, "O", function()
+  local small = require("various-textobjs.config.config").config.forwardLooking.small
+  local core = require("various-textobjs.charwise-core")
+  local row, _, endCol = core.getTextobjPos("().([[{(])", "inner", small)
+  core.selectFromCursorTo({ row, endCol }, small)
+end, {desc = "toNextOpeningBracket textobj"})
