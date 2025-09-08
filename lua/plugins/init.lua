@@ -1,14 +1,4 @@
 return {
-  -- "A universal set of defaults"
-  "tpope/vim-sensible",
-
-  -- Plugin for (not only) vimscript plugins
-  {
-    "tpope/vim-scriptease",
-    keys = { { "zS" }, { "K" } },
-    cmd = { "Messages", "PP", "Scriptnames", "Verbose", "Time" },
-  },
-
   -- Plugins for enhanced editing
   "tpope/vim-repeat", -- Repeat other plugins with . command
   {

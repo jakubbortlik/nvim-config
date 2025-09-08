@@ -1,7 +1,6 @@
 -- Lua version of "set 'option'"
-vim.opt.backup = false
 vim.opt.colorcolumn = "+1"
-vim.opt.completeopt = "menuone,longest,preview"
+vim.opt.completeopt = "menuone,longest,preview,fuzzy"
 vim.opt.cursorline = true
 vim.opt.diffopt:append({"linematch:60"})
 vim.opt.expandtab = true
@@ -14,11 +13,13 @@ vim.opt.history = 10000
 vim.opt.ignorecase = true
 vim.opt.jumpoptions = "view"
 vim.opt.linebreak = true
-vim.opt.mouse = ""
+vim.opt.listchars = "tab:>\\ ,trail:-,extends:>,precedes:<,nbsp:+"
 vim.opt.number = true
-vim.opt.scrolloff = 3
+vim.opt.nrformats:remove("octal")
+vim.opt.scrolloff = 2
 vim.opt.shiftwidth = 4
 vim.opt.showmode = false
+vim.opt.sidescrolloff = 2
 vim.opt.signcolumn = "auto:1-4"
 vim.opt.smartcase = true
 vim.opt.softtabstop = 4
