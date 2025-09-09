@@ -6,7 +6,15 @@ return {
       "grn",
       function()
         vim.o.inccommand = "split"
-        vim.cmd("au InsertLeave * ++once set inccommand=nosplit")
+        vim.api.nvim_create_autocmd("CmdlineLeave", {
+          pattern = "*",
+          once = true,
+          callback = function()
+            vim.defer_fn(function()
+              vim.opt.inccommand = "nosplit"
+            end, 0)
+          end,
+        })
         return ":IncRename " .. vim.fn.expand("<cword>")
       end,
       expr = true,
@@ -14,6 +22,7 @@ return {
     },
   },
   opts = {
+    preview_empty_name = true,
     post_hook = function(result)
       if not result.changes then
         vim.cmd("update")
