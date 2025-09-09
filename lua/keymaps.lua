@@ -153,7 +153,7 @@ nmap("<leader>lc", function()
   end
   local lines = {}
   for _, client in ipairs(active_clients) do
-    table.insert(lines, client.name .. ":")
+    table.insert(lines, client.name .. " (id " .. tostring(client.id) .. "):")
     local capabilities_str = vim.inspect(client.server_capabilities)
     for line in capabilities_str:gmatch("[^\r\n]+") do
       table.insert(lines, line)
