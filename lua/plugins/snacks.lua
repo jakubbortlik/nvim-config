@@ -61,7 +61,17 @@ return {
     { "<leader>sg", function() Snacks.picker.git_grep() end, desc = "Git Grep" },
     { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
     -- search
-    { "<c-'>", function() Snacks.picker.registers() end, desc = "Registers" },
+    { "<c-'>", function() Snacks.picker.registers() end, desc = "Registers", mode = "n" },
+    { "<c-'>", function() Snacks.picker.registers({
+      title = "Registers (insert)",
+      win = {
+        input = {
+          keys = {
+            ["<C-'>"] = { "use_register_insert", mode = { "n", "i" } },
+          },
+        },
+      },
+    }) end, desc = "Registers", mode = "i" },
     { '<leader>s/', function() Snacks.picker.search_history() end, desc = "Search History" },
     { "<leader>sa", function() Snacks.picker.autocmds() end, desc = "Autocmds" },
     { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },

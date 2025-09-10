@@ -22,19 +22,6 @@ return {
     },
   },
   {
-    "tversteeg/registers.nvim",
-    name = "registers",
-    keys = {
-      { '"', mode = { "n", "v" } },
-      { "<C-R>", mode = "i" },
-    },
-    cmd = "Registers",
-    opts = {
-      show_empty = false,
-      window = { border = vim.o.winborder },
-    },
-  },
-  {
     "chrisgrieser/nvim-various-textobjs",
     lazy = false,
     opts = { keymaps = { useDefaults = true, disabledDefaults = { "gw", "gc" } } },
