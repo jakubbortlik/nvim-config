@@ -42,6 +42,13 @@ return {
     { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
     -- git
     { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git Log" },
+    { "<leader>g<c-l>", function()
+      vim.ui.input({prompt="git log -S <string>"}, function(item)
+        if item then
+          Snacks.picker.git_log({pickaxe = item})
+        end
+      end)
+    end, desc = "Git Log" },
     { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Git Log Line" },
     { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
     { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
@@ -50,8 +57,8 @@ return {
     -- Grep
     { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
     { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
-    { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
-    { "<leader>sG", function() Snacks.picker.git_grep() end, desc = "Grep" },
+    { "<leader>ss", function() Snacks.picker.grep() end, desc = "Grep" },
+    { "<leader>sg", function() Snacks.picker.git_grep() end, desc = "Git Grep" },
     { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
     -- search
     { "<c-'>", function() Snacks.picker.registers(require("plugins.snacks.pickers").registers_opts) end, desc = "Registers" },
@@ -81,11 +88,9 @@ return {
     { "grR", function() Snacks.picker.lsp_references() end, nowait = true, desc = "References" },
     { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
     { "gry", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
-    { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "LSP Symbols" },
-    { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
     -- Other
-    { "<leader>z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
-    { "<leader>Z",  function() Snacks.zen({on_open = function()
+    { "\\z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
+    { "\\Z",  function() Snacks.zen({on_open = function()
       vim.o.diff = false
     end}) end, desc = "Toggle Zen Mode without diff" },
     { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
@@ -119,13 +124,12 @@ return {
         vim.print = _G.dd -- Override print to use snacks for `:=` command
 
         -- Create some toggle mappings
-        Snacks.toggle.diagnostics():map("<leader>ud")
-        Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map("<leader>uc")
-        Snacks.toggle.treesitter():map("<leader>uT")
-        Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
-        Snacks.toggle.inlay_hints():map("<leader>uh")
-        Snacks.toggle.indent():map("<leader>ug")
-        Snacks.toggle.dim():map("<leader>uD")
+        Snacks.toggle.diagnostics():map("\\d")
+        Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map("\\c")
+        Snacks.toggle.treesitter():map("\\T")
+        Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("\\b")
+        Snacks.toggle.inlay_hints():map("\\h")
+        Snacks.toggle.dim():map("\\D")
       end,
     })
   end,
