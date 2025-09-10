@@ -16,7 +16,7 @@ return {
     explorer = { enabled = true },
     indent = { enabled = false, indent = {hl = "IBLIndent"}, animate = { enabled = false }, scope = {} },
     input = { enabled = true },
-    picker = require("plugins.snacks.pickers").default_opts,
+    picker = require("plugins.more_snacks.pickers"),
     notifier = { enabled = true },
     quickfile = { enabled = true },
     scope = { enabled = true, cursor = false },
@@ -61,7 +61,7 @@ return {
     { "<leader>sg", function() Snacks.picker.git_grep() end, desc = "Git Grep" },
     { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
     -- search
-    { "<c-'>", function() Snacks.picker.registers(require("plugins.snacks.pickers").registers_opts) end, desc = "Registers" },
+    { "<c-'>", function() Snacks.picker.registers() end, desc = "Registers" },
     { '<leader>s/', function() Snacks.picker.search_history() end, desc = "Search History" },
     { "<leader>sa", function() Snacks.picker.autocmds() end, desc = "Autocmds" },
     { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
