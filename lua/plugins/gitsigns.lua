@@ -12,6 +12,9 @@ return {
         vim.keymap.set(mode, l, r, opts)
       end
 
+      nmap("gb", "<cmd>Gitsigns blame<cr>", "[g]it [b]lame")
+      nmap("gB", "<cmd>Gitsigns blame_line<cr>", "[g]it [B]lame_line")
+
       -- Navigation
       nmap("]g", function()
         vim.schedule(function()
