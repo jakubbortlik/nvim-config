@@ -97,6 +97,7 @@ return {
         ["<C-j>"] = { "history_forward", mode = { "i", "n" } },
         ["<C-k>"] = { "history_back", mode = { "i", "n" } },
         ["<M-h>"] = false,
+        ["<M-f>"] = { "toggle_follow", mode = { "n" } },
         ["<C-h>"] = { "toggle_hidden", mode = { "i", "n" } },
         ["<C-x>"] = { "split", mode = { "i", "n" } },
         ["<M-r>"] = { "toggle_regex", mode = { "i", "n" } },
