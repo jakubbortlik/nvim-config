@@ -2,11 +2,34 @@
 return {
   "Vigemus/iron.nvim",
   keys = {
-    { "<leader>re", vim.cmd.IronRepl, desc = "󱠤 Toggle REPL" },
+    {
+      "<M-r>",
+      function()
+        if vim.bo.filetype ~= "" then
+          vim.cmd.IronFocus()
+          vim.cmd.startinsert()
+        else
+          vim.notify("Can't open REPL without a filetype", vim.log.levels.WARN)
+        end
+      end,
+      desc = "󱠤 Toggle REPL",
+    },
     { "+", mode = { "n", "x" }, desc = "󱠤 Send-to-REPL Operator" },
     { "++", desc = "󱠤 Send Line to REPL" },
-    { "<leader>rw", function() vim.cmd.IronWatch("file") end, desc = "󱠤 REPL watch file" },
-    { "<leader>ru", function() require("iron.core").unwatch(0) end, desc = "󱠤 REPL unwatch file" },
+    {
+      "<leader>rw",
+      function()
+        vim.cmd.IronWatch("file")
+      end,
+      desc = "󱠤 REPL watch file",
+    },
+    {
+      "<leader>ru",
+      function()
+        require("iron.core").unwatch(0)
+      end,
+      desc = "󱠤 REPL unwatch file",
+    },
   },
   -- irons's setup call is `require("iron.core").setup`
   main = "iron.core",
@@ -29,7 +52,7 @@ return {
           command = function()
             local ipythonAvailable = vim.fn.executable("ipython") == 1
             local binary = ipythonAvailable and "ipython" or "python3"
-            return { binary}
+            return { binary }
           end,
         },
       },
