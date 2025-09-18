@@ -55,7 +55,7 @@ end, { silent = true, desc = "Navigate right" })
 nmap("g<c-t>", "<cmd>tab split | execute 'normal <c-]>'<cr>", "Jump to definition in new tab.")
 nmap("g<c-v>", "<cmd>vsplit | execute 'normal <c-]>'<cr>", "Jump to definition in new vertical split.")
 nmap("g<c-x>", "<cmd>split | execute 'normal <c-]>'<cr>", "Jump to definition in new horizontal split.")
-nmap("<leader>tc", vim.cmd.tabclose, "Close the current tab")
+nmap("<leader>tq", vim.cmd.tabclose, "Close the current tab")
 nmap("g<c-o>", function()
   local previous_file = vim.fn.expand("%:p")
   local jump_count = 0

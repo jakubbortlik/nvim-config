@@ -32,24 +32,25 @@ return {
     local wk = require("which-key")
     -- Register normal mode keymaps
     wk.add({
-      {"<leader>n", group = "Neotest" },
-      {"<leader>na", function() neotest.run.run(vim.fn.getcwd()) end, desc = "Run [n]eotest for current project" },
-      {"<leader>nc", neotest.output_panel.clear, desc = "[n]eotest output panel - [c]lear" },
-      {"<leader>nd", function() neotest.run.run({ vim.fn.expand("%"), strategy = "dap" }) end, desc = "Run [n]eotest for current file with [d]ap" },
-      {"<leader>nf", function() neotest.run.run({ vim.fn.expand("%") }) end, desc = "Run [n]eotest for current [f]ile" },
-      {"<leader>nu", neotest.run.stop, desc = "Stop running [n]eotest process" },
-      {"<leader>nn", neotest.run.run, desc = "Run [n]eotest for [n]earest test" },
-      {"<leader>nl", neotest.run.run_last, desc = "Run [n]eotest for [l]ast position (same args and strategy)" },
-      {"<leader>nL", function() neotest.run.run_last({ strategy = "dap" }) end, desc = "Run [n]eotest for [L]ast position (same args but with DAP)" },
-      {"<leader>nw", function() neotest.watch.toggle(vim.fn.expand("%")) end, desc = "Toggle [n]eotest [w]atching the current file" },
-      {"<leader>nW", neotest.watch.toggle, desc = "Toggle [n]eotest [W]atching the nearest test" },
-      {"<leader>no", function() neotest.output.open({ enter = true, auto_close = true, open_win = function()
+      {"<leader>t", group = "Neotest" },
+      {"<leader>ta", function() neotest.run.run(vim.fn.getcwd()) end, desc = "Run neo[t]est for current [p]roject" },
+      {"<leader>tc", neotest.output_panel.clear, desc = "neo[t]est output panel - [c]lear" },
+      {"<leader>td", function() neotest.run.run({ strategy = "dap" }) end, desc = "Run neo[t]est for nearest test with [d]ap" },
+      {"<leader>tD", function() neotest.run.run({ vim.fn.expand("%"), strategy = "dap" }) end, desc = "Run neo[t]est for current file with [D]ap" },
+      {"<leader>tL", function() neotest.run.run_last({ strategy = "dap" }) end, desc = "Run neo[t]est for [L]ast position (same args, with DAP)" },
+      {"<leader>tl", neotest.run.run_last, desc = "Run neo[t]est for [l]ast position (same args and strategy)" },
+      {"<leader>tn", neotest.run.run, desc = "Run neo[t]est for [n]earest test" },
+      {"<leader>tt", function() neotest.run.run({ vim.fn.expand("%") }) end, desc = "Run neo[t]est for [t]his file" },
+      {"<leader>tu", neotest.run.stop, desc = "Stop running neo[t]est process" },
+      {"<leader>tW", function() neotest.watch.toggle(vim.fn.expand("%")) end, desc = "Toggle neo[t]est [W]atching current file" },
+      {"<leader>tw", neotest.watch.toggle, desc = "Toggle neo[t]est [w]atching nearest test" },
+      {"<leader>to", function() neotest.output.open({ enter = true, auto_close = true, open_win = function()
         vim.cmd('tabnew')
         local win_id = vim.api.nvim_get_current_win()
         return win_id
-      end}) end, desc = "Open [n]eotest [o]utput" },
-      {"<leader>nO", function() neotest.output_panel.toggle() end, desc = "Open [n]eotest [O]utput panel" },
-      {"<leader>ns", neotest.summary.toggle, desc = "Toggle [n]eotest [s]ummary" },
+      end}) end, desc = "Open neo[t]est [o]utput" },
+      {"<leader>tp", function() neotest.output_panel.toggle() end, desc = "Open neo[t]est output [p]anel" },
+      {"<leader>ts", neotest.summary.toggle, desc = "Toggle neo[t]est [s]ummary" },
     })
     u.nmap("[F", function()
       neotest.jump.prev({ status = "failed" })
