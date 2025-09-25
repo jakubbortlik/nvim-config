@@ -3,8 +3,8 @@ local u = require("utils")
 local title_input_width
 local discussion_tree_size
 local discussion_tree_position
-local comment_position = {row = "92%", col = "100%"}
-local comment_opts = {width = 112, height = 30, position = comment_position}
+local comment_position = { row = "92%", col = "100%" }
+local comment_opts = { width = 112, height = 30, position = comment_position }
 if vim.o.columns > 170 then
   title_input_width = 120
   discussion_tree_size = 90
@@ -37,7 +37,7 @@ return {
     { "glM", desc = "Merge MR" },
     { "glP", desc = "Publish all MR comment drafts" },
     { "glR", desc = "Revoke approval" },
-    { "glS" , desc = "Start Gitlab review" },
+    { "glS", desc = "Start Gitlab review" },
     { "glaa", desc = "Add MR assignee" },
     { "glad", desc = "Delete MR assignee" },
     { "glb", desc = "Rebuild gitlab server" },
@@ -110,7 +110,7 @@ return {
         use_diagnostic_signs = false,
         icons = {
           comment = "╭",
-          range = "│"
+          range = "│",
         },
       },
       popup = {
@@ -121,7 +121,7 @@ return {
         reply = comment_opts,
         edit = comment_opts,
         note = comment_opts,
-        summary = {border = "single", height = "80%", width = "60%"},
+        summary = { border = "single", height = "80%", width = "60%" },
       },
       create_mr = {
         title_input = {
@@ -132,14 +132,18 @@ return {
       },
     })
 
-    u.nmap("gl<C-a>", "<cmd>!glab mr approvers<cr>", "Show eligible approvers")
+    u.nmap("gl<C-a>", "<cmd>lua Snacks.terminal.open('glab mr approvers', {auto_close = false, win = {width = 90, height = 30, border = 'rounded'}})<cr>", "Show eligible approvers")
+    u.nmap("glp", "<cmd>lua Snacks.terminal.open('glab ci view', {win = {width = 190}})<cr>", "Show current CI pipeline")
     u.nmap("glL", function()
       vim.cmd("tab new " .. vim.print(gitlab.state.settings.log_path))
     end, "Open gitlab.nvim.log in a new tab")
     u.nmap("gl<c-l>", function()
       local ok, err = os.remove(gitlab.state.settings.log_path)
       if not ok then
-        vim.print(("Unable to remove file %s, error %s"):format(gitlab.state.settings.log_path, err), vim.log.levels.ERROR)
+        vim.print(
+          ("Unable to remove file %s, error %s"):format(gitlab.state.settings.log_path, err),
+          vim.log.levels.ERROR
+        )
       else
         vim.print("Removed file: " .. gitlab.state.settings.log_path)
       end
@@ -150,12 +154,15 @@ return {
     end, "Rebuild the Gitlab Go server")
     u.nmap("gl<c-s>", function()
       vim.cmd.tabnew()
-      vim.cmd.Verbose('lua require("gitlab").print_settings()')
+      vim.cmd.verbose('lua require("gitlab").print_settings()')
       vim.cmd.only()
     end, "Print gitlab.nvim settings")
     u.nmap("gl<C-r>", function()
       gitlab_server.restart(function()
-        vim.cmd.tabclose()
+        if #vim.api.nvim_list_tabpages() == 1 then
+          vim.cmd.tabnew()
+        end
+        vim.cmd.tabclose(vim.api.nvim_tabpage_get_number(require("gitlab.reviewer").tabnr))
         gitlab.review()
       end)
     end, "Gitlab Restart Server")
