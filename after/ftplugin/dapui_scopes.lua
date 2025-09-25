@@ -1,1 +1,1 @@
-vim.keymap.set("n", "q", "<cmd>close<cr>", { desc = "Close the popup" })
+vim.keymap.set("n", "q", "<cmd>close<cr>", { desc = "Close the popup", buffer = true })
