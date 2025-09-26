@@ -130,3 +130,17 @@ vim.api.nvim_create_autocmd("OptionSet", {
     end
   end,
 })
+
+local last_auto_updated = os.time()
+local gitlab = vim.api.nvim_create_augroup("Gitlab", {})
+vim.api.nvim_create_autocmd("BufEnter", {
+  group = gitlab,
+  callback = function()
+    local last_updated = require("gitlab.state").discussion_tree.last_updated
+    last_updated = last_updated and last_updated or 0
+    if vim.bo.filetype == "gitlab" and os.time() - math.max(last_auto_updated, last_updated) > 10 then
+      require("gitlab").refresh_data()
+      last_auto_updated = os.time()
+    end
+  end
+})
