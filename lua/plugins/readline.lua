@@ -1,15 +1,8 @@
 return {
-  {
-    "tpope/vim-rsi",
-    event = {
-      "CmdlineEnter",
-      "InsertEnter",
-    },
-  },
-  {
-    "ryvnf/readline.vim",
-    event = {
-      "CmdlineEnter",
-    },
+  "jakubbortlik/readline.vim",
+  dir = "~/projects/readline.vim",
+  event = {
+    "CmdlineEnter",
+    "InsertEnter",
   },
 }
