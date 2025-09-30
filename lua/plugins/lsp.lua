@@ -191,23 +191,30 @@ local M = {
     },
     opts = function()
       local null_ls = require("null-ls")
+
+      local sources = {
+        -- linters
+        null_ls.builtins.diagnostics.buf, -- protobuf
+        null_ls.builtins.diagnostics.commitlint, -- conventional commits
+        null_ls.builtins.diagnostics.selene, -- lua
+        null_ls.builtins.diagnostics.vint, -- vimscript
+        null_ls.builtins.diagnostics.yamllint, -- YAML
+        -- formatters
+        null_ls.builtins.formatting.buf, -- Protobuf formatting
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.textlint, -- Markdown
+      }
+
+      if vim.fn.filereadable(vim.fn.getcwd() .. "/" .. ".prettierrc.cjs") == 1 then
+        table.insert(sources, null_ls.builtins.formatting.prettierd.with({ filetypes = { "javascript", "typescript", "markdown" } }))
+      else
+        table.insert(sources, null_ls.builtins.formatting.mdformat)
+      end
+
       return {
         root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
         on_attach = on_attach,
-        sources = {
-          -- linters
-          null_ls.builtins.diagnostics.buf, -- protobuf
-          null_ls.builtins.diagnostics.commitlint, -- conventional commits
-          null_ls.builtins.diagnostics.selene, -- lua
-          null_ls.builtins.diagnostics.vint, -- vimscript
-          null_ls.builtins.diagnostics.yamllint, -- YAML
-          -- formatters
-          null_ls.builtins.formatting.buf, -- Protobuf formatting
-          null_ls.builtins.formatting.mdformat,
-          null_ls.builtins.formatting.prettierd.with({ filetypes = { "javascript", "typescript", "markdown" } }),
-          null_ls.builtins.formatting.stylua,
-          null_ls.builtins.formatting.textlint, -- Markdown
-        },
+        sources = sources,
       }
     end,
   },
