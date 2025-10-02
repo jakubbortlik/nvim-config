@@ -209,6 +209,7 @@ return {
         },
       },
       inactive_sections = {
+        lualine_c = { { 'filename', path = 1 } },
         lualine_x = { { neotest_status }, { "location" } }
       }
     })
