@@ -32,6 +32,5 @@ return {
   config = function(_, opts)
     require("oil").setup(opts)
     vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-    vim.keymap.set("n", "<leader>-", "<CMD>lua require('oil').open_float()<CR>", { desc = "Open parent directory in floating window" })
   end
 }
