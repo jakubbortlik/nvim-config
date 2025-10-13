@@ -16,8 +16,8 @@ return {
 
     vim.keymap.set("n", "<leader>rI", ":Refactor inline_func")
 
-    vim.keymap.set("n", "<leader>rb", ":Refactor extract_block")
-    vim.keymap.set("n", "<leader>rbf", ":Refactor extract_block_to_file")
+    vim.keymap.set("n", "<leader>reb", ":Refactor extract_block")
+    vim.keymap.set("n", "<leader>ref", ":Refactor extract_block_to_file")
 
     vim.keymap.set({ "x", "n" }, "<leader>rp", function()
       refactoring.debug.print_var({ below = true })
