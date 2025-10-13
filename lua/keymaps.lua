@@ -1,6 +1,7 @@
 local imap = require("utils").imap
 local nmap = require("utils").nmap
 local vmap = require("utils").vmap
+local utils = require("utils")
 
 -- Override default behaviour
 nmap("<C-e>", "3<C-E>", "Scroll down more")
@@ -173,6 +174,14 @@ nmap("K", vim.lsp.buf.hover, "vim.lsp.buf.hover()")
 imap("<C-k>", vim.lsp.buf.signature_help, "vim.lsp.buf.signature_help()")
 nmap("<leader>lr", "<cmd>LspRestart<cr>", "Restart LSP")
 nmap("<leader>ls", "<cmd>LspStop<cr>", "Stop LSP")
+
+-- Tools mappings
+vim.keymap.set("n", "<leader>rr", "<cmd>!" .. utils.get_python_tool() .. " run ruff check<cr>", { desc = "Run ruff" })
+vim.keymap.set("n", "<leader>rR", ":!" .. utils.get_python_tool() .. " run ruff check --fix", { desc = "Fix ruff errors" })
+vim.keymap.set("n", "<leader>rb", "<cmd>!" .. utils.get_python_tool() .. " run black .<cr>", { desc = "Run black" })
+vim.keymap.set("n", "<leader>rm", "<cmd>!" .. utils.get_python_tool() .. " run mypy .<cr>", { desc = "Run mypy" })
+vim.keymap.set("n", "<leader>rt", "<cmd>!" .. utils.get_python_tool() .. " run pytest<cr>", { desc = "Run pytest" })
+vim.keymap.set("n", "<leader>rT", ":!" .. utils.get_python_tool() .. " run pytest ", { desc = "Populate cmd with pytest" })
 
 -- Remaps by ThePrimeagen
 vim.keymap.set("x", "<leader>p", [["_dP]], { desc = "Visual mode paste without losing register" })

@@ -15,7 +15,6 @@ return {
       adapters = {
         require("neotest-python")({
           dap = { justMyCode = true },
-          python = u.python_path(),
           args = { "-vv", "--cov", "--cov-report", "term", "--cov-report", "xml:coverage.xml" },
         }),
       },
