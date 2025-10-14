@@ -183,10 +183,7 @@ return {
             end,
           },
           {
-            codeium_status,
-            cond = function()
-              return conditions.window_wider_than(95)
-            end,
+            require 'minuet.lualine',
           },
           {
             "encoding",
