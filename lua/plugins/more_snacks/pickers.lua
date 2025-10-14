@@ -22,7 +22,6 @@ return {
       },
     },
     select = {
-      layout = { preset = "vertical" },
       win = {
         list = {
           keys = {
