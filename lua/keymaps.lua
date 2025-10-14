@@ -138,7 +138,6 @@ vmap("<leader>c<C-l>", function()
   v_copy_path_to_clipboard(vim.fn.expand("%:t"))
 end, "[c]opy basename with [l]ine numbers to clipboard")
 
-vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { desc = "Exit terminal-mode" })
 nmap("<BS>", "<Del>", "Delete the last digit when entering a number.")
 
 -- Make n and N behave the same regardless of previous search direction
