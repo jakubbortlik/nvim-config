@@ -16,9 +16,9 @@ return {
       { "ckj", desc = "Next keymap" },
       { "ckk", desc = "Previous keymap" },
       { "ckl", desc = "Show keymaps" },
-      { mode = "i", "<C-k><C-j>", desc = "Next keymap" },
-      { mode = "i", "<C-k><C-k>", desc = "Previous keymap" },
-      { mode = "i", "<C-k><C-l>", desc = "Show keymaps" },
+      { mode = { "i", "c" }, "<C-k><C-j>", desc = "Next keymap" },
+      { mode = { "i", "c" }, "<C-k><C-k>", desc = "Previous keymap" },
+      { mode = { "i", "c" }, "<C-k><C-l>", desc = "Show keymaps" },
     },
   },
   {
