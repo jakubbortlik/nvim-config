@@ -72,6 +72,12 @@ nmap("g<c-o>", function()
 end, "Go back to previously visited file and bufwipe current file")
 
 -- Miscellaneous mappings
+vim.keymap.set(
+  { "n", "t", "i", "x" },
+  "<c-q>",
+  [[<c-\><c-n>]],
+  { desc = "Go to normal mode" }
+)
 nmap("co", "m`0:%s///gn<cr>", "[c]ount [o]ccurrences")
 nmap("cp", "m`:g//p<cr>", "o[c]currences [p]review")
 nmap("<C-w>N", "<cmd>vnew<cr>", "Create [N]ew vertical window")
