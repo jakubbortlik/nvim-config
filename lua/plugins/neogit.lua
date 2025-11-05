@@ -5,6 +5,7 @@ return {
     "sindrets/diffview.nvim",
     "folke/snacks.nvim",
   },
+  event = { "CmdlineEnter" },
   keys = {
     { "gs", "<cmd>Neogit<cr>", desc = "Open Neo[g]it [s]tatus in new tab" },
     { "gS", "<cmd>Neogit kind=vsplit<cr>", desc = "Vsplit Neo[g]it [s]tatus" },
@@ -28,6 +29,8 @@ return {
       status = {
         ["K"] = "OpenOrScrollUp",
         ["J"] = "OpenOrScrollDown",
+        ["<c-t>"] = false,
+        ["g<c-t>"] = "TabOpen",
       },
     },
   },
