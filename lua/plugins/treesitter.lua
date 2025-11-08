@@ -1,43 +1,53 @@
-return {
+vim.api.nvim_create_autocmd({ "Filetype" }, {
+  callback = function(event)
+    local ignored_fts = {
+      "snacks_notif",
+      "snacks_input",
+      "prompt",
+    }
+
+    if vim.tbl_contains(ignored_fts, event.match) then
+      return
+    end
+
+    -- make sure nvim-treesitter is loaded
+    local ok, nvim_treesitter = pcall(require, "nvim-treesitter")
+
+    -- no nvim-treesitter, maybe fresh install
+    if not ok then
+      return
+    end
+
+    if
+      vim.list_contains(
+        nvim_treesitter.get_installed(),
+        vim.treesitter.language.get_lang(event.match)
+      )
+    then
+      vim.treesitter.start(event.buf)
+      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+      vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+    end
+  end,
+})
+
+local M = {
+  ---@module 'lazy'
+  ---@type LazySpec
   {
     "nvim-treesitter/nvim-treesitter",
+    lazy = false,
+    branch = "main",
     build = ":TSUpdate",
     dependencies = {
-      {
-        "nvim-treesitter/nvim-treesitter-textobjects",
-        init = function()
-          -- PERF: no need to load the plugin, if we only need its opts
-          local plugin = require("lazy.core.config").spec.plugins["nvim-treesitter"]
-          local opts = require("lazy.core.plugin").values(plugin, "opts", false)
-          local enabled = false
-          if opts.textobjects then
-            for _, mod in ipairs({ "move", "select", "swap", "lsp_interop" }) do
-              if opts.textobjects[mod] and opts.textobjects[mod].enable then
-                enabled = true
-                break
-              end
-            end
-          end
-          if not enabled then
-            require("lazy.core.loader").disable_rtp_plugin(
-              "nvim-treesitter-textobjects"
-            )
-          end
-        end,
-      },
       "LiadOz/nvim-dap-repl-highlights",
     },
-    keys = {
-      { "<cr>" },
-      { "<bs>", mode = "x" },
-    },
-    opts = {
-      ensure_installed = {
+    config = function(_, _)
+      local ensure_installed = {
         "bash",
         "c",
         "cpp",
         "dap_repl",
-        -- "diff",
         "dockerfile",
         "gitcommit",
         "gitignore",
@@ -53,7 +63,6 @@ return {
         "luap",
         "markdown",
         "markdown_inline",
-        "org",
         "proto",
         "python",
         "r",
@@ -66,110 +75,303 @@ return {
         "vim",
         "vimdoc",
         "yaml",
-      },
-      sync_install = false,
-      highlight = {
-        enable = true,
-        -- Disable slow treesitter highlight for large files
-        disable = function(_, buf)
-          local max_filesize = 100 * 1024 -- 100 KB
-          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-          if ok and stats and stats.size > max_filesize then
-            return true
-          end
-        end,
-        additional_vim_regex_highlighting = { "org" },
-      },
-      indent = { enable = true, disable = { "python" } },
-      textobjects = {
-        select = {
-          enable = true,
-          lookahead = true, -- Automatically jump forward to textobjects
-          keymaps = {
-            ["aa"] = { query = "@parameter.outer", desc = "Select outer parameter region" },
-            ["ia"] = { query = "@parameter.inner", desc = "Select inner parameter region" },
-            ["af"] = { query = "@function.outer", desc = "Select outer function region" },
-            ["if"] = { query = "@function.inner", desc = "Select inner function region" },
-            ["ac"] = { query = "@class.outer", desc = "Select outer class region" },
-            ["ic"] = { query = "@class.inner", desc = "Select inner class region" },
-            ["aP"] = { query = "@parameter.outer", desc = "Select outer parameter region" },
-            ["iP"] = { query = "@parameter.inner", desc = "Select inner parameter region" },
-            ["aI"] = { query = "@conditional.outer", desc = "Select outer conditional region" },
-            ["iI"] = { query = "@conditional.inner", desc = "Select inner conditional region" },
-            ["al"] = { query = "@loop.outer", desc = "Select outer loop region" },
-            ["il"] = { query = "@loop.inner", desc = "Select inner loop region" },
-            ["at"] = { query = "@comment.outer", desc = "Select outer comment region" },
-            ["it"] = { query = "@comment.inner", desc = "Select inner comment region" },
-          },
-          selection_modes = {
-            ['@parameter.outer'] = 'v', -- charwise
-            ['@function.outer'] = 'V',  -- linewise
-            ['@class.outer'] = 'V',
-            ['@loop.outer'] = 'V',
-            ['@loop.inner'] = 'V',
-          },
-        },
-        move = {
-          enable = true,
-          set_jumps = true, -- whether to set jumps in the jumplist
-          disable = {"help"},
-          goto_next = {
-            ["]i"] = "@conditional.inner",
-          },
-          goto_previous = {
-            ["[i"] = "@conditional.inner",
-          },
-          goto_next_start = {
-            ["]m"] = "@function.outer",
-            ["]]"] = "@class.outer",
-            ["]o"] = "@loop.outer",
-          },
-          goto_next_end = {
-            ["]M"] = "@function.outer",
-            ["]["] = "@class.outer",
-          },
-          goto_previous_start = {
-            ["[m"] = "@function.outer",
-            ["[["] = "@class.outer",
-            ["[o"] = "@loop.outer",
-          },
-          goto_previous_end = {
-            ["[M"] = "@function.outer",
-            ["[]"] = "@class.outer",
-          },
-        },
-      },
-      incremental_selection = {
-        enable = true,
-        disable = function()
-          local ok, bufname = pcall(vim.fn.expand, "%")
-          if ok and bufname == "" or bufname == "[Command Line]" then
-            return true
-          end
-        end,
-        keymaps = {
-          init_selection = "<cr>", -- set to `false` to disable one of the mappings
-          node_incremental = "<cr>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
-        },
-      },
-    },
-    config = function(_, opts)
+      }
+
+      -- make sure nvim-treesitter can load
+      local ok, nvim_treesitter = pcall(require, "nvim-treesitter")
+
+      -- no nvim-treesitter, maybe fresh install
+      if not ok then
+        return
+      end
+
+      nvim_treesitter.install(ensure_installed)
+
       -- This is required for the dap_repl parser to be installable
       require("nvim-dap-repl-highlights").setup()
-
-      if type(opts.ensure_installed) == "table" then
-        local added = {}
-        opts.ensure_installed = vim.tbl_filter(function(lang)
-          if added[lang] then
-            return false
-          end
-          added[lang] = true
-          return true
-        end, opts.ensure_installed)
-      end
-      require("nvim-treesitter.configs").setup(opts)
     end,
   },
+
+  ---@module 'lazy'
+  ---@type LazySpec
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    event = "VeryLazy",
+    branch = "main",
+    keys = {
+      {
+        "[i",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous(
+            "@conditional.inner",
+            "textobjects"
+          )
+        end,
+        desc = "prev conditional",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "]i",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next("@conditional.inner", "textobjects")
+        end,
+        desc = "next conditional",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "[m",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_start(
+            "@function.outer",
+            "textobjects"
+          )
+        end,
+        desc = "prev function",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "]m",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next_start(
+            "@function.outer",
+            "textobjects"
+          )
+        end,
+        desc = "next function",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "[[",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_start(
+            "@class.outer",
+            "textobjects"
+          )
+        end,
+        desc = "prev class",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "]]",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next_start("@class.outer", "textobjects")
+        end,
+        desc = "next class",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "[]",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_end(
+            "@class.outer",
+            "textobjects"
+          )
+        end,
+        desc = "prev class end",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "][",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next_end("@class.outer", "textobjects")
+        end,
+        desc = "next class end",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "[M",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_end(
+            "@function.outer",
+            "textobjects"
+          )
+        end,
+        desc = "prev function end",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "]M",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next_end(
+            "@function.outer",
+            "textobjects"
+          )
+        end,
+        desc = "next function end",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "[a",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_start(
+            "@parameter.outer",
+            "textobjects"
+          )
+        end,
+        desc = "prev argument",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "]a",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next_start(
+            "@parameter.outer",
+            "textobjects"
+          )
+        end,
+        desc = "next argument",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "[A",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_end(
+            "@parameter.outer",
+            "textobjects"
+          )
+        end,
+        desc = "prev argument end",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "]A",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next_end(
+            "@parameter.outer",
+            "textobjects"
+          )
+        end,
+        desc = "next argument end",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "[o",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_start(
+            "@loop.outer",
+            "textobjects"
+          )
+        end,
+        desc = "prev loop",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "]o",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next_start("@loop.outer", "textobjects")
+        end,
+        desc = "next loop",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "[S",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_previous_start(
+            "@block.outer",
+            "textobjects"
+          )
+        end,
+        desc = "prev block",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "]S",
+        function()
+          require("nvim-treesitter-textobjects.move").goto_next_start("@block.outer", "textobjects")
+        end,
+        desc = "next block",
+        mode = { "n", "x", "o" },
+      },
+      {
+        "<leader>[a",
+        function()
+          require("nvim-treesitter-textobjects.swap").swap_next("@parameter.inner")
+        end,
+        desc = "swap next argument",
+      },
+      {
+        "<leader>]a",
+        function()
+          require("nvim-treesitter-textobjects.swap").swap_previous("@parameter.inner")
+        end,
+        desc = "swap prev argument",
+      },
+    },
+
+    opts = {
+      select = {
+        lookahead = true, -- Automatically jump forward to textobjects
+        selection_modes = {
+          ["@parameter.outer"] = "v", -- charwise
+          ["@function.outer"] = "V", -- linewise
+          ["@class.outer"] = "V",
+          ["@loop.outer"] = "V",
+          ["@loop.inner"] = "V",
+        },
+      },
+      move = {
+        set_jumps = true,
+        disable = { "help" },
+      },
+    },
+  },
 }
+
+-- Use the capture groups defined in `textobjects.scm`
+local keymaps = {
+  ["aa"] = {
+    query = "@parameter.outer",
+    group = "textobjects",
+    desc = "Select outer parameter region",
+  },
+  ["ia"] = {
+    query = "@parameter.inner",
+    group = "textobjects",
+    desc = "Select inner parameter region",
+  },
+  ["af"] = {
+    query = "@function.outer",
+    group = "textobjects",
+    desc = "Select outer function region",
+  },
+  ["if"] = {
+    query = "@function.inner",
+    group = "textobjects",
+    desc = "Select inner function region",
+  },
+  ["ac"] = { query = "@class.outer", group = "textobjects", desc = "Select outer class region" },
+  ["ic"] = { query = "@class.inner", group = "textobjects", desc = "Select inner class region" },
+  ["aP"] = {
+    query = "@parameter.outer",
+    group = "textobjects",
+    desc = "Select outer parameter region",
+  },
+  ["iP"] = {
+    query = "@parameter.inner",
+    group = "textobjects",
+    desc = "Select inner parameter region",
+  },
+  ["aI"] = {
+    query = "@conditional.outer",
+    group = "textobjects",
+    desc = "Select outer conditional region",
+  },
+  ["iI"] = {
+    query = "@conditional.inner",
+    group = "textobjects",
+    desc = "Select inner conditional region",
+  },
+  ["al"] = { query = "@loop.outer", group = "textobjects", desc = "Select outer loop region" },
+  ["il"] = { query = "@loop.inner", group = "textobjects", desc = "Select inner loop region" },
+  ["at"] = { query = "@comment.outer", group = "textobjects", desc = "Select outer comment region" },
+  ["it"] = { query = "@comment.inner", group = "textobjects", desc = "Select inner comment region" },
+  ["as"] = { query = "@local.scope", group = "locals", desc = "Select local scope" },
+}
+
+for keys, opts in pairs(keymaps) do
+  vim.keymap.set({ "x", "o" }, keys, function()
+    require("nvim-treesitter-textobjects.select").select_textobject(opts.query, "textobjects")
+  end, { desc = opts.desc })
+end
+
+return M
