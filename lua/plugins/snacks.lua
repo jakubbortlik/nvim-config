@@ -1,4 +1,5 @@
 vim.api.nvim_set_hl(0, "SnacksPickerDir", { link = "Directory" })
+vim.api.nvim_set_hl(0, "SnacksPickerMatch", { link = "IncSearch" })
 
 return {
   enabled = true,
@@ -14,12 +15,12 @@ return {
     dashboard = { enabled = false },
     dim = { enabled = true, animate = { enabled = false }},
     explorer = { enabled = true },
-    indent = { enabled = false, indent = {hl = "IBLIndent"}, animate = { enabled = false }, scope = {} },
+    indent = { enabled = false },
     input = { enabled = true },
     picker = require("plugins.more_snacks.pickers"),
     notifier = { enabled = true },
     quickfile = { enabled = true },
-    scope = { enabled = true, cursor = false },
+    scope = { enabled = false, cursor = false },
     scroll = { enabled = false },
     statuscolumn = { enabled = false },
     words = { enabled = true },
@@ -29,10 +30,9 @@ return {
     -- Top Pickers & Explorer
     { "<leader>sP", function() Snacks.picker() end, desc = "Pickers" },
     { "<leader><space>", function() Snacks.picker.buffers() end, desc = "Buffers" },
-    { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
     { "<leader>:", function() Snacks.picker.command_history() end, desc = "Command History" },
-    { "<leader>n", function() Snacks.picker.notifications() end, desc = "Notification History" },
-    { "<leader>se", function() Snacks.picker.explorer() end, desc = "File Explorer" },
+    { "<leader>sn", function() Snacks.picker.notifications() end, desc = "Notification History" },
+    { "<leader>se", function() Snacks.picker.explorer({layout = {preview = "main"}}) end, desc = "File Explorer" },
     -- find
     { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
     { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
@@ -41,20 +41,48 @@ return {
     { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
     { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
     -- git
-    { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git Log" },
+    { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git log" },
     { "<leader>g<c-l>", function()
       vim.ui.input({prompt="git log -S <string>"}, function(item)
         if item then
           Snacks.picker.git_log({pickaxe = item})
         end
       end)
-    end, desc = "Git Log" },
+    end, desc = "Git log -S" },
     { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Git Log Line" },
     { "<leader>gs", function() Snacks.picker.git_status() end, desc = "Git Status" },
     { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
     { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
     { "<leader>gf", function() Snacks.picker.git_log_file() end, desc = "Git Log File" },
-    -- Grep
+    { "<leader>gb", function() Snacks.gitbrowse({ notify=false }) end, desc = "Git browse", mode = { "n", "x" } },
+    { "<leader>gy", function()
+      Snacks.gitbrowse({ what = "permalink", open = function(url)
+        local start_line, end_line = url:match("#L(%d+)%-L(%d+)$")
+        if tonumber(start_line) == tonumber(end_line) then
+          url = url:gsub("%-L%d+$", "")
+        end
+        vim.fn.setreg("+", url)
+        Snacks.notify(url)
+      end,
+      notify = false,
+      url_patterns = {
+        ["gitlab.*%.com"] = {
+          branch = "/-/tree/{branch}",
+          file = "/-/blob/{branch}/{file}#L{line_start}-L{line_end}",
+          permalink = "/-/blob/{commit}/{file}#L{line_start}-L{line_end}",
+          commit = "/-/commit/{commit}",
+        },
+      },})
+      local mode = vim.fn.mode()
+      if mode == "v" or mode == "V" then
+        vim.cmd.visual()
+      end
+    end, desc = "Git browse", mode = { "n", "x" } },
+    { "<leader>gi", function() Snacks.picker.gh_issue() end, desc = "GitHub Issues (open)" },
+    { "<leader>gI", function() Snacks.picker.gh_issue({ state = "all" }) end, desc = "GitHub Issues (all)" },
+    { "<leader>gp", function() Snacks.picker.gh_pr() end, desc = "GitHub Pull Requests (open)" },
+    { "<leader>gP", function() Snacks.picker.gh_pr({ state = "all" }) end, desc = "GitHub Pull Requests (all)" },
+    -- grep
     { "<leader>sb", function() Snacks.picker.lines() end, desc = "Buffer Lines" },
     { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
     { "<leader>ss", function() Snacks.picker.grep() end, desc = "Grep" },
@@ -87,11 +115,11 @@ return {
     { "<leader>sl", function() Snacks.picker.loclist() end, desc = "Location List" },
     { "<leader>sm", function() Snacks.picker.marks() end, desc = "Marks" },
     { "<leader>sM", function() Snacks.picker.man() end, desc = "Man Pages" },
-    { "<leader>sp", function() Snacks.picker.lazy() end, desc = "Search for Plugin Spec" },
     { "<leader>sq", function() Snacks.picker.qflist() end, desc = "Quickfix List" },
     { "<leader>sr", function() Snacks.picker.resume() end, desc = "Resume" },
     { "<leader>su", function() Snacks.picker.undo() end, desc = "Undo History" },
     { "<leader>uC", function() Snacks.picker.colorschemes() end, desc = "Colorschemes" },
+    { "<leader>sp", function() Snacks.picker.spell_errors() end, desc = "Colorschemes" },
     -- LSP
     { "gd", function() Snacks.picker.lsp_definitions() end, desc = "Goto Definition" },
     { "gD", function() Snacks.picker.lsp_declarations() end, desc = "Goto Declaration" },
@@ -105,7 +133,7 @@ return {
     end}) end, desc = "Toggle Zen Mode without diff" },
     { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
     { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
-    { "<leader>n",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
+    { "<leader>nh",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
     { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
     { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
     { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
