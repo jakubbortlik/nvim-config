@@ -4,8 +4,13 @@ return {
     picker = {
       sources = {
         spell_errors = {
-          finder = function(opts)
-          finder = function(_, ctx)
+          layout = {
+            preset = "dropdown",
+            layout = {
+              width = 0.75,
+            },
+          },
+          sort = {"idx"},
           finder = function(opts, ctx)
             ctx.picker.finder.longest = 0
             local errors = {}
@@ -26,7 +31,7 @@ return {
             local suggestions_tbl = {}
 
             vim.o.spell = true
-            vim.opt.iskeyword:remove({ '_' })
+            vim.bo.iskeyword = save_iskeyword:gsub(",_", "")
 
             -- Go to end of buffer to get misspelled word in first column of first line.
             -- This doesn't handle the corner case of a single character in buffer.
@@ -100,7 +105,7 @@ return {
             ret[#ret + 1] = { "  " }
             for i, sug in ipairs(item.suggestions) do
               ret[#ret + 1] = { tostring(i) .. ".", "Number" }
-              ret[#ret + 1] = {a(sug, picker.finder.longest + 2, {align = "left"}), "Normal" }
+              ret[#ret + 1] = {a(sug, picker.finder.longest + 3, {align = "left"}), "Normal" }
             end
             return ret
           end,
