@@ -4,9 +4,11 @@ local vmap = require("utils").vmap
 local utils = require("utils")
 
 -- Override default behaviour
-nmap("<C-e>", "3<C-E>", "Scroll down more")
-nmap("<C-y>", "3<C-Y>", "Scroll up more")
+nmap("<C-e>", "3<C-e>", "Scroll down more")
+nmap("<C-y>", "3<C-y>", "Scroll up more")
 nmap("1<C-g>", "1<C-g>", "Print full path of current file name") -- Otherwise tmux-sessionizer is started
+imap("<C-l>", "<C-X><C-l>", "Complete lines")
+imap("<C-]>", "<C-X><C-f>", "Complete file names")
 
 nmap("_", function()
   if vim.v.count == 0 then
@@ -81,8 +83,6 @@ vim.keymap.set(
 nmap("co", "m`0:%s///gn<cr>", "[c]ount [o]ccurrences")
 nmap("cp", "m`:g//p<cr>", "o[c]currences [p]review")
 nmap("<C-w>N", "<cmd>vnew<cr>", "Create [N]ew vertical window")
-nmap("<leader>ch", "<cmd>nohlsearch<cr>", "[c]lear [h]ighlighting")
-nmap("<leader>cc", "<cmd>cclose<cr>", "[c]lose [c]uickfix window")
 nmap("<leader>ly", "<cmd>Lazy<cr>", "Show plugins")
 nmap("<leader>I", "<cmd>Inspect<cr>", "[i]nspect current position")
 nmap("<leader>sa", [[:s/\%>.c]], "[s]ubstitute [a]fter")
@@ -214,7 +214,7 @@ if vim.fn.has("nvim-0.10") ~= 1 then
 end
 nmap("<leader>ds", vim.diagnostic.show, "Show diagnostic message")
 
-nmap("<leader>uv", function()
+nmap("\\v", function()
   local config = vim.diagnostic.config() or {}
   local virtual_lines = not config.virtual_lines
   vim.diagnostic.config({ virtual_lines = virtual_lines })
