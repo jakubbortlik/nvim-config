@@ -1,6 +1,12 @@
 return {
   enabled = true,
   sources = {
+    git_log = {
+      cmd_args = { "--no-merges" },
+    },
+    git_grep = {
+      pathspec = { ':!*.min.js', ':!*.min.ss', ':!uv.lock'  },
+    },
     buffers = {
       auto_confirm = true,
       current = false,
@@ -100,7 +106,8 @@ return {
         ["<C-h>"] = { "toggle_hidden", mode = { "i", "n" } },
         ["<C-x>"] = { "split", mode = { "i", "n" } },
         ["<M-r>"] = { "toggle_regex", mode = { "i", "n" } },
-        ["<M-q>"] = { "loclist", mode = { "i", "n" } },
+        ["<C-l>"] = { "loclist", mode = { "i", "n" } },
+        ["<M-a>"] = { "sidekick_send", mode = { "n", "i" } },
       },
     },
     -- Make file truncation consider window width.
@@ -124,6 +131,9 @@ return {
     },
   },
   actions = {
+    sidekick_send = function(...)
+      return require("sidekick.cli.snacks").send(...)
+    end,
     calculate_file_truncate_width = function(self)
       local width = self.list.win:size().width
       self.opts.formatters.file.truncate = width - 6
