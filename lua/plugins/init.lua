@@ -8,7 +8,6 @@ return {
       { "gC", mode = "n", desc = "Toggle caps lock" },
     },
   },
-  "tpope/vim-surround", -- Parentheses, brackets, quotes, and more
   "tpope/vim-unimpaired", -- Pairs of handy bracket mappings
   {
     "jakubbortlik/vim-keymaps", -- Switch keyboard layouts
