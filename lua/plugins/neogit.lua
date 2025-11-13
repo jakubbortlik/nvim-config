@@ -11,6 +11,7 @@ return {
     { "gS", "<cmd>Neogit kind=vsplit<cr>", desc = "Vsplit Neo[g]it [s]tatus" },
   },
   opts = {
+    console_timeout = 5000,
     commit_editor = {
       staged_diff_split_kind = "auto",
     },
