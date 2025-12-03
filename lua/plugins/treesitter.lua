@@ -341,6 +341,8 @@ local keymaps = {
   },
   ["ac"] = { query = "@class.outer", group = "textobjects", desc = "Select outer class region" },
   ["ic"] = { query = "@class.inner", group = "textobjects", desc = "Select inner class region" },
+  ["aC"] = { query = "@codeblock.outer", group = "textobjects", desc = "Select outer codeblock" },
+  ["iC"] = { query = "@codeblock.inner", group = "textobjects", desc = "Select inner codeblock" },
   ["aP"] = {
     query = "@parameter.outer",
     group = "textobjects",
@@ -364,6 +366,8 @@ local keymaps = {
   ["al"] = { query = "@loop.outer", group = "textobjects", desc = "Select outer loop region" },
   ["il"] = { query = "@loop.inner", group = "textobjects", desc = "Select inner loop region" },
   ["at"] = { query = "@comment.outer", group = "textobjects", desc = "Select outer comment region" },
+  ["ae"] = { query = "@emphasis.outer", group = "textobjects", desc = "Select emphasis" },
+  ["ie"] = { query = "@emphasis.inner", group = "textobjects", desc = "Select emphasis content" },
   ["it"] = { query = "@comment.inner", group = "textobjects", desc = "Select inner comment region" },
   ["as"] = { query = "@local.scope", group = "locals", desc = "Select local scope" },
 }
