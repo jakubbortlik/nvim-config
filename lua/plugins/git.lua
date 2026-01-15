@@ -48,6 +48,14 @@ local M = {
       "DiffviewRefresh",
       "DiffviewToggleFiles",
     },
+    opts = {
+      keymaps = {
+        file_history_panel = {
+          { "n", "K", function() require("diffview.actions").select_prev_commit() end, { desc = "Select previous commit" } },
+          { "n", "J", function() require("diffview.actions").select_next_commit() end, { desc = "Select next commit" } },
+        }
+      }
+    }
   },
 }
 
