@@ -5,11 +5,12 @@ return {
     {
       "<M-r>",
       function()
-        if vim.bo.filetype ~= "" then
+        local ft = vim.bo.filetype
+        if ft == "lua" or ft == "python" or ft == "sh" then
           vim.cmd.IronFocus()
           vim.cmd.startinsert()
         else
-          vim.notify("Can't open REPL without a filetype", vim.log.levels.WARN)
+          vim.notify("Can't open REPL with filetype: `" .. ft .. "`", vim.log.levels.WARN)
         end
       end,
       desc = "󱠤 Toggle REPL",
