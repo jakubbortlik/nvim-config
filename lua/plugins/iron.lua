@@ -7,6 +7,7 @@ return {
       function()
         local ft = vim.bo.filetype
         if ft == "lua" or ft == "python" or ft == "sh" or ft == "javascript" then
+          require("state").iron_windows[ft] = vim.api.nvim_get_current_win()
           vim.cmd.IronFocus()
           vim.cmd.startinsert()
         else
