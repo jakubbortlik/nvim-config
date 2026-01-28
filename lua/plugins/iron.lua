@@ -6,7 +6,7 @@ return {
       "<M-r>",
       function()
         local ft = vim.bo.filetype
-        if ft == "lua" or ft == "python" or ft == "sh" then
+        if ft == "lua" or ft == "python" or ft == "sh" or ft == "javascript" then
           vim.cmd.IronFocus()
           vim.cmd.startinsert()
         else
