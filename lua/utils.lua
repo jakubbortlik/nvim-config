@@ -22,7 +22,7 @@ M.imap = function(keys, func, desc, buffer)
 end
 
 ---Return true if system host name contains the string "jakub", false otherwise.
----@return boolean 
+---@return boolean
 M.host_jakub = function()
   return vim.fn.system("hostname"):find("jakub") and true or false
 end
@@ -33,6 +33,29 @@ M.get_python_tool = function()
     return "poetry"
   else
     return "uv"
+  end
+end
+
+M._operator_callback = nil
+
+function M.operator(mode)
+  if mode == nil then
+    vim.o.operatorfunc = "v:lua.require'utils'.operator"
+    return "g@"
+  end
+  if M._operator_callback then
+    M._operator_callback()
+  end
+  return ""
+end
+
+---Set the operatorfunc that will work on the lines defined by the motion that follows
+---after the operator mapping, and enter the operator-pending mode.
+---@param callback function The function to execute
+M.make_operator = function(callback)
+  return function()
+    M._operator_callback = callback
+    return M.operator()
   end
 end
 

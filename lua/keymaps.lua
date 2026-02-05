@@ -106,6 +106,13 @@ local copy_path_to_clipboard = function(path, with_line)
   vim.fn.setreg("+", path)
 end
 
+vim.keymap.set("n", "gW", utils.make_operator(function()
+  local start_line, end_line = vim.fn.line( "'["), vim.fn.line("']")
+  local textwidth = vim.o.textwidth > 0 and vim.o.textwidth or 88
+  vim.cmd(start_line .. "," .. end_line .. "!fmt -w " .. textwidth)
+  vim.cmd.update()
+end), {desc = "format lines to 88 chars", expr = true})
+
 nmap("<leader>cp", function()
   copy_path_to_clipboard(get_relative_path())
 end, "[c]opy [p]ath of buffer to clipboard")

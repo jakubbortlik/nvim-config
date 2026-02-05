@@ -1,3 +1,5 @@
+local u = require("utils")
+
 local linediff = function()
   local start_line, end_line = vim.fn.line( "'["), vim.fn.line("']")
   vim.cmd(start_line .. "," .. end_line .. "Linediff")
@@ -20,7 +22,7 @@ local M = {
   keys = {
     { "<leader>l", ":'<,'>Linediff<cr>", desc = "[l]inediff", mode = "x" },
     { "<leader>lx", "<cmd>LinediffReset<cr>", desc = "[L]inediffReset" },
-    { "<leader>l", operator, desc = "[l]inediff with motion", mode = "n", expr = true },
+    { "<leader>l", u.make_operator(linediff), desc = "[l]inediff with motion", mode = "n", expr = true },
   },
 }
 
