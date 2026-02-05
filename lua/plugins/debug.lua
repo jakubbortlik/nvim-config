@@ -129,7 +129,7 @@ local M = {
 
       -- Python specific config
       local dap_python = require("dap-python")
-      dap_python.setup(vim.g.python3_host_prog)
+      dap_python.setup("uv")
       nmap("<leader>dm", dap_python.test_method, "Run test [m]ethod above cursor")
       nmap("<leader>dc", dap_python.test_class, "Run test [c]lass above cursor")
       vmap("<leader>ds", dap_python.debug_selection, "Debug selected code")
