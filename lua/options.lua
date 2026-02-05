@@ -39,3 +39,4 @@ vim.opt.wildmode = "longest,full"
 vim.opt.shada:append("r/media")
 vim.opt.winborder = "rounded"
 vim.opt.cmdwinheight = 20
+vim.go.tabclose = "uselast,left"
