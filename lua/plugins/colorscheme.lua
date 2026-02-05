@@ -4,7 +4,6 @@ return {
     priority = 1000,
     config = function()
       require("kanagawa").setup({
-        compile = true,
         background = {
           dark = "wave",
           light = "lotus",
@@ -31,7 +30,7 @@ return {
 
           return {
             NormalFloat = { bg = "none" },
-            FloatBorder = { bg = "none" },
+            FloatBorder = { link = "BlinkCmpMenuBorder" },
             FloatTitle = { bg = "none" },
             WinSeparator = { fg = theme.ui.nontext },
             IBLIndent = { bg="NONE", fg="#1a1a1a", nocombine=true },
@@ -75,6 +74,8 @@ return {
             NeogitChangeNewFile            = { fg = theme.syn.string, italic = true },
             NeogitSectionHeader            = { fg = theme.syn.preproc },
 
+            DiffviewFilePanelSelected = { link = "WarningMsg" },
+
             -- Save a hlgroup with dark background and dimmed foreground
             -- so that you can use it where your still want darker windows.
             -- E.g.: autocmd TermOpen * setlocal winhighlight=Normal:NormalDark
@@ -85,7 +86,7 @@ return {
             BlinkCmpMenuSelection = { fg = "NONE", bg = theme.ui.bg_search },
 
             Pmenu = { fg = theme.ui.shade0, bg = theme.ui.bg },
-            PmenuSel = { fg = "NONE", bg = theme.ui.bg_m1 },
+            PmenuSel = { fg = "NONE", bg = theme.ui.bg_search },
             PmenuSbar = { bg = theme.ui.bg_m1 },
             PmenuThumb = { bg = theme.ui.bg_p2 },
           }
