@@ -38,3 +38,4 @@ vim.opt.updatetime = 50
 vim.opt.wildmode = "longest,full"
 vim.opt.shada:append("r/media")
 vim.opt.winborder = "rounded"
+vim.opt.cmdwinheight = 20
