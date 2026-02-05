@@ -1,4 +1,4 @@
-local textwidth = vim.bo.textwidth
+local textwidth = vim.bo.textwidth > 0 and vim.bo.textwidth or 88
 vim.keymap.set(
   "n",
   "<leader>f88",

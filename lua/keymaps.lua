@@ -108,7 +108,7 @@ end
 
 vim.keymap.set("n", "gW", utils.make_operator(function()
   local start_line, end_line = vim.fn.line( "'["), vim.fn.line("']")
-  local textwidth = vim.o.textwidth > 0 and vim.o.textwidth or 88
+  local textwidth = vim.bo.textwidth > 0 and vim.bo.textwidth or 88
   vim.cmd(start_line .. "," .. end_line .. "!fmt -w " .. textwidth)
   vim.cmd.update()
 end), {desc = "format lines to 88 chars", expr = true})
