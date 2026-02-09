@@ -20,10 +20,10 @@ return {
       snacks = true,
     },
     git_services = {
-      ["gitlab.cloud.phonexia.com"] = {
-        pull_request = "https://gitlab.cloud.phonexia.com/${owner}/${repository}/merge_requests/new?merge_request[source_branch]=${branch_name}",
-        commit = "https://gitlab.cloud.phonexia.com/${owner}/${repository}/-/commit/${oid}",
-        tree = "https://gitlab.cloud.phonexia.com/${owner}/${repository}/-/tree/${branch_name}?ref_type=heads",
+      ["gitlab.phonexia.com"] = {
+        pull_request = "https://gitlab.phonexia.com/${owner}/${repository}/merge_requests/new?merge_request[source_branch]=${branch_name}",
+        commit = "https://gitlab.phonexia.com/${owner}/${repository}/-/commit/${oid}",
+        tree = "https://gitlab.phonexia.com/${owner}/${repository}/-/tree/${branch_name}?ref_type=heads",
       },
     },
     mappings = {

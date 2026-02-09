@@ -26,8 +26,8 @@ local M = {
       "tpope/vim-fugitive",
     },
     config = function()
-      vim.g.fugitive_gitlab_domains = { "https://gitlab.cloud.phonexia.com" }
-      vim.cmd([[let g:gitlab_api_keys = {"gitlab.cloud.phonexia.com": expand("$GITLAB_TOKEN")}]])
+      vim.g.fugitive_gitlab_domains = { "https://gitlab.phonexia.com" }
+      vim.cmd([[let g:gitlab_api_keys = {"gitlab.phonexia.com": expand("$GITLAB_TOKEN")}]])
     end
   },
   {
