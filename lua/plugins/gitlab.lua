@@ -130,6 +130,11 @@ return {
         squash = true,
         delete_branch = true,
       },
+      colors = {
+        discussion_tree = {
+          file_name = "Directory",
+        }
+      },
     })
 
     u.nmap("gl<C-a>", "<cmd>lua Snacks.terminal.open('glab mr approvers', {auto_close = false, win = {width = 90, height = 30, border = 'rounded'}})<cr>", "Show eligible approvers")
