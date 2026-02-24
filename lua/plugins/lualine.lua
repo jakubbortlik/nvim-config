@@ -98,13 +98,34 @@ return {
       return ""
     end
 
+    local last_refresh = os.time()
     local gitlab_extension = {
       sections = {
         lualine_a = {
           {
             function()
+              if os.time() - last_refresh > 10 then
+                require("gitlab").data({{ type = "mergeability", refresh = true }}, function() end)
+                last_refresh = os.time()
+              end
               local state = require("gitlab.state")
-              return state.INFO and state.INFO.detailed_merge_status
+              if state.INFO and state.INFO.detailed_merge_status and state.INFO.detailed_merge_status == "mergeable" then
+                return "mergeable"
+              end
+              if state.MERGEABILITY and state.MERGEABILITY.mergeability_checks then
+                local failed = {}
+                local checking = {}
+                for _, check in ipairs(state.MERGEABILITY.mergeability_checks) do
+                  if check.status == "FAILED" then
+                    table.insert(failed, check.identifier)
+                  elseif check.status == "CHECKING" then
+                    table.insert(checking, check.identifier)
+                  end
+                end
+                return #checking ~= 0 and "checking" or #failed ~= 0 and table.concat(failed, ", ") or state.INFO.detailed_merge_status
+              else
+                return state.INFO and state.INFO.detailed_merge_status
+              end
             end,
             color = function()
               local state = require("gitlab.state")
@@ -114,7 +135,6 @@ return {
               else
                 return "unknown"
               end
-
             end,
           }
         },
@@ -126,15 +146,6 @@ return {
             end
           },
         },
-        lualine_z = {
-          {
-            function()
-              local state = require("gitlab.state")
-              local status = state.INFO.pipeline.status ~= nil and state.INFO.pipeline.status or "unknown"
-              return " " .. status
-            end
-          }
-        }
       },
       filetypes = {'gitlab'},
     }
