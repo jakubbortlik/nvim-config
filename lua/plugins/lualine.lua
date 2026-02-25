@@ -113,16 +113,15 @@ return {
                 return "mergeable"
               end
               if state.MERGEABILITY and state.MERGEABILITY.mergeability_checks then
-                local failed = {}
-                local checking = {}
+                local reported = {}
                 for _, check in ipairs(state.MERGEABILITY.mergeability_checks) do
                   if check.status == "FAILED" then
-                    table.insert(failed, check.identifier)
+                    table.insert(reported, check.identifier)
                   elseif check.status == "CHECKING" then
-                    table.insert(checking, check.identifier)
+                    table.insert(reported, check.identifier .. " 🔁")
                   end
                 end
-                return #checking ~= 0 and "checking" or #failed ~= 0 and table.concat(failed, ", ") or state.INFO.detailed_merge_status
+                return #reported ~= 0 and table.concat(reported, ", ") or state.INFO.detailed_merge_status
               else
                 return state.INFO and state.INFO.detailed_merge_status
               end
