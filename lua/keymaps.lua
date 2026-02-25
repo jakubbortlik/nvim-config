@@ -80,6 +80,13 @@ nmap("g<c-o>", function()
   end
 end, "Go back to previously visited file and bufwipe current file")
 
+-- Terminal mode mappings
+vim.keymap.set('t', '<c-tab>', function()
+  if #vim.api.nvim_list_tabpages() > 1 then
+    return '<c-\\><c-n>g<tab>'
+  end
+end, {desc = "Switch to last accessed tab", expr = true})
+
 -- Miscellaneous mappings
 vim.keymap.set(
   { "n", "t", "i", "x" },
