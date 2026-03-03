@@ -133,11 +133,11 @@ return {
     end}) end, desc = "Toggle Zen Mode without diff" },
     { "<leader>.",  function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
     { "<leader>S",  function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },
+    { "<leader>nd", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
     { "<leader>nh",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
     { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
     { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
     { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
-    { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
     { "<c-t>",      function()
       if vim.v.count1 % 2 == 0 then
         Snacks.terminal(nil, {win = {position = "right"}})
