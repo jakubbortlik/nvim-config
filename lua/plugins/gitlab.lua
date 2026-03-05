@@ -38,6 +38,7 @@ return {
     { "glP", desc = "Publish all MR comment drafts" },
     { "glR", desc = "Revoke approval" },
     { "glS", desc = "Start Gitlab review" },
+    { "gl<c-s>", desc = "Print gitlab.nvim settings" },
     { "glaa", desc = "Add MR assignee" },
     { "glad", desc = "Delete MR assignee" },
     { "glb", desc = "Rebuild gitlab server" },
@@ -53,9 +54,6 @@ return {
     { "gls", desc = "Show MR summary" },
     { "glu", desc = "Copy MR url" },
   },
-  build = function()
-    require("gitlab.server").build(true)
-  end, -- Builds the Go binary
   config = function()
     local gitlab = require("gitlab")
     local gitlab_server = require("gitlab.server")
@@ -121,7 +119,10 @@ return {
         reply = comment_opts,
         edit = comment_opts,
         note = comment_opts,
-        summary = { border = "single", height = "80%", width = "60%" },
+        summary = { border = "single", height = "90%", width = "90%" },
+      },
+      info = {
+        horizontal = true,
       },
       create_mr = {
         title_input = {
@@ -140,7 +141,8 @@ return {
     u.nmap("gl<C-a>", "<cmd>lua Snacks.terminal.open('glab mr approvers', {auto_close = false, win = {width = 90, height = 30, border = 'rounded'}})<cr>", "Show eligible approvers")
     u.nmap("glp", "<cmd>lua Snacks.terminal.open('glab ci view', {win = {width = 190}})<cr>", "Show current CI pipeline")
     u.nmap("glL", function()
-      vim.cmd("tab new " .. vim.print(gitlab.state.settings.log_path))
+      vim.cmd.tabnew()
+      vim.cmd.edit(gitlab.state.settings.log_path)
     end, "Open gitlab.nvim.log in a new tab")
     u.nmap("gl<c-l>", function()
       local ok, err = os.remove(gitlab.state.settings.log_path)
@@ -159,7 +161,8 @@ return {
     end, "Rebuild the Gitlab Go server")
     u.nmap("gl<c-s>", function()
       vim.cmd.tabnew()
-      vim.cmd.verbose('lua require("gitlab").print_settings()')
+      local settings = vim.inspect(require("gitlab").state.settings)
+      vim.api.nvim_put(vim.split(settings, "\n"), "l", true, true)
       vim.cmd.only()
     end, "Print gitlab.nvim settings")
     u.nmap("gl<C-r>", function()
