@@ -151,3 +151,22 @@ vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
     vim.bo.filetype = "tsv"
   end,
 })
+
+-- Change cursor color when recording a macro
+vim.api.nvim_set_hl(0, "MacroCursor", { fg = "#ffffff", bg = "#ff5555" }) -- red background
+local macro_cursor = "n-v-c:block-MacroCursor,i-ci-ve:ver25-MacroCursor,r-cr:hor20-MacroCursor,o:hor50-MacroCursor,"
+.. "a:blinkwait700-blinkoff400-blinkon250-MacroCursor/MacroCursor,sm:block-blinkwait175-blinkoff150-blinkon175-MacroCursor"
+local rec_group = vim.api.nvim_create_augroup("MacroRecordingCursor", { clear = true })
+vim.api.nvim_create_autocmd("RecordingEnter", {
+  group = rec_group,
+  callback = function()
+    vim.g.guicursor_backup = vim.o.guicursor
+    vim.o.guicursor = macro_cursor
+  end,
+})
+vim.api.nvim_create_autocmd("RecordingLeave", {
+  group = rec_group,
+  callback = function()
+    vim.o.guicursor = vim.g.guicursor_backup
+  end,
+})
