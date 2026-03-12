@@ -144,3 +144,10 @@ vim.api.nvim_create_autocmd("BufEnter", {
     end
   end
 })
+
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+  pattern = "metadata.csv",
+  callback = function()
+    vim.bo.filetype = "tsv"
+  end,
+})
