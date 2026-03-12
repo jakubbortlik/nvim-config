@@ -166,6 +166,8 @@ return {
         Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map("\\c")
         Snacks.toggle.treesitter():map("\\T")
         Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("\\b")
+        Snacks.toggle.option("modifiable", { off = false, on = true, name = "Modifiable" }):map("\\m")
+        Snacks.toggle.option("readonly", { off = false, on = true, name = "Readonly" }):map("\\r")
         Snacks.toggle.inlay_hints():map("\\h")
         Snacks.toggle.dim():map("\\D")
       end,
