@@ -49,6 +49,13 @@ local M = {
       "DiffviewToggleFiles",
     },
     opts = {
+      hooks = {
+        diff_buf_win_enter = function(_, winid, ctx)
+          if ctx.layout_name == 'diff2_horizontal' then
+            vim.wo[winid].foldlevel = 0
+          end
+        end,
+      },
       keymaps = {
         file_history_panel = {
           { "n", "K", function() require("diffview.actions").select_prev_commit() end, { desc = "Select previous commit" } },
