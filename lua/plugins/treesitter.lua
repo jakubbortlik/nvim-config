@@ -343,16 +343,6 @@ local keymaps = {
   ["ic"] = { query = "@class.inner", group = "textobjects", desc = "Select inner class region" },
   ["aC"] = { query = "@codeblock.outer", group = "textobjects", desc = "Select outer codeblock" },
   ["iC"] = { query = "@codeblock.inner", group = "textobjects", desc = "Select inner codeblock" },
-  ["aP"] = {
-    query = "@parameter.outer",
-    group = "textobjects",
-    desc = "Select outer parameter region",
-  },
-  ["iP"] = {
-    query = "@parameter.inner",
-    group = "textobjects",
-    desc = "Select inner parameter region",
-  },
   ["aI"] = {
     query = "@conditional.outer",
     group = "textobjects",
