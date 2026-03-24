@@ -66,6 +66,13 @@ nmap("<leader>tq", function()
   end
   vim.cmd.tabclose()
 end, "Close the current tab")
+nmap("<C-Tab>", function()
+  if vim.fn.tabpagenr("#") ~= 0 then
+    vim.cmd("normal! g\t")
+  else
+    vim.cmd.tabnext()
+  end
+end, "Go to last accessed tab or next tab")
 nmap("g<c-o>", function()
   local previous_file = vim.fn.expand("%:p")
   local jump_count = 0
