@@ -1,14 +1,15 @@
 return {
   "folke/sidekick.nvim",
   opts = {
-    -- add any options here
     nes = { enabled = false },
     cli = {
       mux = {
-        backend = "tmux",
         enabled = true,
       },
       win = {
+        split = {
+          width = 90,
+        },
         keys = {
           prompt = { "<c-k><c-p>", "prompt", mode = "t", desc = "insert prompt or context" },
         },
