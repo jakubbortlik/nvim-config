@@ -24,6 +24,15 @@ return {
           end
         end,
       },
+      ruff = { -- custom handler to open Ruff rules
+        name = "ruff",
+        handle = function(mode, line, _)
+          local ticket = require("gx.helper").find(line, mode, "(%u%u?%u?%u?%u?%d%d?%d?%d?)")
+          if ticket then
+            return "https://docs.astral.sh/ruff/rules/" .. ticket
+          end
+        end,
+      },
     },
     handler_options = {
       search_engine = "duckduckgo",
