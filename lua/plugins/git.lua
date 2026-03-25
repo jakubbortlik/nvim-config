@@ -31,7 +31,7 @@ local M = {
     end
   },
   {
-    "sindrets/diffview.nvim", -- a single tabpage interface for reviewing all git changes
+    "dlyongemallo/diffview.nvim",
     keys = {
       { "<leader>vH", ":DiffviewFileHistory --no-merges", desc = "Prepopulate commandline with Diff[v]iewFile[H]istory"},
       { "<leader>vh", "<cmd>DiffviewFileHistory --no-merges %<cr>", desc = "Run Diff[v]iewFile[H]istory for current file"},
@@ -49,18 +49,36 @@ local M = {
       "DiffviewToggleFiles",
     },
     opts = {
+      persist_selections = {
+        enabled = true,
+      },
+      signs = {
+        selected_file = "✅",
+        unselected_file = "⬜",
+        selected_dir = "✅",
+        partially_selected_dir = "🔳",
+        unselected_dir = "⬜",
+      },
+      file_panel = {
+        win_config = {
+          width = 55,
+        },
+      },
       hooks = {
-        diff_buf_win_enter = function(_, winid, ctx)
-          if ctx.layout_name == 'diff2_horizontal' then
-            vim.wo[winid].foldlevel = 0
-          end
+        diff_buf_win_enter = function(_, winid, _)
+          vim.wo[winid].foldlevel = 0
+          vim.wo[winid].number = true
         end,
       },
       keymaps = {
         file_history_panel = {
           { "n", "K", function() require("diffview.actions").select_prev_commit() end, { desc = "Select previous commit" } },
           { "n", "J", function() require("diffview.actions").select_next_commit() end, { desc = "Select next commit" } },
-        }
+        },
+        file_panel = {
+          { { "n", "x" }, "m", function() require("diffview.actions").toggle_select_entry() end, { desc = "Toggle file selection" } },
+          { { "n", "x" }, "<space>", false },
+        },
       }
     }
   },

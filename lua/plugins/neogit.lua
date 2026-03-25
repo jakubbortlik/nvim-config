@@ -2,7 +2,7 @@ return {
   "NeogitOrg/neogit",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "sindrets/diffview.nvim",
+    "dlyongemallo/diffview.nvim",
     "folke/snacks.nvim",
   },
   event = { "CmdlineEnter" },

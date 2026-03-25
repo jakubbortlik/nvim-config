@@ -20,9 +20,12 @@ return {
   dependencies = {
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
-    {"sindrets/diffview.nvim", opts = {
-      view = { default = { layout = "diff2_vertical" } },
-    }},
+    {
+      "dlyongemallo/diffview.nvim",
+      opts = {
+        view = { default = { layout = "diff2_vertical" } },
+      },
+    },
     "nvim-tree/nvim-web-devicons", -- not required
   },
   lazy = false,
