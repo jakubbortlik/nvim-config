@@ -21,7 +21,7 @@ return {
     scroll = { enabled = false },
     statuscolumn = { enabled = false },
     words = { enabled = true },
-    zen = { enabled = true, toggles = { dim = true }}
+    zen = { enabled = true, toggles = { dim = false }}
   },
   keys = {
     -- Top Pickers & Explorer
