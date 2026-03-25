@@ -38,6 +38,12 @@ return {
     nmap("<C-p>", function()
       harpoon:list():select(6)
     end, "Navigate to harpoon file 6")
+    nmap("<C-S-P>", function()
+      harpoon:list():prev()
+    end, "Navigate to previous harpoon file")
+    nmap("<C-S-N>", function()
+      harpoon:list():next()
+    end, "Navigate to next harpoon file")
     harpoon:extend({
       UI_CREATE = function(cx)
         vim.keymap.set("n", "<C-v>", function()
