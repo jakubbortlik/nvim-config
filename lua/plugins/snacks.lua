@@ -40,9 +40,9 @@ return {
     -- git
     { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git log" },
     { "<leader>g<c-l>", function()
-      vim.ui.input({prompt="git log -S <string>"}, function(item)
+      vim.ui.input({prompt="git log -G <string>"}, function(item)
         if item then
-          Snacks.picker.git_log({pickaxe = item})
+          Snacks.picker.git_log({cmd_args = {"-G", item}})
         end
       end)
     end, desc = "Git log -S" },
