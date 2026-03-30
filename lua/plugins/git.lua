@@ -41,11 +41,13 @@ local M = {
     },
     cmd = {
       "DiffviewClose",
+      "DiffviewDiffFiles",
       "DiffviewFileHistory",
       "DiffviewFocusFiles",
       "DiffviewLog",
       "DiffviewOpen",
       "DiffviewRefresh",
+      "DiffviewToggle",
       "DiffviewToggleFiles",
     },
     opts = {
