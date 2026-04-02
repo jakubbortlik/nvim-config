@@ -39,18 +39,21 @@ end
 M._operator_callback = nil
 
 function M.operator(mode)
+  ---If `mode` is nil, we're running this function from a mapping
+  ---Otherwise we're running this from g@{motion} and `mode` is "line", "char", or
+  ---"block"
   if mode == nil then
     vim.o.operatorfunc = "v:lua.require'utils'.operator"
-    return "g@"
+    return "g@" -- call the `operatorfunc`, see :h g@
   end
   if M._operator_callback then
     M._operator_callback()
   end
-  return ""
+  return "" -- do nothing, the _operator_callback already did the work
 end
 
----Set the operatorfunc that will work on the lines defined by the motion that follows
----after the operator mapping, and enter the operator-pending mode.
+---Return a function that can be used as RHS in mappings. The mapping must have
+---opts = { expr = true }.
 ---@param callback function The function to execute
 M.make_operator = function(callback)
   return function()
