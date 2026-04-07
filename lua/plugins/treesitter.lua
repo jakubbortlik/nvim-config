@@ -47,7 +47,6 @@ local M = {
         "bash",
         "c",
         "cpp",
-        "dap_repl",
         "dockerfile",
         "gitcommit",
         "gitignore",
