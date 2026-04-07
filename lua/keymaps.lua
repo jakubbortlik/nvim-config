@@ -102,7 +102,8 @@ vim.keymap.set(
   { desc = "Go to normal mode" }
 )
 nmap("co", "m`0:%s///gn<cr>", "[c]ount [o]ccurrences")
-nmap("cp", "m`:g//p<cr>", "o[c]currences [p]review")
+nmap("cp", "m`:g//number<cr>", "o[c]currences [p]review")
+nmap("gcp", "m`:.,$g//number<cr>", "o[c]currences [p]review from here till end")
 nmap("<C-w>N", "<cmd>vnew<cr>", "Create [N]ew vertical window")
 nmap("<leader>ly", "<cmd>Lazy<cr>", "Show plugins")
 nmap("<leader>I", "<cmd>Inspect<cr>", "[i]nspect current position")
