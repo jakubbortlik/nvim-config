@@ -1,3 +1,5 @@
+require("vim._core.ui2").enable()
+
 -- Bootstrap https://github.com/folke/lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
