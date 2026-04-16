@@ -105,6 +105,21 @@ nmap("co", "m`0:%s///gn<cr>", "[c]ount [o]ccurrences")
 nmap("cp", "m`:g//number<cr>", "o[c]currences [p]review")
 nmap("gcp", "m`:.,$g//number<cr>", "o[c]currences [p]review from here till end")
 nmap("<C-w>N", "<cmd>vnew<cr>", "Create [N]ew vertical window")
+nmap("<C-w>D", function()
+  for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+    if vim.api.nvim_win_get_config(win).relative == "" then
+      vim.api.nvim_win_call(win, function()
+        if vim.wo.diff then
+          vim.notify(string.format("diffoff: window %d", win))
+          vim.cmd("diffoff")
+        else
+          vim.notify(string.format("diffthis: window %d", win))
+          vim.cmd("diffthis")
+        end
+      end)
+    end
+  end
+end, "Toggle diff mode for normal windows in tabpage")
 nmap("<leader>ly", "<cmd>Lazy<cr>", "Show plugins")
 nmap("<leader>I", "<cmd>Inspect<cr>", "[i]nspect current position")
 nmap("<leader>sa", [[:s/\%>.c]], "[s]ubstitute [a]fter")
