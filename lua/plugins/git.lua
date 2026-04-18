@@ -68,7 +68,6 @@ local M = {
       },
       hooks = {
         diff_buf_win_enter = function(_, winid, _)
-          vim.wo[winid].foldlevel = 0
           vim.wo[winid].number = true
         end,
       },
