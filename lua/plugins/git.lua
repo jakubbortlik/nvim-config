@@ -57,11 +57,12 @@ local M = {
       signs = {
         selected_file = "✅",
         unselected_file = "⬜",
-        selected_dir = "✅",
-        partially_selected_dir = "🔳",
-        unselected_dir = "⬜",
+        selected_dir = " ",
+        partially_selected_dir = " ",
+        unselected_dir = " ",
       },
       file_panel = {
+        mark_placement = "sign_column",
         win_config = {
           width = 55,
         },
