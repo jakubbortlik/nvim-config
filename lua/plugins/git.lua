@@ -78,7 +78,7 @@ local M = {
         },
         file_panel = {
           { { "n", "x" }, "m", function() require("diffview.actions").toggle_select_entry() end, { desc = "Toggle file selection" } },
-          { { "n", "x" }, "<space>", false },
+          { { "n", "x" }, "w", false },
         },
       }
     }
