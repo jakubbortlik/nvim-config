@@ -41,16 +41,19 @@ local server_options = {
         telemetry = { enable = false },
       },
     },
+    root_markers = { '.git', { 'stylua.toml', '.luarc.json' } },
   },
   ts_ls = {},
   buf_ls = {},
   jsonls = {},
   protols = {},
-  pyright = {
+  basedpyright = {
     settings = {
-      python = {
+      basedpyright = {
         analysis = {
-          typeCheckingMode = "basic", -- or "strict"
+          typeCheckingMode = "off", -- or "strict" or "basic"
+          diagnosticMode = "openFilesOnly",
+          ignore = { "*" },
           diagnosticSeverityOverrides = {
             reportReturnType = "none",
           },
@@ -60,7 +63,12 @@ local server_options = {
     on_attach = function(client, bufnr)
       -- Disable all capabilities
       for capability, _ in pairs(client.server_capabilities) do
-        if capability ~= "textDocumentSync" and capability ~= "hoverProvider" and capability ~= "signatureHelpProvider" then
+        if
+          capability ~= "textDocumentSync"
+          and capability ~= "hoverProvider"
+          and capability ~= "signatureHelpProvider"
+          and capability ~= "implementationProvider"
+        then
           client.server_capabilities[capability] = false
         end
       end
@@ -82,6 +90,7 @@ local M = {
           capabilities = capabilities,
           on_attach = options.on_attach or on_attach,
           settings = options.settings or {},
+          root_markers = options.root_markers or {},
         })
       end
     end,
@@ -164,7 +173,6 @@ local M = {
         "textlint",
         "typescript-language-server",
         "vint",
-        "yamllint",
       },
     },
   },
@@ -182,7 +190,6 @@ local M = {
         null_ls.builtins.diagnostics.commitlint, -- conventional commits
         null_ls.builtins.diagnostics.selene, -- lua
         null_ls.builtins.diagnostics.vint, -- vimscript
-        null_ls.builtins.diagnostics.yamllint, -- YAML
         -- formatters
         null_ls.builtins.formatting.buf, -- Protobuf formatting
         null_ls.builtins.formatting.stylua,
