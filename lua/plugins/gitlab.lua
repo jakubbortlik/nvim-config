@@ -62,10 +62,10 @@ return {
     local gitlab_server = require("gitlab.server")
     gitlab.setup({
       debug = { -- Which values to log
-        request = true,
-        response = true,
-        gitlab_request = true,
-        gitlab_response = true,
+        request = false,
+        response = false,
+        gitlab_request = false,
+        gitlab_response = false,
       },
       keymaps = {
         help_nowait = true,
