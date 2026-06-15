@@ -124,6 +124,66 @@ return {
     { "gI", function() Snacks.picker.lsp_implementations() end, desc = "Goto Implementation" },
     { "gry", function() Snacks.picker.lsp_type_definitions() end, desc = "Goto T[y]pe Definition" },
     -- Other
+    { "<leader>-", function()
+      local tmpfile = vim.fn.tempname()
+      local cmd_string = ""
+      if vim.fn.expand("%") ~= "" then
+        local selected_file = vim.fn.shellescape(vim.fn.expand("%:p"))
+        cmd_string = " --selectfile=" .. selected_file .. " "
+      end
+      local cmds = {
+        [[map <C-x> chain shell echo "split %s" > ]] .. tmpfile .. [[; quit]],
+        [[map <C-v> chain shell echo "vsplit %s" > ]] .. tmpfile .. [[; quit]],
+        [[map <C-t> chain shell echo "tabnew %s" > ]] .. tmpfile .. [[; quit]],
+        [[map <C-d> chain shell echo "diffsplit %f" > ]] .. tmpfile .. [[; quit]],
+        [[map <CR> chain shell echo "edit %s" > ]] .. tmpfile .. [[; quit]]
+      }
+      for _, cmd in ipairs(cmds) do
+        cmd_string = cmd_string .. " --cmd=" .. vim.fn.shellescape(cmd)
+      end
+      local term = Snacks.terminal.open("ranger" .. cmd_string, {
+        preset = "floating",
+        win = {
+          border = "rounded",
+          on_close = function()
+            vim.schedule(function()
+              if vim.fn.filereadable(tmpfile) == 1 then
+                local line = vim.fn.readfile(tmpfile)[1]
+                vim.fn.delete(tmpfile)
+                local action = line:match("^(%S+)")
+                local files = {}
+                for file in line:gmatch("'([^']+)'") do
+                  table.insert(files, file)
+                end
+                if action and #files > 0 then
+                  if action == "split" then
+                    for _, file in ipairs(files) do
+                      vim.cmd.split(file)
+                    end
+                  elseif action == "vsplit" then
+                    for _, file in ipairs(files) do
+                      vim.cmd.vsplit(file)
+                    end
+                  elseif action == "tabnew" then
+                    vim.cmd.tabnew(files[1])
+                    for i = 2, #files do
+                      vim.cmd.vsplit(files[i])
+                    end
+                  elseif action == "edit" then
+                    for _, file in ipairs(files) do
+                      vim.cmd.edit(file)
+                    end
+                  elseif action == "diffsplit" then
+                    vim.cmd("vertical diffsplit " .. files[1])
+                  end
+                end
+              end
+            end)
+          end
+        }
+      })
+      vim.keymap.set("t", "<c-t>", "<c-t>", { buffer = term.buf, nowait = true })
+    end, desc = "Open ranger" },
     { "\\z",  function() Snacks.zen() end, desc = "Toggle Zen Mode" },
     { "\\Z",  function() Snacks.zen({on_open = function()
       vim.o.diff = false
