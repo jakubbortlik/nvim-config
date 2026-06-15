@@ -156,7 +156,6 @@ return {
         _G.bt = function()
           Snacks.debug.backtrace()
         end
-        vim.print = _G.dd -- Override print to use snacks for `:=` command
 
         -- Create some toggle mappings
         Snacks.toggle.diagnostics():map("\\d")
