@@ -10,6 +10,8 @@ nmap("1<C-g>", "1<C-g>", "Print full path of current file name") -- Otherwise tm
 imap("<C-l>", "<C-X><C-l>", "Complete lines")
 imap("<C-]>", "<C-X><C-f>", "Complete file names")
 
+vim.keymap.set('t', '<C-[>', '<Esc>')
+
 nmap("_", function()
   if vim.v.count == 0 then
     local cur_height = vim.api.nvim_win_get_height(0)
