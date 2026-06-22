@@ -105,8 +105,8 @@ nmap("co", "m`0:%s///gn<cr>", "[c]ount [o]ccurrences")
 nmap("cp", "m`:g//number<cr>", "o[c]currences [p]review")
 nmap("gcp", "m`:.,$g//number<cr>", "o[c]currences [p]review from here till end")
 nmap("<C-W>^", "<cmd>vsp #<cr>", "Edit alternate file in vertical split")
-nmap("<C-w>N", "<cmd>vnew<cr>", "Create [N]ew vertical window")
-nmap("<C-w>D", function()
+nmap("<C-W>N", "<cmd>vnew<cr>", "Create [N]ew vertical window")
+nmap("<C-W>D", function()
   for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
     if vim.api.nvim_win_get_config(win).relative == "" then
       vim.api.nvim_win_call(win, function()
