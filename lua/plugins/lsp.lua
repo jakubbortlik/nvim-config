@@ -196,8 +196,16 @@ local M = {
         null_ls.builtins.formatting.textlint, -- Markdown
       }
 
-      if vim.fn.filereadable(vim.fn.getcwd() .. "/" .. ".prettierrc.cjs") == 1 then
-        table.insert(sources, null_ls.builtins.formatting.prettierd.with({ filetypes = { "javascript", "typescript", "markdown" } }))
+      if
+        vim.fn.filereadable(vim.fn.getcwd() .. "/" .. ".prettierrc.cjs") == 1
+        or vim.fn.filereadable(vim.fn.getcwd() .. "/" .. ".prettierrc.yaml") == 1
+      then
+        table.insert(
+          sources,
+          null_ls.builtins.formatting.prettierd.with({
+            filetypes = { "javascript", "typescript", "markdown" },
+          })
+        )
       else
         table.insert(sources, null_ls.builtins.formatting.mdformat)
       end
