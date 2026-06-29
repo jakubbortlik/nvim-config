@@ -101,6 +101,9 @@ return {
       keys = {
         ["<C-j>"] = { "history_forward", mode = { "i", "n" } },
         ["<C-k>"] = { "history_back", mode = { "i", "n" } },
+        ["<M-n>"] = { "history_prefix_forward", mode = { "i", "n" } },
+        ["<M-p>"] = { "history_prefix_back", mode = { "i", "n" } },
+        ["<M-P>"] = { "toggle_preview", mode = { "i", "n" } },
         ["<M-h>"] = false,
         ["<M-f>"] = { "toggle_follow", mode = { "n" } },
         ["<C-h>"] = { "toggle_hidden", mode = { "i", "n" } },
@@ -131,6 +134,12 @@ return {
     },
   },
   actions = {
+    history_prefix_back = function(picker)
+      picker:hist_prefix()
+    end,
+    history_prefix_forward = function(picker)
+      picker:hist_prefix(true)
+    end,
     sidekick_send = function(...)
       return require("sidekick.cli.snacks").send(...)
     end,

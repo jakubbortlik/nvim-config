@@ -166,6 +166,55 @@ return {
         Snacks.toggle.option("readonly", { off = false, on = true, name = "Readonly" }):map("\\r")
         Snacks.toggle.inlay_hints():map("\\h")
         Snacks.toggle.dim():map("\\D")
+
+        local matches_prefix = function(item, prefix)
+          return vim.startswith(item.pattern or "", prefix.pattern or "")
+            and vim.startswith(item.search or "", prefix.search or "")
+        end
+
+        local History = require("snacks.picker.util.history")
+        History.next_prefix = function(self, prefix)
+          for i = self.cursor + 1, self.idx do
+            local item = self.kv:get(i)
+            if i == self.idx or (item and matches_prefix(item, prefix)) then
+              self.cursor = i
+              break
+            end
+          end
+          return self:get()
+        end
+
+        History.prev_prefix = function(self, prefix)
+          for i = self.cursor - 1, 1, -1 do
+            local item = self.kv:get(i)
+            if item and matches_prefix(item, prefix) then
+              self.cursor = i
+              break
+            end
+          end
+          return self:get()
+        end
+
+        local Picker = require("snacks.picker.core.picker")
+        Picker.hist_prefix = function(self, forward)
+          if self.history:is_current() then
+            self._hist_prefix = {
+              pattern = self.input.filter.pattern,
+              search = self.input.filter.search,
+            }
+          end
+          self:hist_record()
+          if forward then
+            self.history:next_prefix(self._hist_prefix)
+          else
+            self.history:prev_prefix(self._hist_prefix)
+          end
+          local hist = self.history:get()
+          if hist then
+            self.opts.live = hist.live
+            self.input:set(hist.pattern, hist.search)
+          end
+        end
       end,
     })
   end,
