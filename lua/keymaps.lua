@@ -112,11 +112,12 @@ nmap("<C-W>D", function()
   for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
     if vim.api.nvim_win_get_config(win).relative == "" then
       vim.api.nvim_win_call(win, function()
+        local file_name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(win)), ":.")
         if vim.wo.diff then
-          vim.notify(string.format("diffoff: window %d", win))
+          vim.notify(string.format("diffoff: %s", file_name))
           vim.cmd("diffoff")
         else
-          vim.notify(string.format("diffthis: window %d", win))
+          vim.notify(string.format("diffthis: %s", file_name))
           vim.cmd("diffthis")
         end
       end)
