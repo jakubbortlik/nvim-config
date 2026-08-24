@@ -185,9 +185,6 @@ return {
             end,
           },
           {
-            require 'minuet.lualine',
-          },
-          {
             "encoding",
             cond = function()
               return conditions.window_wider_than(120)
