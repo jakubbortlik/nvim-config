@@ -130,11 +130,47 @@ nmap("<leader>sa", [[:s/\%>.c]], "[s]ubstitute [a]fter")
 
 nmap("g<C-j>", "mzJ`z", "Join lines without moving cursor")
 
+---Split input string by separator.
+---@param inputstr string
+---@param sep string
+---@return string[]
+local split = function(inputstr, sep)
+  local t = {}
+  if sep == "" then
+    return t
+  end
+  for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+    table.insert(t, str)
+  end
+  return t
+end
+
+---Strip a prefexi from a path.
+---@param string path
+---@param prefix string
+---@return string
+local strip_prefix = function(path, prefix)
+  local result = {}
+  local split_prefix = split(prefix, "/")
+  for i, p in ipairs(split(path, "/")) do
+    if p ~= split_prefix[i] then
+      table.insert(result, p)
+    end
+  end
+  return table.concat(result, "/")
+end
+
+---Get relative path of the current file.
+---Try stripping the LSP workspace prefix and 
+---@return string
 local get_relative_path = function()
   local path = vim.fn.expand("%")
   local workspaces = vim.lsp.buf.list_workspace_folders()
   if workspaces[1] then
     path = vim.fn.fnamemodify(vim.fn.expand("%:p"), ":s?" .. workspaces[1] .. "/??")
+  end
+  if vim.fn.isabsolutepath(path) then
+    path = strip_prefix(path, vim.fn.getcwd())
   end
   return path
 end
