@@ -44,12 +44,25 @@ local editor_id = vim.api.nvim_create_augroup("Editor", {
   clear = true
 })
 
-vim.api.nvim_create_autocmd({"TextYankPost"}, {
+vim.api.nvim_create_autocmd("TextYankPost", {
   group = editor_id,
   callback  = function()
-    vim.highlight.on_yank({higroup="IncSearch", timeout=250})
+    if vim.fn.has("nvim-0.13") == 1 then
+      vim.hl.hl_op({higroup="IncSearch", timeout=300})
+    else
+      vim.hl.on_yank({higroup="IncSearch", timeout=300})
+    end
   end
 })
+
+if vim.fn.has("nvim-0.13") == 1 then
+  vim.api.nvim_create_autocmd("TextPutPost", {
+    group = editor_id,
+    callback  = function()
+      vim.hl.hl_op({higroup="DiffAdd", timeout=300})
+    end
+  })
+end
 
 local mappings = {}
 vim.api.nvim_create_autocmd({"BufEnter"}, {
