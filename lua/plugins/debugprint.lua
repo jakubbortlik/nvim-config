@@ -1,6 +1,7 @@
 return {
   "andrewferrier/debugprint.nvim",
   opts = {
+    display_timestamp = true,
     keymaps = {
       normal = {
         delete_debug_prints = "g?d",
