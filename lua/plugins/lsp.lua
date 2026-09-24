@@ -37,6 +37,9 @@ local server_options = {
   pylsp = {
     settings = {
       plugins = {
+        jedi_rename = { enabled = false },
+        rope_rename = { enabled = true },
+        pylsp_rope = { enabled = true },
         rope_completion = {
           enabled = false,
         },
