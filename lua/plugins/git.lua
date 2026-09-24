@@ -5,8 +5,8 @@ local M = {
   {
     "tpope/vim-fugitive",
     keys = {
-      { "<leader>gs", "<cmd>Git<cr>", desc = "Run [G]it"},
-      { "<leader>gS", "<cmd>vertical Git<cr>", desc = "Run [G]it in a vertical split"},
+      { "gs", "<cmd>Git<cr>", desc = "Run [G]it"},
+      { "gS", "<cmd>vertical Git<cr>", desc = "Run [G]it in a vertical split"},
     },
     cmd = {
       "G",
