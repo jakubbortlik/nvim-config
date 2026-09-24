@@ -3,6 +3,29 @@ return {
   opts = {
     nes = { enabled = false },
     cli = {
+      tools = {
+        phx_claude = {
+          cmd = { "claude", "--settings", vim.env.HOME .. "/dotfiles/claude/s.json" },
+          is_proc = "\\<claude\\>",
+          url = "https://github.com/anthropics/claude-code",
+          resume = { "--resume" },
+          continue = { "--continue" },
+          format = function(text)
+            local Text = require("sidekick.text")
+
+            Text.transform(text, function(str)
+              return str:find("[^%w/_%.%-]") and ('"' .. str .. '"') or str
+            end, "SidekickLocFile")
+
+            local ret = Text.to_string(text)
+
+            -- transform line ranges to a format that Claude understands
+            ret = ret:gsub("@([^@]-) :L(%d+)%-L(%d+)", "@%1#L%2-%3")
+
+            return ret
+          end,
+        },
+      },
       mux = {
         enabled = true,
       },
@@ -17,6 +40,36 @@ return {
     },
   },
   keys = {
+    {
+      "<c-,>",
+      function()
+        local new_layout = vim.v.count1 == 1 and "right" or "bottom"
+        require("sidekick.config").cli.win.layout = new_layout
+        require("sidekick.cli.state").with(function(state, attached)
+          if state.terminal then
+            state.terminal.opts.layout = new_layout
+            if attached then
+              state.terminal:show()
+              state.terminal:focus()
+            elseif state.terminal:is_open() then
+              state.terminal:hide()
+              state.terminal:show()
+              state.terminal:focus()
+            else
+              state.terminal:toggle()
+              if state.terminal:is_open() then
+                state.terminal:focus()
+              end
+            end
+          end
+        end, {
+          attach = true,
+          filter = { name = "phx_claude" },
+        })
+      end,
+      desc = "Sidekick Toggle PHX Claude",
+      mode = { "n", "t", "i", "x" },
+    },
     {
       "<c-.>",
       function()
