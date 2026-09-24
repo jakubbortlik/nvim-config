@@ -134,7 +134,7 @@ return {
     { "<leader>nh",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
     { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
     { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
-    { "<leader>lg", function() Snacks.lazygit() end, desc = "Lazygit" },
+    { "<a-g>", function() Snacks.lazygit() end, desc = "Lazygit", mode = { "n", "t" } },
     { "<c-t>",      function()
       if vim.v.count1 % 2 == 0 then
         Snacks.terminal(nil, {win = {position = "right"}})
