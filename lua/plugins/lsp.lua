@@ -11,6 +11,29 @@ local on_attach = function(client, bufnr)
 end
 
 local server_options = {
+  gopls = {
+    settings = {
+      gopls = {
+        staticcheck = true,
+        gofumpt = true,  -- stricter formatting than gofmt
+        analyses = {
+          unusedparams = true,
+          shadow = true,
+          nilness = true,
+          unusedwrite = true,
+          useany = true,
+        },
+        hints = {
+          assignVariableTypes = true,
+          compositeLiteralFields = true,
+          constantValues = true,
+          functionTypeParameters = true,
+          parameterNames = true,
+          rangeVariableTypes = true,
+        },
+      },
+    },
+  },
   pylsp = {
     settings = {
       plugins = {
