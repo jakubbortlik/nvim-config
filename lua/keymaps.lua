@@ -125,6 +125,9 @@ vim.keymap.set('t', '<c-tab>', function()
 end, {desc = "Switch to last accessed tab", expr = true})
 
 -- Miscellaneous mappings
+vim.keymap.set("n", "<leader>md", "<cmd>Markview toggle<cr>", { desc = "Toggle Markview for buffer" })
+vim.keymap.set("n", "<leader>mD", "<cmd>Markview Toggle<cr>", { desc = "Toggle Markview globally" })
+
 vim.keymap.set(
   { "n", "t", "i", "x" },
   "<c-q>",
