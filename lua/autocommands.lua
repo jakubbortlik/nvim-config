@@ -35,8 +35,8 @@ vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter" }, {
   group = python_id,
   pattern = { "*py" },
   callback = function()
-    vim.keymap.set("n", "<leader>ra", "<cmd>vnew term://python "..vim.fn.expand("%:p").."<cr>", { desc = "Run buffer with Python" })
-    vim.keymap.set("n", "<leader>rA", ":vnew term://python "..vim.fn.expand("%:p").." ", { desc = "Start cmdline to run buffer with Python" })
+    vim.keymap.set("n", "<leader>ra", "<cmd>tab vnew term://python "..vim.fn.expand("%:p").."<cr>", { desc = "Run buffer with Python" })
+    vim.keymap.set("n", "<leader>rA", ":tab vnew term://python "..vim.fn.expand("%:p").." ", { desc = "Start cmdline to run buffer with Python" })
   end
 })
 
