@@ -135,6 +135,25 @@ return {
     { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
     { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
     { "<a-g>", function() Snacks.lazygit() end, desc = "Lazygit", mode = { "n", "t" } },
+    { "<leader>jj", function()
+      vim.env.NVIM_LAST_WIN = vim.api.nvim_get_current_win()
+      Snacks.terminal("jjui", {win = {
+        position = "float",
+        border = "rounded",
+        -- jjui binds these itself; a buffer-local terminal mapping takes precedence
+        -- over the global t-mode ones, and the non-recursive RHS is forwarded to
+        -- the job instead of being handled by Neovim
+        on_buf = function(self)
+          for _, key in ipairs({ "<c-t>", "<m-n>" }) do
+            vim.keymap.set("t", key, key, {
+              buffer = self.buf,
+              remap = false,
+              desc = "jjui: " .. key,
+            })
+          end
+        end,
+      }})
+    end, desc = "JJui" },
     { "<c-t>",      function()
       if vim.v.count1 % 2 == 0 then
         Snacks.terminal(nil, {win = {position = "right"}})
