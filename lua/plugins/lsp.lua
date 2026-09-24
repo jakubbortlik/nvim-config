@@ -189,10 +189,12 @@ local M = {
     opts = {
       ensure_installed = {
         "buf",
+        "basedpyright",
         "commitlint",
         "debugpy",
         "json-lsp",
         "jq",
+        "gopls",
         "lua_ls",
         "luacheck",
         "mdformat",
