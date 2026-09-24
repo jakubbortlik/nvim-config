@@ -1,4 +1,6 @@
-require("vim._core.ui2").enable()
+if vim.fn.has("nvim-0.12") == 1 then
+  require("vim._core.ui2").enable()
+end
 
 -- Bootstrap https://github.com/folke/lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
