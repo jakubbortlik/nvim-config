@@ -58,7 +58,10 @@ local M = {
       "DiffviewToggleFiles",
     },
     opts = {
-      view = { default = { layout = "diff2_horizontal" } },
+      view = {
+        default = { layout = "diff2_horizontal" },
+        winfixbuf = true,
+      },
       preferred_adapter = "jj",  -- Preferred VCS adapter ('git'|'hg'|'jj'|'p4'). Tried first when detecting repos.
       persist_selections = {
         enabled = true,
