@@ -262,6 +262,8 @@ end, "[c]opy basename with [l]ine numbers to clipboard")
 
 nmap("<BS>", "<Del>", "Delete the last digit when entering a number.")
 
+nmap("<C-M-l>", "<cmd>lua vim.api.nvim_buf_clear_namespace(0, vim.api.nvim_create_namespace('nvim.multicursor'), 0, -1)<cr>", "Redraw the screen")
+
 -- Make n and N behave the same regardless of previous search direction
 vim.keymap.set({ "n" }, "n", "/<CR>", { silent = true, desc = "Search forward" })
 vim.keymap.set({ "n" }, "N", "?<CR>", { silent = true, desc = "Search backward" })
