@@ -37,6 +37,9 @@ require("lazy").setup({
     browser = "firefox",
     border = "rounded",
   },
+  diff = {
+    cmd = "diffview.nvim",
+  },
   change_detection = { enabled = true, notify = false },
   performance = {
     rtp = {
