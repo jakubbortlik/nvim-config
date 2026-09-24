@@ -24,16 +24,28 @@ return {
   opts = {
     preview_empty_name = true,
     post_hook = function(result)
-      if not result.changes then
+      if not (result.changes or result.documentChanges) then
         vim.cmd("update")
         return
       end
-      for file in pairs(result.changes) do
-        local bufnr = vim.fn.bufnr(file:sub(8))
-        if bufnr ~= -1 then
-          vim.api.nvim_buf_call(bufnr, function()
-            vim.cmd("update")
-          end)
+      if result.documentChanges then
+        for _, change in ipairs(result.documentChanges) do
+          local bufnr = vim.fn.bufnr(change.textDocument.uri:sub(8))
+          if bufnr ~= -1 then
+            vim.api.nvim_buf_call(bufnr, function()
+              vim.cmd("update")
+            end)
+          end
+        end
+      end
+      if result.changes then
+        for file in pairs(result.changes) do
+          local bufnr = vim.fn.bufnr(file:sub(8))
+          if bufnr ~= -1 then
+            vim.api.nvim_buf_call(bufnr, function()
+              vim.cmd("update")
+            end)
+          end
         end
       end
     end,
