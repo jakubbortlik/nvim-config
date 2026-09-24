@@ -7,7 +7,7 @@ local comment_position = { row = "92%", col = "100%" }
 local comment_opts = { width = 112, height = 30, position = comment_position }
 if vim.o.columns > 170 then
   title_input_width = 120
-  discussion_tree_size = 90
+  discussion_tree_size = 96
   discussion_tree_position = "right"
 else
   title_input_width = vim.fn.winwidth(0) - 10
