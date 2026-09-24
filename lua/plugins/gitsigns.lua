@@ -29,13 +29,13 @@ return {
       end, "Navigate to prev unstaged hunk")
 
       -- Navigation
-      nmap("]G", function()
+      nmap("]h", function()
         vim.schedule(function()
           gs.nav_hunk("next", { wrap = false, greedy = false, target = "all" })
         end)
       end, "Navigate to next [h]unk")
 
-      nmap("[G", function()
+      nmap("[h", function()
         vim.schedule(function()
           gs.nav_hunk("prev", { wrap = false, greedy = false, target = "all" })
         end)
