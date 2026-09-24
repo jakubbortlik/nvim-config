@@ -29,7 +29,7 @@ vim.opt.softtabstop = 4
 vim.opt.spelllang = "en_us"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-vim.opt.suffixes:remove({".info"})
+vim.opt.suffixes:remove({ ".info" })
 vim.opt.swapfile = false
 vim.opt.tabstop = 4
 vim.opt.termguicolors = true
