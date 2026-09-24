@@ -109,8 +109,8 @@ return {
                 last_refresh = os.time()
               end
               local state = require("gitlab.state")
-              if state.INFO and state.INFO.detailed_merge_status and state.INFO.detailed_merge_status == "mergeable" then
-                return "mergeable"
+              if state.INFO and state.INFO.detailed_merge_status and (state.INFO.detailed_merge_status == "mergeable" or state.INFO.detailed_merge_status == "not_open") then
+                return state.INFO.detailed_merge_status
               end
               if state.MERGEABILITY and state.MERGEABILITY then
                 local reported = {}
