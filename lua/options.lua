@@ -20,6 +20,8 @@ vim.opt.nrformats:remove("octal")
 vim.opt.scrolloff = 2
 vim.opt.shiftwidth = 4
 vim.opt.showmode = false
+vim.opt.showbreak = "↪ "
+vim.opt.breakat:append({ "=#" })
 vim.opt.sidescrolloff = 2
 vim.opt.signcolumn = "auto:1-4"
 vim.opt.smartcase = true
