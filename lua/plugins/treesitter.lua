@@ -1,4 +1,4 @@
-vim.api.nvim_create_autocmd({ "Filetype" }, {
+vim.api.nvim_create_autocmd({ "FileType" }, {
   callback = function(event)
     local ignored_fts = {
       "snacks_notif",
