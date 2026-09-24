@@ -75,6 +75,8 @@ vim.keymap.set({ "n", "t", "i" }, "<A-l>", function()
   tmux_navigate("<A-l>")
 end, { silent = true, desc = "Navigate right" })
 
+nmap("g<c-f>", "<cmd>vsplit | execute 'normal gf'<cr>", "Edit file under cursor in new vsplit.")
+nmap("g<c-s-f>", "<cmd>split | execute 'normal gf'<cr>", "Edit file under cursor in new vsplit.")
 nmap("g<c-t>", "<cmd>tab split | execute 'normal <c-]>'<cr>", "Jump to definition in new tab.")
 nmap("g<c-v>", "<cmd>vsplit | execute 'normal <c-]>'<cr>", "Jump to definition in new vertical split.")
 nmap("g<c-x>", "<cmd>split | execute 'normal <c-]>'<cr>", "Jump to definition in new horizontal split.")
