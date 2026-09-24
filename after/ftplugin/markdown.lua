@@ -46,3 +46,11 @@ nmap("<leader>m100", ":set ft=markdown tw=100 cc+=+1<cr>", "Set markdown options
 nmap("<leader>p80", ":set ft=python tw=80 cc+=+1<cr>", "Set python options tw=80")
 nmap("<leader>p88", ":set ft=python tw=88 cc+=+1<cr>", "Set python options tw=88")
 nmap("<leader>p100", ":set ft=python tw=100 cc+=+1<cr>", "Set python options tw=100")
+
+if vim.bo.buftype == "nofile" then
+  nmap("<c-f>", (require("diffview.actions").scroll_view(0.25)), "Scroll view down", true)
+  nmap("<c-b>", require("diffview.actions").scroll_view(-0.25), "Scroll view up", true)
+  nmap("<S-Tab>", require("diffview.actions").select_prev_entry, "Open diff for the prev file", true)
+  nmap("<Tab>", require("diffview.actions").select_next_entry, "Open diff for the next file", true)
+  nmap("<S-Tab>", require("diffview.actions").select_prev_entry, "Open diff for the prev file", true)
+end

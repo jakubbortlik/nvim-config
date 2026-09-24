@@ -23,15 +23,18 @@ nmap("F", function()
   end
 end, "Toggle reviewer follow node", 0)
 
-nmap("j", function()
+nmap("gj", function()
   vim.cmd.normal("$")
-  vim.fn.search("[] @")
+  vim.fn.search([[\([] \|^\)@]])
   vim.cmd.normal("0")
 end, "Go to next node", 0)
-nmap("k", function()
-  vim.fn.search("[] @", "b")
+nmap("gk", function()
+  vim.fn.search([[\([] \|^\)@]], "b")
   vim.cmd.normal("0")
 end, "Go to previous node", 0)
+
+vim.keymap.set("n", "j", "gj", { desc = "Navigate down", buffer = true, nowait = true, remap = false })
+vim.keymap.set("n", "k", "gk", { desc = "Navigate up", buffer = true, nowait = true, remap = false })
 
 nmap("J", function()
   toggle_if_match("^%s*.*[✓-] ?")
@@ -97,6 +100,9 @@ nmap(
 )
 vim.keymap.set("n", "<", "Kt", { desc = "Toggle root node", buffer = true, nowait = true, remap = true })
 
+nmap("<c-f>", require("diffview.actions").scroll_view(0.25), "Scroll view down", true)
+nmap("<c-b>", require("diffview.actions").scroll_view(-0.25), "Scroll view up", true)
+nmap("<S-Tab>", require("diffview.actions").select_prev_entry, "Open diff for the prev file", true)
 nmap("<Tab>", require("diffview.actions").select_next_entry, "Open diff for the next file", true)
 nmap("<S-Tab>", require("diffview.actions").select_prev_entry, "Open diff for the prev file", true)
 nmap("<leader>e", require("diffview.actions").focus_files, "Bring focus to file panel", true)
