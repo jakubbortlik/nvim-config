@@ -74,6 +74,7 @@ return {
             NeogitChangeNewFile            = { fg = theme.syn.string, italic = true },
             NeogitSectionHeader            = { fg = theme.syn.preproc },
 
+            NeotestWinSelect = { link = "ErrorMsg" },
             DiffviewFilePanelSelected = { link = "WarningMsg" },
 
             -- Save a hlgroup with dark background and dimmed foreground
