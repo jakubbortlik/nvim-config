@@ -31,7 +31,8 @@ local M = {
     end
   },
   {
-    "dlyongemallo/diffview.nvim",
+    require("utils").get_diffview_provider(),
+    dir = "/home/jakub/projects/" .. require("utils").get_diffview_provider(),
     keys = {
       { "<leader>vH", ":DiffviewFileHistory --no-merges", desc = "Prepopulate commandline with Diff[v]iewFile[H]istory"},
       { "<leader>vh", "<cmd>DiffviewFileHistory --no-merges %<cr>", desc = "Run Diff[v]iewFile[H]istory for current file"},

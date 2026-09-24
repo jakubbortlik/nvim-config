@@ -62,4 +62,9 @@ M.make_operator = function(callback)
   end
 end
 
+M.get_diffview_provider = function()
+  -- a single tabpage interface for reviewing all git changes
+  return vim.env.DV == "s" and "sindrets/diffview.nvim" or vim.env.DV == "j" and "diffview-plus.nvim" or "dlyongemallo/diffview-plus.nvim"
+end
+
 return M

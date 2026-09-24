@@ -21,7 +21,7 @@ return {
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
     {
-      "dlyongemallo/diffview.nvim",
+      require("utils").get_diffview_provider(),
       opts = {
         view = { default = { layout = "diff2_vertical" } },
       },
