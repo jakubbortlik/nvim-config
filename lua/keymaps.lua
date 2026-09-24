@@ -88,6 +88,14 @@ nmap("<leader>tq", function()
   end
   vim.cmd.tabclose()
 end, "Close the current tab")
+nmap("<leader>tQ", function()
+  local tabpages = vim.api.nvim_list_tabpages()
+  if #tabpages == 1 then
+    vim.cmd.tabnew()
+    vim.cmd.tabprevious()
+  end
+  vim.cmd.tabclose({bang=true})
+end, "Force close the current tab")
 nmap("<C-Tab>", function()
   if vim.fn.tabpagenr("#") ~= 0 then
     vim.cmd("normal! g\t")
