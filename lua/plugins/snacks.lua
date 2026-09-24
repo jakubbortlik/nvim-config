@@ -15,7 +15,7 @@ return {
     indent = { enabled = false },
     input = { enabled = true },
     picker = require("plugins.more_snacks.pickers"),
-    notifier = { enabled = true },
+    notifier = { enabled = true, margin = { top = 2 }, date_format = "%T" },
     quickfile = { enabled = true },
     scope = { enabled = false, cursor = false },
     scroll = { enabled = false },
