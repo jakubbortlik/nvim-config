@@ -1,6 +1,7 @@
 -- Lua version of "set 'option'"
 vim.opt.colorcolumn = "+1"
 vim.opt.completeopt = "menuone,longest,preview,fuzzy"
+vim.opt.concealcursor = "nc"
 vim.opt.cursorline = true
 vim.opt.diffopt:append({"linematch:60"})
 vim.opt.expandtab = true
