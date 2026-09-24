@@ -150,12 +150,15 @@ vim.api.nvim_create_autocmd("BufEnter", {
   group = gitlab,
   callback = function()
     local last_updated = require("gitlab.state").discussion_tree.last_updated
+    local updating = require("gitlab.state").discussion_tree.updating
+    updating = type(updating) == "number" and updating or 0
     last_updated = last_updated and last_updated or 0
-    if vim.bo.filetype == "gitlab" and os.time() - math.max(last_auto_updated, last_updated) > 10 then
-      require("gitlab").refresh_data()
+    if vim.bo.filetype == "gitlab" and (os.time() - math.max(last_auto_updated, last_updated) > 60) and not (updating > 0) then
       last_auto_updated = os.time()
+      require("gitlab").refresh_data()
     end
-  end
+  end,
+  desc = "Refresh data when entering discussion tree"
 })
 
 vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
