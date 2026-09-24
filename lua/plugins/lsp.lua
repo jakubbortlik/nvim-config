@@ -73,7 +73,7 @@ local server_options = {
         telemetry = { enable = false },
       },
     },
-    root_markers = { '.git', { 'stylua.toml', '.luarc.json' } },
+    root_markers = { '.git', '.jj', { 'stylua.toml', '.luarc.json' } },
   },
   ts_ls = {},
   buf_ls = {},
