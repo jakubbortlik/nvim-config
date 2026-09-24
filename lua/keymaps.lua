@@ -134,7 +134,7 @@ vim.keymap.set(
   [[<c-\><c-n>]],
   { desc = "Go to normal mode" }
 )
-vim.keymap.set({ "x" }, "Q", "sa`", { desc = "", remap = true })
+vim.keymap.set({ "x" }, "q", "sa`", { desc = "Put backticks around visual selection", remap = true })
 nmap("co", "m`0:%s///gn<cr>", "[c]ount [o]ccurrences")
 nmap("cp", "m`:g//number<cr>", "o[c]currences [p]review")
 nmap("gcp", "m`:.,$g//number<cr>", "o[c]currences [p]review from here till end")
