@@ -43,14 +43,14 @@ local M = {
 
       dap.configurations.lua = {
         {
-          type = 'nlua',
-          request = 'attach',
+          type = "nlua",
+          request = "attach",
           name = "Attach to running Neovim instance",
         }
       }
       dap.adapters.nlua = function(callback, config)
         callback({
-          type = 'server',
+          type = "server",
           host = config.host or "127.0.0.1",
           port = config.port or 8086,
         })
@@ -89,7 +89,7 @@ local M = {
         dapui.toggle({ reset = true })
       end, { desc = "Dapui toggle" })
 
-      keymap('n', '<F8>', [[:lua require("osv").launch({port = 8086})<CR>]], { desc = "Launch OSV server in debugee", noremap = true })
+      keymap("n", "<F8>", [[:lua require("osv").launch({port = 8086})<CR>]], { desc = "Launch OSV server in debugee", noremap = true })
 
       local opts = { noremap = true, silent = true }
       local pbapi = require("persistent-breakpoints.api")
@@ -218,8 +218,8 @@ local M = {
       dap.listeners.after.event_initialized["dapui_config"] = dapui.open
       dap.listeners.before.event_terminated["dapui_config"] = dapui.close
       dap.listeners.before.event_exited["dapui_config"] = dapui.close
-      vim.fn.sign_define('DapBreakpoint',{ text ='🛑', texthl ='', linehl ='', numhl =''})
-      vim.fn.sign_define('DapStopped',{ text ='▶️', texthl ='', linehl ='', numhl =''})
+      vim.fn.sign_define("DapBreakpoint", { text ="🛑", texthl ="", linehl ="", numhl =""})
+      vim.fn.sign_define("DapStopped", { text ="▶️", texthl ="", linehl ="", numhl =""})
     end,
   },
 }
