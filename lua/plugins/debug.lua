@@ -41,6 +41,10 @@ local M = {
       local dap = require("dap")
       local dapui = require("dapui")
 
+      dap.configurations.python = dap.configurations.python or {}
+      table.insert(dap.configurations.python, {
+        justMyCode = false,
+      })
       dap.configurations.lua = {
         {
           type = "nlua",
