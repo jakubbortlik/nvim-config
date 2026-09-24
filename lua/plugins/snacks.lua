@@ -154,6 +154,7 @@ return {
         end,
       }})
     end, desc = "JJui" },
+    { "<leader>gu", function() Snacks.terminal("glab-tui", {win = {position = "float", border = "rounded"}}) end, desc = "glab-tui" },
     { "<c-t>",      function()
       if vim.v.count1 % 2 == 0 then
         Snacks.terminal(nil, {win = {position = "right"}})
