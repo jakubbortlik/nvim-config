@@ -26,6 +26,24 @@ nmap("_", function()
   end
 end, "Maximize/equalize win height or set to [count]")
 
+nmap("|", function()
+  if vim.v.count == 0 then
+    local cur_width = vim.api.nvim_win_get_width(0)
+    local total_width = vim.o.columns
+    if (total_width >= cur_width) and (cur_width > total_width / 2) then
+      vim.cmd("vertical resize " .. math.floor(total_width / 2)) -- equalize
+    else
+      local windows = vim.api.nvim_tabpage_list_wins(vim.api.nvim_get_current_tabpage())
+      for _, winid in ipairs(windows) do
+        vim.fn.win_execute(winid, "set nowrap")
+      end
+      vim.cmd(total_width - 10 .. "wincmd |") -- maximize
+    end
+  else
+    vim.cmd(vim.v.count .. "wincmd |")
+  end
+end, "Maximize/equalize win width or set to [count]")
+
 -- Navigation
 local tmux_navigate = function(keymap)
   local cfg = vim.api.nvim_win_get_config(0)
