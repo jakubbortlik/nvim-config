@@ -19,6 +19,7 @@ local M = {
       "nvim-neotest/nvim-nio",
       -- Creates a beautiful debugger UI
       "rcarriga/nvim-dap-ui",
+      {"igorlfs/nvim-dap-view", config = true, lazy=false},
       "LiadOz/nvim-dap-repl-highlights",
 
       -- Show variable values as virtual text
@@ -58,6 +59,11 @@ local M = {
       require("nvim-dap-virtual-text").setup({})
 
       local keymap = vim.keymap.set
+
+      keymap("n", "<leader>dt", "<cmd>DapViewToggle<cr>", { desc = "Toggle DapView" })
+      keymap("n", "<leader>db", "<cmd>DapToggleBreakpoint<cr>", { desc = "Toggle Breakpoint" })
+      keymap("n", "<leader>dd", "<cmd>DapContinue<cr>", { desc = "DapContinue" })
+      keymap("n", "<leader>dw", "<cmd>DapViewWatch<cr>", { desc = "DapViewWatch" })
 
       -- Basic debugging keymaps, feel free to change to your liking!
       keymap("n", "<F1>", function()
