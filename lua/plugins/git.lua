@@ -1,5 +1,7 @@
 -- Git related plugins
 local get_main = require("utils").get_main
+vim.g.DiffCharDoMapping = 0
+vim.g.DiffDelPosVisible = 0
 
 local M = {
   {
@@ -33,6 +35,9 @@ local M = {
   {
     require("utils").get_diffview_provider(),
     dir = "/home/jakub/projects/" .. require("utils").get_diffview_provider(),
+    dependencies = {
+      "rickhowe/diffchar.vim",
+    },
     keys = {
       { "<leader>vH", ":DiffviewFileHistory --no-merges", desc = "Prepopulate commandline with Diff[v]iewFile[H]istory"},
       { "<leader>vh", "<cmd>DiffviewFileHistory --no-merges %<cr>", desc = "Run Diff[v]iewFile[H]istory for current file"},
