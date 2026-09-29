@@ -1,6 +1,7 @@
 return {
   "Kicamon/markdown-table-mode.nvim",
   cmd = { "Mtm" },
+  keys = {{"<leader>mm", "<cmd>Mtm<cr>", desc = "Toggle markdown-table-mode"}},
   opts = {
     filetype = {
       "*.md",
