@@ -26,7 +26,6 @@ return {
         },
         overrides = function(colors)
           local theme = colors.theme
-          local c = require("kanagawa.lib.color")
 
           return {
             NormalFloat = { bg = "none" },
@@ -47,32 +46,6 @@ return {
             NotificationWarning = { link = "WarningMsg" },
             NotificationError = { link = "ErrorMsg" },
             ['@string.special.url'] = { underline = true, undercurl = false },
-            -- Neogit
-            NeogitDiffDelete = { bg = c(theme.diff.delete):brighten(-0.5, theme.diff.delete):to_hex(), fg = c(theme.diff.delete):brighten(0.6, theme.diff.delete):to_hex() },
-            NeogitDiffDeleteCursor = { bg = c(theme.diff.delete):brighten(-0.5, theme.diff.delete):to_hex() },
-            NeogitDiffDeleteHighlight = { bg = theme.diff.delete, fg = c(theme.diff.delete):brighten(0.8, theme.diff.delete):to_hex()  },
-            --
-            NeogitDiffAdd = { bg = c(theme.diff.add):brighten(-0.5, theme.diff.add):to_hex(), fg = c(theme.diff.add):brighten(0.6, theme.diff.add):to_hex() },
-            NeogitDiffAddCursor = { bg = c(theme.diff.add):brighten(-0.5, theme.diff.add):to_hex() },
-            NeogitDiffAddHighlight = { bg = theme.diff.add, fg = c(theme.diff.add):brighten(0.8, theme.diff.add):to_hex() },
-            --
-            NeogitDiffContext = { bg = theme.ui.bg, fg = theme.ui.fg_dim },
-            NeogitDiffContextCursor = { bg = c(theme.diff.change):brighten(-0.5, theme.diff.change):to_hex() },
-            NeogitDiffContextHighlight = { bg = theme.ui.bg_p1, fg = theme.ui.fg },
-            --
-            NeogitHunkHeader = { fg = theme.syn.fun },
-            NeogitHunkHeaderHighlight = { fg = theme.syn.constant, bg = theme.diff.change },
-            NeogitHunkHeadercursor = { fg = theme.syn.constant, bg = theme.diff.change },
-            --
-            NeogitChangeModified           = { fg = theme.vcs.changed, italic = true },
-            NeogitChangeAdded              = { fg = theme.vcs.added, italic = true },
-            NeogitChangeDeleted            = { fg = theme.vcs.removed, italic = true },
-            NeogitChangeRenamed            = { fg = theme.syn.parameter, italic = true },
-            NeogitChangeUpdated            = { fg = theme.syn.constant, italic = true },
-            NeogitChangeCopied             = { fg = theme.syn.fun, italic = true },
-            NeogitChangeUnmerged           = { fg = theme.syn.identifier, italic = true },
-            NeogitChangeNewFile            = { fg = theme.syn.string, italic = true },
-            NeogitSectionHeader            = { fg = theme.syn.preproc },
 
             NeotestWinSelect = { link = "ErrorMsg" },
             DiffviewFilePanelSelected = { link = "WarningMsg" },
