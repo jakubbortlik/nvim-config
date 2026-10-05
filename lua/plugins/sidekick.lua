@@ -103,9 +103,19 @@ return {
     {
       "<leader>ks",
       function()
-        require("sidekick.cli").select({ filter = { installed = true } })
+        require("sidekick.cli").send({ msg = "<quote>\n{selection}\n</quote>\n{position}", name = "claude", focus = true })
       end,
-      desc = "Select CLI",
+      mode = { "x" },
+      desc = "Send selection with line",
+    },
+    {
+      "<leader>ks",
+      function()
+        vim.cmd.normal("V")
+        require("sidekick.cli").send({ msg = "<quote>\n{selection}\n</quote>\n{line}", name = "claude", focus = true })
+      end,
+      mode = { "n" },
+      desc = "Send selection with line",
     },
     {
       "<leader>kt",
