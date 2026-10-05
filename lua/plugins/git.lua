@@ -85,13 +85,18 @@ local M = {
         end,
       },
       keymaps = {
+        view = {
+          { "n", "gX", function() require("diffview.actions").cycle_layout() end, { desc = "Cycle through available layouts." } },
+        },
         file_history_panel = {
           { "n", "K", function() require("diffview.actions").select_prev_commit() end, { desc = "Select previous commit" } },
           { "n", "J", function() require("diffview.actions").select_next_commit() end, { desc = "Select next commit" } },
+          { "n", "gX", function() require("diffview.actions").cycle_layout() end, { desc = "Cycle available layouts" } },
         },
         file_panel = {
           { { "n", "x" }, "m", function() require("diffview.actions").toggle_select_entry() end, { desc = "Toggle file selection" } },
           { { "n", "x" }, "w", false },
+          { "n", "gX", function() require("diffview.actions").cycle_layout() end, { desc = "Cycle available layouts" } },
         },
       }
     }
