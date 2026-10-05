@@ -125,6 +125,9 @@ vim.keymap.set('t', '<c-tab>', function()
 end, {desc = "Switch to last accessed tab", expr = true})
 
 -- Miscellaneous mappings
+vim.keymap.set("x" , "<leader>b", "2sa*", { desc = "Put ** around visual selection", remap = true })
+vim.keymap.set("x" , "<leader>i", "sa*", { desc = "Put * around visual selection", remap = true })
+vim.keymap.set("x" , "<leader>u", "sa_", { desc = "Put _ around visual selection", remap = true })
 vim.keymap.set(
   { "n", "t", "i", "x" },
   "<c-q>",
