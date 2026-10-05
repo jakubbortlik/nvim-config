@@ -16,6 +16,10 @@ return {
     "rafamadriz/friendly-snippets",
     "folke/lazydev.nvim",
     "Kaiser-Yang/blink-cmp-git",
+    {
+      "mikavilpas/blink-ripgrep.nvim",
+      version = "*",
+    }
   },
   --- @module "blink.cmp"
   --- @type blink.cmp.Config
@@ -50,7 +54,15 @@ return {
       },
     },
     sources = {
-      default = { "git", "lsp", "path", "snippets", "lazydev", "buffer" },
+      default = {
+        "git",
+        "lsp",
+        "path",
+        "snippets",
+        "lazydev",
+        "buffer",
+        "ripgrep",
+      },
       providers = {
         buffer = { min_keyword_length = 3 },
         lazydev = { module = "lazydev.integrations.blink", score_offset = 100 },
@@ -68,6 +80,12 @@ return {
               },
             },
           },
+        },
+        ripgrep = {
+          module = "blink-ripgrep",
+          name = "Ripgrep",
+          ---@type blink-ripgrep.Options
+          opts = {},
         },
       },
     },
