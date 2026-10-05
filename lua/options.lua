@@ -3,7 +3,8 @@ vim.opt.colorcolumn = "+1"
 vim.opt.completeopt = "menuone,longest,preview,fuzzy"
 vim.opt.concealcursor = "nc"
 vim.opt.cursorline = true
-vim.opt.diffopt:append({"linematch:60"})
+vim.opt.diffopt:append("linematch:60")
+vim.opt.diffopt:append("algorithm:histogram")
 vim.opt.expandtab = true
 vim.opt.fileformat = "unix"
 vim.opt.grepprg = "rg --color=never --no-heading --with-filename --line-number --column --smart-case --sort=path"
@@ -14,14 +15,14 @@ vim.opt.history = 10000
 vim.opt.ignorecase = true
 vim.opt.jumpoptions = "view"
 vim.opt.linebreak = true
-vim.opt.listchars = "tab:>\\ ,trail:-,extends:>,precedes:<,nbsp:+"
+vim.opt.listchars = "tab:>-,trail:-,extends:>,precedes:<,nbsp:+"
 vim.opt.number = true
 vim.opt.nrformats:remove("octal")
 vim.opt.scrolloff = 2
 vim.opt.shiftwidth = 4
 vim.opt.showmode = false
 vim.opt.showbreak = "↪ "
-vim.opt.breakat:append({ "=#" })
+vim.opt.breakat:append("=#")
 vim.opt.sidescrolloff = 2
 vim.opt.signcolumn = "auto:1-4"
 vim.opt.smartcase = true
