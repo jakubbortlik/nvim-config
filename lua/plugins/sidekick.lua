@@ -126,6 +126,14 @@ return {
       desc = "Send This",
     },
     {
+      "<leader>kl",
+      function()
+        require("sidekick.cli").send({ msg = "{line}", name = "claude", focus = true })
+      end,
+      mode = { "x", "n" },
+      desc = "Send this line",
+    },
+    {
       "<leader>kf",
       function()
         require("sidekick.cli").send({ msg = "{file}", name = "claude", focus = true })
