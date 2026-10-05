@@ -8,6 +8,7 @@ return {
           dark = "wave",
           light = "lotus",
         },
+        transparent = true,
         colors = {
           theme = {
             wave = {
