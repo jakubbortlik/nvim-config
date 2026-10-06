@@ -144,13 +144,14 @@ local M = {
     init = function(_)
       local pylsp = require("mason-registry").get_package("python-lsp-server")
       pylsp:on("install:success", function()
+        vim.notify("python-lsp-server: installing plugins")
         local function mason_package_path(package)
           return vim.fn.resolve(vim.fn.stdpath("data") .. "/mason/packages/" .. package)
         end
 
-        local path = mason_package_path("python-lsp-server")
-        local command = path .. "/venv/bin/pip"
-        local args = {
+        local bin = mason_package_path("python-lsp-server") .. "/venv/bin/pip"
+        local cmd = {
+          bin,
           "install",
           "-U",
           "pyls-memestra",
@@ -160,22 +161,16 @@ local M = {
           "python-lsp-ruff",
         }
 
-        require("plenary.job")
-          :new({
-            command = command,
-            args = args,
-            cwd = path,
-            on_exit = function(_, status)
-              vim.defer_fn(function()
-                if status ~= 0 then
-                  vim.print(string.format("installation of pylsp plugins exited with non-zero code: %s", status), vim.log.levels.ERROR)
-                else
-                  vim.print("pylsp plugins were installed successfully")
-                end
-              end, 0)
-            end,
-          })
-          :start()
+        vim.system(cmd, {}, function(out)
+            vim.defer_fn(function()
+              if out.code ~= 0 then
+                vim.notify(string.format("python-lsp-server: installation of plugins failed with code: %s", out.code), vim.log.levels.ERROR)
+              else
+                vim.notify("python-lsp-server: plugins installed successfully")
+              end
+            end, 0)
+          end
+        ):wait()
       end)
     end,
     keys = { { "<leader>ma", "<cmd>Mason<cr>", desc = "Mason" } },
