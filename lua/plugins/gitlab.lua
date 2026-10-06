@@ -19,7 +19,6 @@ return {
   "harrisoncramer/gitlab.nvim",
   dependencies = {
     "MunifTanjim/nui.nvim",
-    "nvim-lua/plenary.nvim",
     {
       require("utils").get_diffview_provider(),
       opts = {
