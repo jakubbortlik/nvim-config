@@ -134,9 +134,13 @@ return {
     { "<leader>nh",  function() Snacks.notifier.show_history() end, desc = "Notification History" },
     { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
     { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
-    { "<a-g>", function() Snacks.lazygit() end, desc = "Lazygit", mode = { "n", "t" } },
-    { "<leader>jj", function()
-      vim.env.NVIM_LAST_WIN = vim.api.nvim_get_current_win()
+    { "<m-g>", function() Snacks.lazygit() end, desc = "Lazygit", mode = { "n", "t" } },
+    { "<m-s-j>", function()
+      -- Set the last window so jjui can pick it up for opening files (see
+      -- ~/dotfiles/config/jjui/config.lua:78)
+      if vim.fn.mode() ~= "t" then
+        vim.env.NVIM_LAST_WIN = vim.api.nvim_get_current_win()
+      end
       Snacks.terminal("jjui", {win = {
         position = "float",
         border = "rounded",
@@ -153,7 +157,7 @@ return {
           end
         end,
       }})
-    end, desc = "JJui" },
+    end, desc = "JJui", mode = { "n", "t" } },
     { "<leader>gu", function() Snacks.terminal("glab-tui", {win = {position = "float", border = "rounded"}}) end, desc = "glab-tui" },
     { "<c-t>",      function()
       if vim.v.count1 % 2 == 0 then
