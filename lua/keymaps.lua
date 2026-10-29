@@ -124,6 +124,10 @@ vim.keymap.set('t', '<c-tab>', function()
   end
 end, {desc = "Switch to last accessed tab", expr = true})
 
+-- Insert tags
+nmap("<leader>ki", [[o<item></item>O]], "Set markdown options tw=80")
+nmap("<leader>kq", [[o<quote></quote>O]], "Set markdown options tw=80")
+
 -- Miscellaneous mappings
 vim.keymap.set("x" , "<leader>b", "2sa*", { desc = "Put ** around visual selection", remap = true })
 vim.keymap.set("x" , "<leader>i", "sa*", { desc = "Put * around visual selection", remap = true })
