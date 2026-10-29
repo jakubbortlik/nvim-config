@@ -75,13 +75,16 @@ return {
   },
   {
     "petertriho/nvim-scrollbar",
+    branch = "refactor/v2",
     opts = {
-      show_in_active_only = true,
-      set_hightlights = true,
-      hide_if_all_visible = true,
-      handle = {
-        blend = 15,
-        highlight = "Search",
+      set_highlights = true,
+      scrollbar = {
+        hide_if_all_visible = true,
+        visibility = "active",
+        thumb = {
+          blend = 15,
+          highlight = { bg = "#2d4f67" },
+        },
       },
     },
   },
