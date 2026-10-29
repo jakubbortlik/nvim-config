@@ -79,6 +79,22 @@ local server_options = {
   buf_ls = {},
   jsonls = {},
   protols = {},
+  ty = {
+    on_attach = function(client, bufnr)
+      -- Disable all capabilities
+      for capability, _ in pairs(client.server_capabilities) do
+        if
+          capability ~= "textDocumentSync"
+          and capability ~= "hoverProvider"
+          and capability ~= "signatureHelpProvider"
+          and capability ~= "implementationProvider"
+        then
+          client.server_capabilities[capability] = false
+        end
+      end
+      on_attach(client, bufnr)
+    end,
+  },
   basedpyright = {
     settings = {
       basedpyright = {
@@ -99,7 +115,6 @@ local server_options = {
           capability ~= "textDocumentSync"
           and capability ~= "hoverProvider"
           and capability ~= "signatureHelpProvider"
-          and capability ~= "implementationProvider"
         then
           client.server_capabilities[capability] = false
         end
@@ -118,11 +133,13 @@ local M = {
     config = function()
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       for server_name, options in pairs(server_options) do
+        -- Leave settings/root_markers unset when not given, so the defaults
+        -- shipped by nvim-lspconfig are kept (an empty list would replace them).
         vim.lsp.config(server_name, {
           capabilities = capabilities,
           on_attach = options.on_attach or on_attach,
-          settings = options.settings or {},
-          root_markers = options.root_markers or {},
+          settings = options.settings,
+          root_markers = options.root_markers,
         })
       end
     end,
@@ -200,6 +217,7 @@ local M = {
         "shellcheck",
         "stylua",
         "textlint",
+        "ty",
         "typescript-language-server",
         "vint",
       },
